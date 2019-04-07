@@ -34,7 +34,7 @@ featured = true
 #   E.g. `projects = ["deep-learning"]` references 
 #   `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
-projects = []
+projects = ["ntarc"]
 
 # Slides (optional).
 #   Associate this page with Markdown slides.
@@ -54,7 +54,7 @@ url_preprint = ""
 url_code = "https://cn.tuwien.ac.at/network-traffic/ntadatabase/"
 url_dataset = ""
 url_project = ""
-url_slides = ""
+url_slides = "https://www.dcferreira.com/presentation_ntarc_netsecseminar/"
 url_video = ""
 url_poster = ""
 url_source = ""

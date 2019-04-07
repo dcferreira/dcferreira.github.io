@@ -34,7 +34,7 @@ featured = true
 #   E.g. `projects = ["deep-learning"]` references 
 #   `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
-projects = []
+projects = ["multilingual_embeddings"]
 
 # Slides (optional).
 #   Associate this page with Markdown slides.
