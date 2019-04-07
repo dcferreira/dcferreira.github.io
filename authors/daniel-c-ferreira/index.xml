@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Daniel C Ferreira on dcferreira</title>
-    <link>https://dcferreira.github.io/authors/daniel-c-ferreira/</link>
+    <link>https://dcferreira.com/authors/daniel-c-ferreira/</link>
     <description>Recent content in Daniel C Ferreira on dcferreira</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 07 Aug 2017 00:00:00 +0200</lastBuildDate>
     
-	<atom:link href="https://dcferreira.github.io/authors/daniel-c-ferreira/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://dcferreira.com/authors/daniel-c-ferreira/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A meta-analysis approach for feature selection in network traffic research</title>
-      <link>https://dcferreira.github.io/publication/ntarc-features/</link>
+      <link>https://dcferreira.com/publication/ntarc-features/</link>
       <pubDate>Mon, 07 Aug 2017 00:00:00 +0200</pubDate>
       
-      <guid>https://dcferreira.github.io/publication/ntarc-features/</guid>
+      <guid>https://dcferreira.com/publication/ntarc-features/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Jointly Learning to Embed and Predict with Multiple Languages</title>
-      <link>https://dcferreira.github.io/publication/multilingual/</link>
+      <link>https://dcferreira.com/publication/multilingual/</link>
       <pubDate>Sun, 07 Aug 2016 00:00:00 +0200</pubDate>
       
-      <guid>https://dcferreira.github.io/publication/multilingual/</guid>
+      <guid>https://dcferreira.com/publication/multilingual/</guid>
       <description></description>
     </item>
     
