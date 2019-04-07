@@ -1,6 +1,6 @@
 +++
 # Display name
-name = "Nelson Bighetti"
+name = "Daniel C. Ferreira"
 
 # Is this the primary user of the site?
 superuser = true
@@ -21,25 +21,21 @@ email = ""
 # List (academic) interests or hobbies
 interests = [
   "Artificial Intelligence",
-  "Computational Linguistics",
-  "Information Retrieval"
+  "Cyber Security",
+  "Natural Language Processing",
+  "Music"
 ]
 
 # List qualifications (such as academic degrees)
 [[education.courses]]
-  course = "PhD in Artificial Intelligence"
-  institution = "Stanford University"
-  year = 2012
+  course = "MSc in Applied Mathematics"
+  institution = "Técnico Lisboa"
+  year = 2015
 
 [[education.courses]]
-  course = "MEng in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2009
-
-[[education.courses]]
-  course = "BSc in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2008
+  course = "BSc in Applied Mathematics and Computation"
+  institution = "Técnico Lisboa"
+  year = 2013
 
 # Social/Academic Networking
 #
@@ -62,32 +58,38 @@ interests = [
 [[social]]
   icon = "envelope"
   icon_pack = "fas"
-  link = "#contact"  # For a direct email link, use "mailto:test@example.org".
-
+  link = "mailto:daniel.ferreira.1@gmail.com"  # For a direct email link, use "mailto:test@example.org".
+  
 [[social]]
-  icon = "twitter"
+  icon = "github"
   icon_pack = "fab"
-  link = "https://twitter.com/GeorgeCushen"
+  link = "https://github.com/dcferreira"
 
 [[social]]
   icon = "google-scholar"
   icon_pack = "ai"
-  link = "https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ"
-
+  link = "https://scholar.google.com/citations?user=4PusPA4AAAAJ"
+  
 [[social]]
-  icon = "github"
+  icon = "twitter"
   icon_pack = "fab"
-  link = "https://github.com/gcushen"
+  link = "https://twitter.com/dcferreira1"
+
 
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
-# [[social]]
-#   icon = "cv"
-#   icon_pack = "ai"
-#   link = "files/cv.pdf"
+[[social]]
+  icon = "cv"
+  icon_pack = "ai"
+  link = "files/CVDanielFerreira2019.pdf"
 
 +++
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+I am a 2nd year PhD student in the [Communications Networks](https://cn.tuwien.ac.at/) group at the Technical University of Vienna, Austria.
+My current research focus is on applying machine learning techniques using data at the network layer for cyber security.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. 
+I received a MSc in Applied Mathematics from [Técnico Lisboa](https://tecnico.ulisboa.pt/en/).
+I've worked for almost 2 years in machine learning applied to Natural Language Processing, in my [MSc thesis](https://fenix.tecnico.ulisboa.pt/cursos/mma/dissertacao/565303595500655) and at [Priberam](https://www.priberam.pt/).
+In 2016 I moved to Vienna to work in cyber security, an area by which I've always been fascinated.
+
+Outside of work I'm passionate about music, and in particular metal (check out [some of my work](https://mydementia.bandcamp.com/releases)), and also video-games.

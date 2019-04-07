@@ -3,7 +3,7 @@
 
 # Color theme.
 #   Choose from `default`, `ocean`, `forest`, `dark`, `apogee`, `1950s`, `coffee`, `cupcake`.
-color_theme = "default"
+color_theme = "dark"
 # Enable users to switch between day and night mode?
 day_night = true
 
@@ -18,7 +18,7 @@ description = ""
 sharing_image = ""
 
 # Twitter username (without @). Used when a vistor shares your site on Twitter.
-twitter = ""
+twitter = "dcferreira1"
 
 # Diplay a logo in navigation bar rather than title (optional).
 #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
@@ -50,7 +50,7 @@ highlight = true
 # highlight_style = "github"  # For supported styles, see https://cdnjs.com/libraries/highlight.js/
 
 # Enable in-built social sharing buttons?
-sharing = true
+sharing = false
 
 # Privacy pack
 #   Show a cookie consent message to visitors
@@ -62,13 +62,13 @@ gravatar = false
 
 # Contact Widget setup
   email = "test@example.org"
-  address = "Building 1 Room 1, Stanford University, California, 90210, USA"
+  # address = "Building 1 Room 1, Stanford University, California, 90210, USA"
   # Office hours: use `<br>` to insert a line break, or set to "" to remove office hours
-  office_hours = """Monday 10:00 to 13:00<br>
-                    Wednesday 09:00 to 10:00<br>
-                    Otherwise email to book an appointment"""
-  phone = "888 888 88 88"
-  skype = "echo123"
+  # office_hours = """Monday 10:00 to 13:00<br>
+  #                   Wednesday 09:00 to 10:00<br>
+  #                   Otherwise email to book an appointment"""
+  # phone = "888 888 88 88"
+  # skype = "echo123"
   telegram = ""
   keybase = ""  # Your keybase.io username.
 
