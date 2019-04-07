@@ -1,6 +1,6 @@
 +++
 title = "Extreme Dimensionality Reduction for Network Attack Visualization with Autoencoders"
-date = 2019-03-07
+date = 2019-07-01
 draft = false
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
