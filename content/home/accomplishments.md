@@ -1,7 +1,7 @@
 +++
 # Accomplishments widget.
 widget = "accomplishments"  # Do not modify this line!
-active = true  # Activate this widget? true/false
+active = false  # Activate this widget? true/false
 
 title = "Accomplish&shy;ments"
 subtitle = ""
@@ -20,27 +20,19 @@ date_format = "Jan 2006"
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 
 [[item]]
-  title = "Neural Networks and Deep Learning"
-  organization = "Coursera"
-  certificate_url = "https://www.coursera.org"
-  date_start = "2018-10-01"
-  date_end = ""
+  title = "Monitor in the Lisbon Machine Learning Summer School"
+  organization = "[LxMLS](http://lxmls.it.pt)"
+  certificate_url = ""
+  date_start = "2014-07-01"
+  date_end = "2018-07-01"
   description = ""
 
 [[item]]
-  title = "Blockchain Fundamentals"
-  organization = "edX"
-  certificate_url = "https://www.edx.org"
-  date_start = "2018-03-01"
+  title = "Software Security"
+  organization = "Coursera"
+  certificate_url = ""
+  date_start = "2015-05-20"
   date_end = ""
-  description = ""
-  
-[[item]]
-  title = "Intro to Python"
-  organization = "DataCamp"
-  certificate_url = "https://www.datacamp.com"
-  date_start = "2017-07-01"
-  date_end = "2017-12-21"
   description = ""
 
 +++
