@@ -19,27 +19,33 @@ date_format = "January 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
-  title = "CEO"
-  company = "GenCoin"
-  company_url = ""
-  location = "California"
-  date_start = "2017-01-01"
-  date_end = ""
+  title = "Project Assistant"
+  company = "TU Wien"
+  company_url = "https://cn.tuwien.ac.at/"
+  location = "Vienna, Austria"
+  date_start = "2016-08-01"
+  date_end = "2019-02-28"
   description = """
-  Responsibilities include:
-  
-  * Analysing
-  * Modelling
-  * Deploying
+  I was part of the [BigDAMA project](https://bigdama.ait.ac.at/), a fundamental research project focused on big data analytics for network traffic monitoring and analysis.
+
+  My research topics are mostly related to how to represent network traffic for detecting attacks at the
+network level (i.e., which features to use). Experimented with both classical features (what have people
+been using and why?), and feature learning approaches using Deep Learning techniques, and in particular
+representing traffic in 2-dimensional spaces.
   """
 
 [[experience]]
-  title = "Professor"
-  company = "University X"
-  company_url = ""
-  location = "California"
-  date_start = "2016-01-01"
-  date_end = "2016-12-31"
-  description = """Taught electronic engineering and researched semiconductor physics."""
+  title = "Junior Researcher"
+  company = "Priberam"
+  company_url = "https://www.priberam.pt"
+  location = "Lisbon, Portugal"
+  date_start = "2016-03-01"
+  date_end = "2016-07-31"
+  description = """
+  I was part of the [SUMMA project](http://summa-project.eu/), a huge H2020 project.
+
+  I specifically tackled the problem of named entity recognition in which, given a text with some entity mentions
+(e.g., David and Victoria), the goal is to find the corresponding entities in Wikipedia (e.g., David Beckham and
+Victoria Beckham). We used both classical methods (such as SVM) and modern Deep Learning approaches."""
 
 +++
