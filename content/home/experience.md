@@ -3,7 +3,7 @@
 widget = "experience"  # Do not modify this line!
 active = true  # Activate this widget? true/false
 
-title = "Experience"
+title = "EXPERIENCE"
 subtitle = ""
 
 # Order that this section will appear in.
@@ -19,8 +19,8 @@ date_format = "January 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
-  title = "Project Assistant"
-  company = "TU Wien"
+  title = "PROJECT ASSISTANT"
+  company = "TU WIEN"
   company_url = "https://cn.tuwien.ac.at/"
   location = "Vienna, Austria"
   date_start = "2016-08-01"
@@ -35,8 +35,8 @@ representing traffic in 2-dimensional spaces.
   """
 
 [[experience]]
-  title = "Junior Researcher"
-  company = "Priberam"
+  title = "JUNIOR RESEARCHER"
+  company = "PRIBERAM"
   company_url = "https://www.priberam.pt"
   location = "Lisbon, Portugal"
   date_start = "2016-03-01"
