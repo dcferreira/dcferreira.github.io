@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dcferreira on dcferreira</title>
@@ -6,8 +5,33 @@
     <description>Recent content in dcferreira on dcferreira</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jul 2019 00:00:00 +0200</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>City-GAN</title>
+      <link>https://dcferreira.com/project/city-gan/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0200</pubDate>
+      
+      <guid>https://dcferreira.com/project/city-gan/</guid>
+      <description>&lt;p&gt;Generative Adversarial Networks (GANs) are a well-known technique that is trained on samples (e.g. pictures
+of fruits) and which after training is able to generate realistic new samples. Conditional GANs (CGANs)
+additionally provide label information for subclasses (e.g. apple, orange, pear) which enables the GAN to learn
+more easily and increase the quality of its output samples. We use GANs to learn architectural features of
+major cities and to generate images of buildings which do not exist. We show that currently available GAN
+and CGAN architectures are unsuited for this task and propose a custom architecture and demonstrate that
+our architecture has superior performance for this task and verify its capabilities with extensive experiments.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Extreme Dimensionality Reduction for Network Attack Visualization with Autoencoders</title>
+      <link>https://dcferreira.com/publication/feature_reduction/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0200</pubDate>
+      
+      <guid>https://dcferreira.com/publication/feature_reduction/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Traffic Flow Mapper</title>

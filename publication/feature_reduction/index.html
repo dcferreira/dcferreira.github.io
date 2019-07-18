@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -30,10 +28,10 @@
   
     
   
-  <meta name="description" content="Daniel&#39;s personal page">
+  <meta name="description" content="The visualization of network traffic flows is an open problem that affects the control and administration of communication networks. Feature vectors used for representing traffic commonly have from tens to hundreds of dimensions and hardly tolerate visual conceptualizations. In this work we use neural networks to obtain extremely low-dimensional data representations that are meaningful from an attack-detection perspective. We focus on a simple Autoencoder architecture, as well as an extension that benefits from pre-knowledge, and evaluate their performances by comparing them with reductions based on Principal Component Analysis and Linear Discriminant Analysis. Experiments are conducted with a modern Intrusion Detection dataset that collects legitimate traffic mixed with a wide variety of attack classes. Results show that feature spaces can be strongly reduced up to two dimensions with tolerable classification degradation while providing a clear visualization of the data. Visualizing traffic flows in two-dimensional spaces is extremely useful to understand what is happening in networks, also to enhance and refocus classification, trigger refined analysis, and aid the security experts’ decision-making. We  dditionally developed a tool prototype that covers such functions, therefore supporting the optimization of network traffic attack detectors in both design and application phases.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://dcferreira.com/publication_types/">
+  <link rel="alternate" hreflang="en-us" href="https://dcferreira.com/publication/feature_reduction/">
 
   
 
@@ -113,15 +111,15 @@
   
 
   
-  <link rel="alternate" href="https://dcferreira.com/publication_types/index.xml" type="application/rss+xml" title="dcferreira">
-  <link rel="feed" href="https://dcferreira.com/publication_types/index.xml" type="application/rss+xml" title="dcferreira">
+  <link rel="alternate" href="https://dcferreira.com/index.xml" type="application/rss+xml" title="dcferreira">
+  <link rel="feed" href="https://dcferreira.com/index.xml" type="application/rss+xml" title="dcferreira">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://dcferreira.com/publication_types/">
+  <link rel="canonical" href="https://dcferreira.com/publication/feature_reduction/">
 
   
   
@@ -135,19 +133,21 @@
   <meta property="twitter:creator" content="@dcferreira1">
   
   <meta property="og:site_name" content="dcferreira">
-  <meta property="og:url" content="https://dcferreira.com/publication_types/">
-  <meta property="og:title" content="Publication_types | dcferreira">
-  <meta property="og:description" content="Daniel&#39;s personal page"><meta property="og:image" content="https://dcferreira.com/img/avatar.jpg">
+  <meta property="og:url" content="https://dcferreira.com/publication/feature_reduction/">
+  <meta property="og:title" content="Extreme Dimensionality Reduction for Network Attack Visualization with Autoencoders | dcferreira">
+  <meta property="og:description" content="The visualization of network traffic flows is an open problem that affects the control and administration of communication networks. Feature vectors used for representing traffic commonly have from tens to hundreds of dimensions and hardly tolerate visual conceptualizations. In this work we use neural networks to obtain extremely low-dimensional data representations that are meaningful from an attack-detection perspective. We focus on a simple Autoencoder architecture, as well as an extension that benefits from pre-knowledge, and evaluate their performances by comparing them with reductions based on Principal Component Analysis and Linear Discriminant Analysis. Experiments are conducted with a modern Intrusion Detection dataset that collects legitimate traffic mixed with a wide variety of attack classes. Results show that feature spaces can be strongly reduced up to two dimensions with tolerable classification degradation while providing a clear visualization of the data. Visualizing traffic flows in two-dimensional spaces is extremely useful to understand what is happening in networks, also to enhance and refocus classification, trigger refined analysis, and aid the security experts’ decision-making. We  dditionally developed a tool prototype that covers such functions, therefore supporting the optimization of network traffic attack detectors in both design and application phases."><meta property="og:image" content="https://dcferreira.com/img/avatar.jpg">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-07-01T00:00:00&#43;02:00">
+  <meta property="article:published_time" content="2019-07-01T00:00:00&#43;02:00">
+  
+  <meta property="article:modified_time" content="2019-04-07T22:55:38&#43;02:00">
   
 
   
 
   
 
-  <title>Publication_types | dcferreira</title>
+  <title>Extreme Dimensionality Reduction for Network Attack Visualization with Autoencoders | dcferreira</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" class="dark">
@@ -321,8 +321,9 @@
   </div>
 </nav>
 
+<div class="pub" itemscope itemtype="http://schema.org/CreativeWork">
 
-
+  
 
 
 
@@ -338,36 +339,214 @@
   
 
   
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Extreme Dimensionality Reduction for Network Attack Visualization with Autoencoders</h1>
+
+  
+
+  
+    
+
+
+<meta content="2019-07-01 00:00:00 &#43;0200 CEST" itemprop="datePublished">
+<meta content="2019-04-07 22:55:38 &#43;0200 CEST" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+      <span itemprop="name">
+        Daniel C Ferreira
+      </span>
+    </span>, 
+    <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+      <span itemprop="name">
+        Félix Iglesias Vázquez
+      </span>
+    </span>, 
+    <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+      <span itemprop="name">
+        Tanja Zseby
+      </span>
+    </span>
+    
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>July, 2019</time>
+  </span>
+  
+
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
   
   
     
   
-<div class="universal-wrapper pt-3">
-  <h1 itemprop="name">Publication_types</h1>
+<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/dcferreira/network_analysis_feature_reduction" target="_blank" rel="noopener">
+  Code
+</a>
+
+
+
 
   
+  <a class="btn btn-outline-primary my-1 mr-1" href="/project/tfm/">
+    Project
+  </a>
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-  <div>
-    <h2><a href="/publication_types/1/">1</a></h2>
-    <div class="article-style">
-      
+    
+    <h3>Abstract</h3>
+    <p class="pub-abstract" itemprop="text">The visualization of network traffic flows is an open problem that affects the control and administration of communication networks. Feature vectors used for representing traffic commonly have from tens to hundreds of dimensions and hardly tolerate visual conceptualizations. In this work we use neural networks to obtain extremely low-dimensional data representations that are meaningful from an attack-detection perspective. We focus on a simple Autoencoder architecture, as well as an extension that benefits from pre-knowledge, and evaluate their performances by comparing them with reductions based on Principal Component Analysis and Linear Discriminant Analysis. Experiments are conducted with a modern Intrusion Detection dataset that collects legitimate traffic mixed with a wide variety of attack classes. Results show that feature spaces can be strongly reduced up to two dimensions with tolerable classification degradation while providing a clear visualization of the data. Visualizing traffic flows in two-dimensional spaces is extremely useful to understand what is happening in networks, also to enhance and refocus classification, trigger refined analysis, and aid the security experts’ decision-making. We  dditionally developed a tool prototype that covers such functions, therefore supporting the optimization of network traffic attack detectors in both design and application phases.</p>
+    
+
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Type</div>
+          <div class="col-12 col-md-9">
+            
+            <a href="/publication/#1">
+              Conference paper
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
     </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Publication</div>
+          <div class="col-12 col-md-9">Proceedings of the International Joint Conference on Neural Networks 2019</div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    <div class="space-below"></div>
+
+    <div class="article-style"></div>
+
+    
+
+
+
+
+    
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
   </div>
-  
-
-  
-
 </div>
+
+
+
 <div class="container">
   <footer class="site-footer">
   
@@ -517,6 +696,4 @@
 
   </body>
 </html>
-
-
 

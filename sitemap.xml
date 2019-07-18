@@ -1,5 +1,92 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/publication_types/1/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/project/city-gan/</loc>
+      <lastmod>2019-07-14T18:49:43+02:00</lastmod>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/daniel-c-ferreira/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/publication/feature_reduction/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/f%C3%A9lix-iglesias-v%C3%A1zquez/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/project/</loc>
+      <lastmod>2019-07-14T18:49:43+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/publication_types/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/tanja-zseby/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/</loc>
+      <lastmod>2019-07-14T18:54:49+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
   
     
     <url>
@@ -22,6 +109,33 @@
     
       <loc>https://dcferreira.com/publication/ntarc-features/</loc>
       <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/f%C3%A9lix-iglesis-v%C3%A1zquez/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/gernot-vormayr/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/authors/maximilian-bachl/</loc>
+      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <priority>0</priority>
     </url>
     
   
@@ -60,39 +174,6 @@
     
     <url>
     
-      <loc>https://dcferreira.com/publication/multilingual/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/project/multilingual_embeddings/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/author/admin/</loc>
-      <lastmod>2019-04-07T23:41:29+02:00</lastmod>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/publication_types/1/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
       <loc>https://dcferreira.com/authors/andr%C3%A9-ft-martins/</loc>
       <lastmod>2019-04-07T22:55:38+02:00</lastmod>
       <priority>0</priority>
@@ -102,52 +183,8 @@
     
     <url>
     
-      <loc>https://dcferreira.com/author/</loc>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/authors/</loc>
+      <loc>https://dcferreira.com/publication/multilingual/</loc>
       <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/categories/</loc>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/authors/daniel-c-ferreira/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/authors/f%C3%A9lix-iglesis-v%C3%A1zquez/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/authors/gernot-vormayr/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
     </url>
     
   
@@ -163,8 +200,23 @@
     
     <url>
     
-      <loc>https://dcferreira.com/authors/maximilian-bachl/</loc>
+      <loc>https://dcferreira.com/project/multilingual_embeddings/</loc>
       <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/author/admin/</loc>
+      <lastmod>2019-07-14T18:58:51+02:00</lastmod>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://dcferreira.com/author/</loc>
       <priority>0</priority>
     </url>
     
@@ -172,17 +224,7 @@
     
     <url>
     
-      <loc>https://dcferreira.com/project/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/publication_types/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
+      <loc>https://dcferreira.com/categories/</loc>
       <priority>0</priority>
     </url>
     
@@ -191,24 +233,6 @@
     <url>
     
       <loc>https://dcferreira.com/tags/</loc>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/authors/tanja-zseby/</loc>
-      <lastmod>2019-04-07T22:55:38+02:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    <url>
-    
-      <loc>https://dcferreira.com/</loc>
-      <lastmod>2018-10-01T00:16:12+01:00</lastmod>
       <priority>0</priority>
     </url>
     

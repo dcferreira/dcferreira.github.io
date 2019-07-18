@@ -6,10 +6,19 @@
     <description>Recent content in Projects on dcferreira</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Mar 2019 00:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jul 2019 00:00:00 +0200</lastBuildDate>
     
 	<atom:link href="https://dcferreira.com/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>City-GAN</title>
+      <link>https://dcferreira.com/project/city-gan/</link>
+      <pubDate>Mon, 01 Jul 2019 00:00:00 +0200</pubDate>
+      
+      <guid>https://dcferreira.com/project/city-gan/</guid>
+      <description>City-GAN uses Conditional Generative Adversarial Neural Networks to generate pictures of fake buildings, with the architectural characteristics of a specific city.</description>
+    </item>
     
     <item>
       <title>Traffic Flow Mapper</title>
@@ -17,7 +26,7 @@
       <pubDate>Thu, 07 Mar 2019 00:00:00 +0100</pubDate>
       
       <guid>https://dcferreira.com/project/tfm/</guid>
-      <description></description>
+      <description>The Traffic Flow Mapper is a prototype tool for visualizing network traffic in 2D.</description>
     </item>
     
     <item>
@@ -26,7 +35,7 @@
       <pubDate>Sun, 07 Jan 2018 00:00:00 +0100</pubDate>
       
       <guid>https://dcferreira.com/project/mdcgenpy/</guid>
-      <description></description>
+      <description>MDCGenPy is a synthetic dataset generator made specifically for testing clustering algorithms. It allows for incredible flexibility in generating data with specific shapes with a low effort.</description>
     </item>
     
     <item>
@@ -35,7 +44,7 @@
       <pubDate>Mon, 07 Aug 2017 00:00:00 +0200</pubDate>
       
       <guid>https://dcferreira.com/project/ntarc/</guid>
-      <description></description>
+      <description>The NTARC database is a collective effort of labeling and categorizing research made in the network traffic analysis field.</description>
     </item>
     
     <item>
@@ -44,7 +53,7 @@
       <pubDate>Sun, 07 Aug 2016 00:00:00 +0200</pubDate>
       
       <guid>https://dcferreira.com/project/multilingual_embeddings/</guid>
-      <description></description>
+      <description>Multilingual embeddings can be used for any Natural Language Processing task which applies to multiple languages.</description>
     </item>
     
   </channel>
