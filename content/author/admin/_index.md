@@ -85,11 +85,12 @@ interests = [
 
 +++
 
-I am a 2nd year PhD student in the [Communications Networks](https://cn.tuwien.ac.at/) group at the Technical University of Vienna, Austria.
-My current research focus is on applying machine learning techniques using data at the network layer for cyber security.
+I am a machine learning expert working at [Cyan Security](https://cyansecurity.com).
+My current research focus is on applying machine learning techniques for cyber security.
 
 I received a MSc in Applied Mathematics from [Técnico Lisboa](https://tecnico.ulisboa.pt/en/).
 I've worked for almost 2 years in machine learning applied to Natural Language Processing, in my [MSc thesis](https://fenix.tecnico.ulisboa.pt/cursos/mma/dissertacao/565303595500655) and at [Priberam](https://www.priberam.pt/).
 In 2016 I moved to Vienna to work in cyber security, an area by which I've always been fascinated.
+After working as a project assistant for the [Communications Networks](https://cn.tuwien.ac.at/) group at the Technical University of Vienna, Austria, I decided to move to the industry.
 
 Outside of work I'm passionate about music, and in particular metal (check out [some of my work](https://mydementia.bandcamp.com/releases)), and also video-games.
