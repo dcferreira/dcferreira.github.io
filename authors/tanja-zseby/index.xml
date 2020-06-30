@@ -6,10 +6,28 @@
     <description>Recent content in Tanja Zseby on dcferreira</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jul 2019 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jan 2020 00:00:00 +0100</lastBuildDate>
     
 	<atom:link href="https://dcferreira.com/authors/tanja-zseby/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>NTARC: A Data Model for the Systematic Review of Network Traffic Analysis Research</title>
+      <link>https://dcferreira.com/publication/ntarc/</link>
+      <pubDate>Thu, 30 Jan 2020 00:00:00 +0100</pubDate>
+      
+      <guid>https://dcferreira.com/publication/ntarc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jointly Learning to Embed and Predict with Multiple Languages</title>
+      <link>https://dcferreira.com/publication/mdcgen/</link>
+      <pubDate>Tue, 01 Oct 2019 00:00:00 +0200</pubDate>
+      
+      <guid>https://dcferreira.com/publication/mdcgen/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Extreme Dimensionality Reduction for Network Attack Visualization with Autoencoders</title>

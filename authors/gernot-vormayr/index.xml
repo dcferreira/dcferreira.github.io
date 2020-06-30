@@ -6,10 +6,19 @@
     <description>Recent content in Gernot Vormayr on dcferreira</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Aug 2017 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jan 2020 00:00:00 +0100</lastBuildDate>
     
 	<atom:link href="https://dcferreira.com/authors/gernot-vormayr/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>NTARC: A Data Model for the Systematic Review of Network Traffic Analysis Research</title>
+      <link>https://dcferreira.com/publication/ntarc/</link>
+      <pubDate>Thu, 30 Jan 2020 00:00:00 +0100</pubDate>
+      
+      <guid>https://dcferreira.com/publication/ntarc/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>A meta-analysis approach for feature selection in network traffic research</title>
