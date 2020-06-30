@@ -19,11 +19,11 @@ summary = "MDCGenPy is a synthetic dataset generator made specifically for testi
 slides = ""
 
 # Optional external URL for project (replaces project detail page).
-external_link = "https://github.com/CN-TU/mdcgenpy"
+external_link = ""
 
 # Links (optional).
 url_pdf = ""
-url_code = ""
+url_code = "https://github.com/CN-TU/mdcgenpy"
 url_dataset = ""
 url_slides = ""
 url_video = ""
