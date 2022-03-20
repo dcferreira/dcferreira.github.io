@@ -1,26 +1,38 @@
-+++
-# Recent Posts widget.
-# This widget displays recent posts from `content/post/`.
-widget = "posts"  # Do not modify this line!
-active = false  # Activate this widget? true/false
-weight = 40  # Order that this section will appear.
-date = 2016-04-20T00:00:00
+---
+# An instance of the Pages widget.
+# Documentation: https://wowchemy.com/docs/page-builder/
+widget: pages
 
-title = "Recent Posts"
-subtitle = ""
+# This file represents a page section.
+headless: true
 
-# Number of recent posts to list.
-count = 5
+# Order that this section appears on the page.
+weight: 80
 
-# List format.
-#   0 = Simple
-#   1 = Detailed
-#   2 = Stream
-list_format = 2
+title: Recent Posts
+subtitle:
 
-# Filter posts by tag or category.
-#  E.g. to only show posts tagged with `Academic`, set `filter_tag = "Academic"`
-filter_tag = ""
-filter_category = ""
-+++
+content:
+  # Filter on criteria
+  filters:
+    folders:
+      - post
+    tag: ""
+    category: ""
+    publication_type: ""
+    author: ""
+    exclude_featured: false
+    exclude_future: false
+    exclude_past: false
+  # Choose how many pages you would like to display (0 = all pages)
+  count: 5
+  # Choose how many pages you would like to offset by
+  offset: 0
+  # Page order: descending (desc) or ascending (asc) date.
+  order: desc
 
+design:
+  # Choose a view for the listings:
+  view: compact
+  columns: "2"
+---

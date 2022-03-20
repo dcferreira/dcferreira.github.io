@@ -1,45 +1,22 @@
-+++
-title = "Traffic Flow Mapper"
-date = 2019-03-07
-draft = false
-
-# Tags: can be used for filtering projects.
-# Example: `tags = ["machine-learning", "deep-learning"]`
-tags = []
-
-# Project summary to display on homepage.
-summary = "The Traffic Flow Mapper is a prototype tool for visualizing network traffic in 2D."
-
-# Slides (optional).
-#   Associate this page with Markdown slides.
-#   Simply enter your slide deck's filename without extension.
-#   E.g. `slides = "example-slides"` references 
-#   `content/slides/example-slides.md`.
-#   Otherwise, set `slides = ""`.
-slides = ""
+---
+title: Traffic Flow Mapper
+summary: The Traffic Flow Mapper is a prototype tool for visualizing network traffic in 2D.
+tags:
+  - Security
+date: "2019-03-07T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
-external_link = "https://github.com/dcferreira/network_analysis_feature_reduction"
+external_link: ""
 
-# Links (optional).
-url_pdf = ""
-url_code = ""
-url_dataset = ""
-url_slides = ""
-url_video = ""
-url_poster = ""
+url_code: "https://github.com/dcferreira/network_analysis_feature_reduction"
+url_pdf: ""
+url_slides: ""
+url_video: ""
 
-# Custom links (optional).
-#   Uncomment line below to enable. For multiple links, use the form `[{...}, {...}, {...}]`.
-# url_custom = [{icon_pack = "fab", icon="twitter", name="Follow", url = "https://twitter.com"}]
-
-# Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
-[image]
-  # Caption (optional)
-  caption = ""
-
-  # Focal point (optional)
-  # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
-  focal_point = ""
-+++
+# Slides (optional).
+#   Associate this project with Markdown slides.
+#   Simply enter your slide deck's filename without extension.
+#   E.g. `slides = "example-slides"` references `content/slides/example-slides.md`.
+#   Otherwise, set `slides = ""`.
+slides: ""
+---
