@@ -7,8 +7,8 @@
 
 appearance:
   theme_night: dark
-  font: default
-  font_size: L
+  font: minimal
+  font_size: M
 
 # SEO
 
@@ -48,7 +48,6 @@ footer:
   #     allow_commercial: false
 
 # Localization
-
 locale:
   date_format: "Jan 2, 2006"
   time_format: "3:04 PM"
