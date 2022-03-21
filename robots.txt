@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: https://dcferreira.com/sitemap.xml
