@@ -9,7 +9,75 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>&lt;strong>Upload&lt;/strong> an existing slide deck to &lt;code>static/&lt;/code> and link using &lt;code>url_slides&lt;/code> parameter in the front matter of the talk file&lt;/li>
 &lt;li>&lt;strong>Embed&lt;/strong> your slides (e.g. Google Slides) or presentation video on this page using &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">shortcodes&lt;/a>.&lt;/li>
 &lt;/ul>
-&lt;p>Further event details, including &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">page elements&lt;/a> such as image galleries, can be added to the body of this page.&lt;/p></description></item><item><title>NTARC: A Data Model for the Systematic Review of Network Traffic Analysis Research</title><link>https://dcferreira.com/publication/ntarc/</link><pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/ntarc/</guid><description/></item><item><title>DeepArchitect</title><link>https://dcferreira.com/project/deep-architect/</link><pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/project/deep-architect/</guid><description/></item><item><title>Towards modular and programmable architecture search</title><link>https://dcferreira.com/publication/deep-architect/</link><pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/deep-architect/</guid><description/></item><item><title>MDCGen: Multidimensional dataset generator for clustering</title><link>https://dcferreira.com/publication/mdcgen/</link><pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/mdcgen/</guid><description/></item><item><title>City-GAN: Learning architectural styles using a custom Conditional GAN architecture</title><link>https://dcferreira.com/publication/city-gan/</link><pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/city-gan/</guid><description/></item><item><title>City-GAN</title><link>https://dcferreira.com/project/city-gan/</link><pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/project/city-gan/</guid><description>&lt;p>Generative Adversarial Networks (GANs) are a well-known technique that is trained on samples (e.g. pictures
+&lt;p>Further event details, including &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">page elements&lt;/a> such as image galleries, can be added to the body of this page.&lt;/p></description></item><item><title>Efficient UDFs on Databricks with unpickleable objects</title><link>https://dcferreira.com/post/2022-03-spark-serialization/</link><pubDate>Mon, 21 Mar 2022 17:30:00 +0000</pubDate><guid>https://dcferreira.com/post/2022-03-spark-serialization/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>I often run into a problem when writing UDFs on Databricks, where I need some to access some object that &lt;code>pickle&lt;/code> can&amp;rsquo;t serialize.
+Often times this is just something that comes from some external library, and so fixing the code is not a practical solution.&lt;/p>
+&lt;p>An easy solution to this is to initialize the object inside the UDF itself.
+This avoids the need for serialization, but it introduces a new problem: the object is initialized for every run of the UDF, hitting performance.&lt;/p>
+&lt;p>The solution that addresses these 2 problems is to cache the object initialization.
+Then, each executor initializes the object only once.&lt;/p>
+&lt;h2 id="the-problem">The Problem&lt;/h2>
+&lt;p>Here is a simple example:&lt;/p>
+&lt;pre>&lt;code class="language-python">import time
+from lxml.etree import HTMLParser
+# `spark` is the spark context, on databricks it is a global variable that's always available
+df = spark.createDataFrame([{&amp;quot;n&amp;quot;: n} for n in range(10000)])
+class Slow:
+def __init__(self):
+self.parser = HTMLParser()
+time.sleep(0.01)
+def double(self, x: int) -&amp;gt; int:
+return 2 * x
+slow_global = Slow()
+@udf(&amp;quot;int&amp;quot;)
+def f_error(n):
+return slow_global.double(n)
+&lt;/code>&lt;/pre>
+&lt;p>When actually executing the UDF&lt;/p>
+&lt;pre>&lt;code class="language-python">df.select(&amp;quot;n&amp;quot;, f_error(&amp;quot;n&amp;quot;)).collect()
+&lt;/code>&lt;/pre>
+&lt;p>we get the error&lt;/p>
+&lt;pre>&lt;code>PicklingError: Could not serialize object: TypeError: can't pickle lxml.etree.HTMLParser objects
+&lt;/code>&lt;/pre>
+&lt;h2 id="naive-solution">Naive Solution&lt;/h2>
+&lt;p>The naive solution is to initialize the object in each run of the UDF:&lt;/p>
+&lt;pre>&lt;code class="language-python">@udf(&amp;quot;int&amp;quot;)
+def f(n):
+slow = Slow()
+return slow.double(n)
+&lt;/code>&lt;/pre>
+&lt;p>This works&lt;/p>
+&lt;pre>&lt;code class="language-python">df.select(&amp;quot;n&amp;quot;, f(&amp;quot;n&amp;quot;)).collect()
+&lt;/code>&lt;/pre>
+&lt;p>but it&amp;rsquo;s very inefficient.&lt;/p>
+&lt;p>On a cluster with 2 &lt;code>i3.xlarge&lt;/code> workers on AWS, executing this took me around 25 seconds.&lt;/p>
+&lt;h2 id="optimized-solution">Optimized Solution&lt;/h2>
+&lt;p>The solution is then to cache the object initialization.
+For this, we need the &lt;a href="https://cachetools.readthedocs.io/" target="_blank" rel="noopener">&lt;code>cachetools&lt;/code>&lt;/a> library.
+On Databricks, you can install it by running the following cell&lt;/p>
+&lt;pre>&lt;code>%pip install cachetools
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-note">
+&lt;div>
+We can&amp;rsquo;t use &lt;a href="https://docs.python.org/3/library/functools.html#functools.lru_cache" target="_blank" rel="noopener">&lt;code>lru_cache&lt;/code>&lt;/a> from the standard library,
+because it requires serialization.
+Trying it gives us the error: &lt;code>PicklingError: Could not serialize object: AttributeError: 'functools._lru_cache_wrapper' object has no attribute '__bases__'&lt;/code>
+&lt;/div>
+&lt;/div>
+&lt;p>Usage is very simple:&lt;/p>
+&lt;pre>&lt;code class="language-python">from cachetools import cached
+@cached(cache={})
+def get_slow():
+return Slow()
+@udf(&amp;quot;int&amp;quot;)
+def f_cached(n):
+slow = get_slow()
+return slow.double(n)
+&lt;/code>&lt;/pre>
+&lt;p>Executing it&lt;/p>
+&lt;pre>&lt;code class="language-python">df.select(&amp;quot;n&amp;quot;, f_cached(&amp;quot;n&amp;quot;)).collect()
+&lt;/code>&lt;/pre>
+&lt;p>took around 0.5 seconds, in the same cluster as above.&lt;/p></description></item><item><title>NTARC: A Data Model for the Systematic Review of Network Traffic Analysis Research</title><link>https://dcferreira.com/publication/ntarc/</link><pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/ntarc/</guid><description/></item><item><title>DeepArchitect</title><link>https://dcferreira.com/project/deep-architect/</link><pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/project/deep-architect/</guid><description/></item><item><title>Towards modular and programmable architecture search</title><link>https://dcferreira.com/publication/deep-architect/</link><pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/deep-architect/</guid><description/></item><item><title>MDCGen: Multidimensional dataset generator for clustering</title><link>https://dcferreira.com/publication/mdcgen/</link><pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/mdcgen/</guid><description/></item><item><title>City-GAN: Learning architectural styles using a custom Conditional GAN architecture</title><link>https://dcferreira.com/publication/city-gan/</link><pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/publication/city-gan/</guid><description/></item><item><title>City-GAN</title><link>https://dcferreira.com/project/city-gan/</link><pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate><guid>https://dcferreira.com/project/city-gan/</guid><description>&lt;p>Generative Adversarial Networks (GANs) are a well-known technique that is trained on samples (e.g. pictures
 of fruits) and which after training is able to generate realistic new samples. Conditional GANs (CGANs)
 additionally provide label information for subclasses (e.g. apple, orange, pear) which enables the GAN to learn
 more easily and increase the quality of its output samples. We use GANs to learn architectural features of
