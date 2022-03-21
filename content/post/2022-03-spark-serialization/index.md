@@ -9,10 +9,10 @@ summary: How to avoid `PicklingError` on custom UDFs on Databricks/Spark, while 
 projects: []
 
 # Date published
-date: "2022-03-21T20:00:00Z"
+date: "2022-03-21T19:30:00Z"
 
 # Date updated
-lastmod: "2022-03-21T20:00:00Z"
+lastmod: "2022-03-21T19:30:00Z"
 
 # Is this an unpublished draft?
 draft: false
