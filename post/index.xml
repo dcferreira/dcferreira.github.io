@@ -7,46 +7,45 @@ This avoids the need for serialization, but it introduces a new problem: the obj
 Then, each executor initializes the object only once.&lt;/p>
 &lt;h2 id="the-problem">The Problem&lt;/h2>
 &lt;p>Here is a simple example:&lt;/p>
-&lt;pre>&lt;code class="language-python">import time
-from lxml.etree import HTMLParser
-# `spark` is the spark context, on databricks it is a global variable that's always available
-df = spark.createDataFrame([{&amp;quot;n&amp;quot;: n} for n in range(10000)])
-class Slow:
-def __init__(self):
-self.parser = HTMLParser()
-time.sleep(0.01)
-def double(self, x: int) -&amp;gt; int:
-return 2 * x
-slow_global = Slow()
-@udf(&amp;quot;int&amp;quot;)
-def f_error(n):
-return slow_global.double(n)
-&lt;/code>&lt;/pre>
-&lt;p>When actually executing the UDF&lt;/p>
-&lt;pre>&lt;code class="language-python">df.select(&amp;quot;n&amp;quot;, f_error(&amp;quot;n&amp;quot;)).collect()
-&lt;/code>&lt;/pre>
-&lt;p>we get the error&lt;/p>
-&lt;pre>&lt;code>PicklingError: Could not serialize object: TypeError: can't pickle lxml.etree.HTMLParser objects
-&lt;/code>&lt;/pre>
-&lt;h2 id="naive-solution">Naive Solution&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">time&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">lxml.etree&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">HTMLParser&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># `spark` is the spark context, on databricks it is a global variable that&amp;#39;s always available&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">spark&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">createDataFrame&lt;/span>&lt;span class="p">([{&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10000&lt;/span>&lt;span class="p">)])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">Slow&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parser&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">HTMLParser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">0.01&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">def&lt;/span> &lt;span class="nf">double&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">x&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">slow_global&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Slow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@udf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;int&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">f_error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">slow_global&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">double&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When actually executing the UDF&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">select&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f_error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">collect&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>we get the error&lt;/p>
+&lt;pre tabindex="0">&lt;code>PicklingError: Could not serialize object: TypeError: can&amp;#39;t pickle lxml.etree.HTMLParser objects
+&lt;/code>&lt;/pre>&lt;h2 id="naive-solution">Naive Solution&lt;/h2>
 &lt;p>The naive solution is to initialize the object in each run of the UDF:&lt;/p>
-&lt;pre>&lt;code class="language-python">@udf(&amp;quot;int&amp;quot;)
-def f(n):
-slow = Slow()
-return slow.double(n)
-&lt;/code>&lt;/pre>
-&lt;p>This works&lt;/p>
-&lt;pre>&lt;code class="language-python">df.select(&amp;quot;n&amp;quot;, f(&amp;quot;n&amp;quot;)).collect()
-&lt;/code>&lt;/pre>
-&lt;p>but it&amp;rsquo;s very inefficient.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@udf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;int&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">f&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">slow&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Slow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">slow&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">double&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This works&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">select&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">collect&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>but it&amp;rsquo;s very inefficient.&lt;/p>
 &lt;p>On a cluster with 2 &lt;code>i3.xlarge&lt;/code> workers on AWS, executing this took me around 25 seconds.&lt;/p>
 &lt;h2 id="optimized-solution">Optimized Solution&lt;/h2>
 &lt;p>The solution is then to cache the object initialization.
 For this, we need the &lt;a href="https://cachetools.readthedocs.io/" target="_blank" rel="noopener">&lt;code>cachetools&lt;/code>&lt;/a> library.
 On Databricks, you can install it by running the following cell&lt;/p>
-&lt;pre>&lt;code>%pip install cachetools
-&lt;/code>&lt;/pre>
-&lt;div class="alert alert-note">
+&lt;pre tabindex="0">&lt;code>%pip install cachetools
+&lt;/code>&lt;/pre>&lt;div class="alert alert-note">
 &lt;div>
 We can&amp;rsquo;t use &lt;a href="https://docs.python.org/3/library/functools.html#functools.lru_cache" target="_blank" rel="noopener">&lt;code>lru_cache&lt;/code>&lt;/a> from the standard library,
 because it requires serialization.
@@ -54,16 +53,16 @@ Trying it gives us the error: &lt;code>PicklingError: Could not serialize object
 &lt;/div>
 &lt;/div>
 &lt;p>Usage is very simple:&lt;/p>
-&lt;pre>&lt;code class="language-python">from cachetools import cached
-@cached(cache={})
-def get_slow():
-return Slow()
-@udf(&amp;quot;int&amp;quot;)
-def f_cached(n):
-slow = get_slow()
-return slow.double(n)
-&lt;/code>&lt;/pre>
-&lt;p>Executing it&lt;/p>
-&lt;pre>&lt;code class="language-python">df.select(&amp;quot;n&amp;quot;, f_cached(&amp;quot;n&amp;quot;)).collect()
-&lt;/code>&lt;/pre>
-&lt;p>took around 0.5 seconds, in the same cluster as above.&lt;/p></description></item></channel></rss>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">cachetools&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">cached&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@cached&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">get_slow&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">Slow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@udf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;int&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">f_cached&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">slow&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">get_slow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">slow&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">double&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Executing it&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">select&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f_cached&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;n&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">collect&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>took around 0.5 seconds, in the same cluster as above.&lt;/p></description></item></channel></rss>
