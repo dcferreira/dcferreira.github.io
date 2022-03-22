@@ -50,7 +50,7 @@ social:
     link: https://scholar.google.com/citations?user=4PusPA4AAAAJ&hl=en
   - icon: linkedin
     icon_pack: fab
-    link: https://www.linkedin.com/in/daniel-ferreira-355aa677/
+    link: https://www.linkedin.com/in/daniel-c-ferreira-355aa677
   - icon: twitter
     icon_pack: fab
     link: https://twitter.com/dcferreira1
