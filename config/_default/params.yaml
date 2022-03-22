@@ -16,8 +16,8 @@ marketing:
   seo:
     site_type: Person
     local_business_type: ""
-    org_name: ""
-    description: "Daniel's personal page"
+    org_name: "Daniel's personal page"
+    description: ""
     twitter: "dcferreira1"
   analytics:
     google_analytics: "UA-137896487-1"
