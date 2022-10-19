@@ -27,7 +27,7 @@ interests:
 # Education to show in About widget
 education:
   courses:
-    - course: MSc in Applied MathematicsMSc in Applied Mathematics
+    - course: MSc in Applied Mathematics
       institution: Técnico Lisboa
       year: 2015
     - course: BSc in Applied Mathematics and Computation
