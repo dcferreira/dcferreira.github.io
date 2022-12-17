@@ -22,13 +22,19 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
+  - title: Machine Learning Engineer
+    company: Freelancer
+    date_start: "2022-10-01"
+    description: |2-
+        Currently looking for clients. I'm mostly interested in short-term projects, in both NLP and 
+        cybersecurity topics.
   - title: DATA SCIENTIST
     company: CYAN SECURITY
     company_url: "https://cyansecurity.com"
     # company_logo: org-gc
     location: Vienna, Austria
     date_start: "2019-06-01"
-    date_end: ""
+    date_end: "2022-09-30"
     description: |2-
         Topics include website categorization (using multilingual text and images), DNS tunneling detection,
         and IoT security. Heavy emphasis on developing production-ready ML models, and following MLOps best

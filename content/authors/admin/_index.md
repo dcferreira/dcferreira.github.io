@@ -6,12 +6,12 @@ title: Daniel C. Ferreira
 superuser: true
 
 # Role/position/tagline
-role: Data Scientist
+role: Machine Learning Engineer
 
 # Organizations/Affiliations to show in About widget
 organizations:
-  - name: Cyan Security
-    url: https://www.cyansecurity.com/
+  - name: Freelancer
+    # url: https://www.cyansecurity.com/
 
 # Short bio (displayed in user profile at end of posts)
 bio: ""
@@ -69,12 +69,12 @@ email: ""
 highlight_name: true
 ---
 
-I am a machine learning expert working at [Cyan Security](https://cyansecurity.com).
-My current research focus is on applying machine learning techniques for cyber security.
+I am a Machine Learning expert based in Vienna, Austria with a background in mathematics and 6+ years of experience in academia and industry.
+My focus is on applying ML techniques to Natural Language Processing and/or Cybersecurity topics.
 
-I received a MSc in Applied Mathematics from [Técnico Lisboa](https://tecnico.ulisboa.pt/en/).
-I've worked for almost 2 years in machine learning applied to Natural Language Processing, in my [MSc thesis](https://fenix.tecnico.ulisboa.pt/cursos/mma/dissertacao/565303595500655) and at [Priberam](https://www.priberam.pt/).
-In 2016 I moved to Vienna to work in cyber security, an area by which I've always been fascinated.
-After working as a project assistant for the [Communications Networks](https://cn.tuwien.ac.at/) group at the Technical University of Vienna, Austria, I decided to move to the industry.
+I have experience in the full lifecycle of ML, from data collection/processing/labeling all the way to deployment,
+and like to work in projects where a little bit of everything is needed.
+My past professional experience includes a [leading cybersecurity company](https://cyansecurity.com), the
+[Technical University of Vienna](https://cn.tuwien.ac.at/), among others.
 
 Outside of work I'm passionate about music, and in particular metal (check out [some of my work](https://mydementia.bandcamp.com/releases)), and also video-games.
