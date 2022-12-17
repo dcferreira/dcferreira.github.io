@@ -51,9 +51,9 @@ social:
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/daniel-c-ferreira-355aa677
-  - icon: twitter
+  - icon: mastodon
     icon_pack: fab
-    link: https://twitter.com/dcferreira1
+    link: https://mstdn.social/@dcferreira
 
   # Link to a PDF of your resume/CV.
   # To use: copy your resume to `static/uploads/resume.pdf`, enable `ai` icons in `params.toml`,
