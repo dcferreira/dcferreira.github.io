@@ -19,6 +19,3 @@ main:
   - name: Projects
     url: "#projects"
     weight: 50
-  - name: CV
-    url: uploads/CVDanielFerreira2022.pdf
-    weight: 70
