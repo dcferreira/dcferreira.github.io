@@ -66,7 +66,7 @@ The database has a `articles` table and a `sections` table.
 I opened up the database and extracted 2 articles, and a couple of sections from each of them.
 It's important here that you choose examples that would help you.
 In this case I chose 2 sections from each article: a Title and an Abstract, because the Titles won't be indexed in
-our usecase (see [Part 2](/post/2023-03-02-ai-web-app) of this series for details).
+our use case (see [Part 2](/post/2023-03-02-ai-web-app) of this series for details).
 I also chose sections that are different enough among themselves that I can make a query for each of them, and
 verify that the result is the section I wanted.
 
@@ -91,7 +91,7 @@ Put these 2 files in `tests/assets`:
 
 You should also setup some fixtures to access these files.
 The original data is a SQLite file with 2 tables, so we need to write a fixture that reads the CSV files and
-generates a SQLlite file.
+generates a SQLite file.
 
 Create a `tests/conftest.py` file:
 
@@ -210,4 +210,152 @@ If you're following along and got a different error, check the link below for th
 {{% callout note %}}
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/0d29f2c81a628fb5e856f7da5314995a6bf601bf
+{{% /callout %}}
+
+# Implementing Functions
+
+We now need to implement the functions `index_embeddings` and `search` that pass the tests above.
+We take most of the code from [Part 2](/post/2023-03-02-ai-web-app), but change a couple of things to
+make it more production-ready.
+The biggest changes we do in this case are: (1) moving away from using `print` towards using a proper
+logging library ([loguru](https://loguru.readthedocs.io/en/stable/) in this case), and (2) removing the dependency
+on the `pandas` library, as it wasn't really necessary and in this case will only add overhead to our functions.
+
+The first thing to do is to add `loguru` to the dependencies section of our `pyproject.toml`.
+We can then add the imports we need for `index_embeddings`:
+
+```python
+import sqlite3
+from pathlib import Path
+
+import regex as re
+from loguru import logger
+from txtai.embeddings import Embeddings
+from txtai.pipeline import Tokenizer
+```
+
+and the function itself is copied from [Part 2](/post/2023-03-02-ai-web-app), but using `loguru` instead of `print`
+
+```python
+def index_embeddings(database: Path) -> Embeddings:
+    def stream():
+        # Connection to database file
+        db = sqlite3.connect(database)
+        cur = db.cursor()
+
+        # Select tagged sentences without a NLP label.
+        # NLP labels are set for non-informative sentences.
+        cur.execute(
+            "SELECT Id, Name, Text FROM sections "
+            "WHERE (labels is null or labels NOT IN ('FRAGMENT', 'QUESTION')) "
+            "AND tags is not null"
+        )
+
+        count = 0
+        for row in cur:
+            # Unpack row
+            uid, name, text = row
+
+            # Only process certain document sections
+            if not name or not re.search(
+                r"background|(?<!.*?results.*?)discussion|introduction|reference",
+                name.lower(),
+            ):
+                # Tokenize text
+                tokens = Tokenizer.tokenize(text)
+
+                document = (uid, tokens, None)
+
+                count += 1
+                if count % 1000 == 0:
+                    logger.debug(f"Streamed {count} documents")
+
+                # Skip documents with no tokens parsed
+                if tokens:
+                    yield document
+
+        logger.info(f"Iterated over {count} total rows")
+
+        # Free database resources
+        db.close()
+
+    # BM25 + fastText vectors
+    embeddings = Embeddings(
+        {
+            "method": "sentence-transformers",
+            "path": "all-MiniLM-L6-v2",
+            "scoring": "bm25",
+        }
+    )
+
+    embeddings.index(stream())
+
+    return embeddings
+```
+
+For the `search` function, in the notebook version we're outputting a `pandas` DataFrame.
+In the notebook that's a nice way to visualize the output of the function, but actually we
+don't really the dataframe and can use something simpler.
+Furthermore, as this function will be exposed as an API, it would be nice to have a schema
+of what the output will actually look like.
+
+For that we can use Python's [dataclasses](https://docs.python.org/3/library/dataclasses.html)
+(an alternative would be [pydantic](https://docs.pydantic.dev/)'s `BaseModel`, with more functionality
+but requires one more library to be installed).
+We can have a look at what fields we want to fetch from our database and return as a result from search
+and make our own `Result` class:
+
+```python
+from dataclasses import dataclass
+from datetime import datetime
+
+
+@dataclass
+class Result:
+    id: str
+    title: str
+    published: datetime
+    reference: str
+    text: str
+    score: float
+```
+
+We then change our original `search` function to
+
+```python
+def search(
+    embeddings: Embeddings, database: Path, query: str, topn: int = 5
+) -> List[Result]:
+    db = sqlite3.connect(database)
+    cur = db.cursor()
+
+    results: List[Result] = []
+    for uid, score in embeddings.search(query, topn):
+        cur.execute("SELECT article, text FROM sections WHERE id = ?", [uid])
+        uid, text = cur.fetchone()
+
+        cur.execute(
+            "SELECT Title, Published, Reference from articles where id = ?", [uid]
+        )
+        res = cur.fetchone()
+        results.append(
+            Result(
+                id=uid,
+                title=res[0],
+                published=res[1],
+                reference=res[2],
+                text=text,
+                score=score,
+            )
+        )
+
+    db.close()
+    return results
+```
+
+Running `hatch run cov` should now show the tests as passing.
+
+{{% callout note %}}
+If you've been following these instructions, your code should look like this:
+https://github.com/dcferreira/ai-web-app/tree/afe845ca0a5866d4a2d4ef6bb687c31f3384d473
 {{% /callout %}}
