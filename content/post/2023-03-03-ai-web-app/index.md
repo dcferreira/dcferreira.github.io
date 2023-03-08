@@ -59,7 +59,7 @@ Alternatives to `hatch`: [Poetry](https://python-poetry.org/), [PDM](https://pdm
 [Conda](https://docs.conda.io/en/latest/), [venv](https://docs.python.org/3/library/venv.html).
 {{% /callout %}}
 
-My currently favourite project manager is [hatch](https://hatch.pypa.io/).
+My currently favorite project manager is [hatch](https://hatch.pypa.io/).
 If you've never used a project manager before, it's main job is keeping track of your dependencies,
 making sure there are no incompatibilities between libraries, and keeping your environment clean of unnecessary clutter.
 Project managers also allow you to build or publish your own Python packages with a single command.
@@ -114,7 +114,7 @@ Alternatives to `ruff`: [flake8](https://flake8.pycqa.org/en/latest/), [FlakeHea
 I'm not aware of good alternatives to `black` or `isort`.
 {{% /callout %}}
 
-For linting, my favourite tool is [ruff](https://github.com/charliermarsh/ruff).
+For linting, my favorite tool is [ruff](https://github.com/charliermarsh/ruff).
 It's significantly faster than any other linter, and very simple to setup and forget.
 
 Another great tool for keeping the style the same throughout the code is [black](https://black.readthedocs.io/en/stable/).
