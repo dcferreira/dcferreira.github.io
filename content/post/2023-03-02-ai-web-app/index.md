@@ -1,9 +1,9 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 2)
-subtitle: How to do a proof of concept for an AI Web App.
+subtitle: Make a Proof of Concept for an AI App
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 2) -- How to do a proof of concept for an AI Web App.
+summary: How and why to make a proof of concept for an AI app, using Jupyter Notebook.
 
 # Link this post with a project
 projects: []

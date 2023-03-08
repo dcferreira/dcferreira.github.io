@@ -1,18 +1,18 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 8)
-subtitle: Deploy the serverless backend to Google Cloud
+subtitle: Deploy a Serverless AI App with Google Cloud
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 8) -- Deploy the serverless backend to Google Cloud.
+summary: How to deploy a serverless AI app to Google Cloud almost for free using Cloud Run and the Artifact Registry.
 
 # Link this post with a project
 projects: []
 
 # Date published
-date: "2023-03-03T00:08:00Z"
+date: "2023-03-08T00:08:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:08:00Z"
+lastmod: "2023-03-08T00:08:00Z"
 
 # Is this an unpublished draft?
 draft: false
@@ -162,8 +162,11 @@ hatch run build && hatch run push
 And finally we can deploy our serverless function (when asked, choose unauthenticated access)
 
 ```bash
-gcloud run deploy ai-web-app --image="us-central1-docker.pkg.dev/my-example-webapp-23867/ai-web-app-artifacts/ai-web-app:latest" --region=us-central1 --memory=2GiB
+gcloud run deploy ai-web-app --image="us-central1-docker.pkg.dev/my-example-webapp-23867/ai-web-app-artifacts/ai-web-app:latest" --region=us-central1 --memory=2Gi
 ```
+
+Note that the `--memory=2Gi` option is important for this specific case,
+as the `all-MiniLM-L6-v2` model (see [Part 1](/post/2023-03-01-ai-web-app)) requires almost all that memory to run.
 
 The output of this deploy command will give you a Service URL for your app, which you should use
 to access it.

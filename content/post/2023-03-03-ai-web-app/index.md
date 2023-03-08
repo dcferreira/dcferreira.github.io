@@ -1,18 +1,18 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 3)
-subtitle: Setting up a Python project with modern tools
+subtitle: Setup the Python Project with Modern Tools
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 3) -- Setting up a Python project with modern tools.
+summary: How to setup a Python project for easy developing with black, ruff, pre-commit hooks, and type hints.
 
 # Link this post with a project
 projects: []
 
 # Date published
-date: "2023-03-03T00:03:00Z"
+date: "2023-03-08T00:03:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:03:00Z"
+lastmod: "2023-03-08T00:03:00Z"
 
 # Is this an unpublished draft?
 draft: false

@@ -1,18 +1,18 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 5)
-subtitle: Implement and test a Python backend server
+subtitle: Implement and Test a Python Backend Server
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 5) -- Implement and test a Python backend server.
+summary: How to use FastAPI+Uvicorn to write and deploy the backend of a simple AI App.
 
 # Link this post with a project
 projects: []
 
 # Date published
-date: "2023-03-03T00:05:00Z"
+date: "2023-03-08T00:05:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:05:00Z"
+lastmod: "2023-03-08T00:05:00Z"
 
 # Is this an unpublished draft?
 draft: false

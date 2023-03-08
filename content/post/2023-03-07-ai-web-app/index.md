@@ -1,9 +1,9 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 7)
-subtitle: Build a CI/CD pipeline for your app
+subtitle: Build a CI/CD Pipeline for an AI App
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 7) -- Build a CI/CD pipeline for your app.
+summary: How to develop a simple CI/CD pipeline for testing your code with GitHub Actions.
 
 # Link this post with a project
 projects: []

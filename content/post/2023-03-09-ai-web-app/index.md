@@ -1,18 +1,18 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 9)
-subtitle: Deploy a simple frontend
+subtitle: Deploy a Simple Frontend for an AI App
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 9) -- Deploy a simple frontend.
+summary: How to make and deploy a simple frontend for an AI web app that interacts with a serverless backend.
 
 # Link this post with a project
 projects: []
 
 # Date published
-date: "2023-03-03T00:09:00Z"
+date: "2023-03-08T00:09:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:09:00Z"
+lastmod: "2023-03-08T00:09:00Z"
 
 # Is this an unpublished draft?
 draft: false

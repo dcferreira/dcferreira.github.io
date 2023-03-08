@@ -1,18 +1,18 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 4)
-subtitle: Setup simple test cases for your Python code
+subtitle: Develop an App with Test-driven Development
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 4) -- Setup simple test cases for your Python code.
+summary: How and why we should use pytest and unit tests to facilitate development when writing an AI App.
 
 # Link this post with a project
 projects: []
 
 # Date published
-date: "2023-03-03T00:04:00Z"
+date: "2023-03-08T00:04:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:04:00Z"
+lastmod: "2023-03-08T00:04:00Z"
 
 # Is this an unpublished draft?
 draft: false

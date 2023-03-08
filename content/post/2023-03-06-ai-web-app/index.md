@@ -1,18 +1,18 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 6)
-subtitle: Containerize your app with Docker
+subtitle: Containerize an App with Docker
 
 # Summary for listings and search engines
-summary: Making and Deploying an AI Web App in 2023 (Part 6) -- Containerize your app with Docker.
+summary: How to use multi-stage building in Docker to containerize a hatch project with a web app.
 
 # Link this post with a project
 projects: []
 
 # Date published
-date: "2023-03-03T00:06:00Z"
+date: "2023-03-08T00:06:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:06:00Z"
+lastmod: "2023-03-08T00:06:00Z"
 
 # Is this an unpublished draft?
 draft: false

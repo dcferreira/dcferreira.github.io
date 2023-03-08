@@ -58,3 +58,15 @@ We will use serverless infrastructure for both cost saving and easy scalability.
 
 For this guide, we're assuming you're using Linux (or WSL on Windows), and are comfortable with command line and Python.
 For the deployment part we also assume you have a valid credit card, but that part is optional and some alternatives are suggested.
+
+Here is the full table of contents:
+
+1. [Introduction (this page)](/post/2023-03-01-ai-web-app)
+2. [Make a Proof of Concept for an AI App](/post/2023-03-02-ai-web-app)
+3. [Setup the Python Project with Modern Tools](/post/2023-03-03-ai-web-app)
+4. [Develop an App with Test-driven Development](/post/2023-03-04-ai-web-app)
+5. [Implement and Test a Python Backend Server](/post/2023-03-05-ai-web-app)
+6. [Containerize an App with Docker](/post/2023-03-06-ai-web-app)
+7. [Build a CI/CD Pipeline for an AI App](/post/2023-03-07-ai-web-app)
+8. [Deploy a Serverless AI App with Google Cloud](/post/2023-03-08-ai-web-app)
+9. [Deploy a Simple Frontend for an AI App](/post/2023-03-09-ai-web-app)
