@@ -9,10 +9,10 @@ summary: Making and Deploying an AI Web App in 2023 (Part 6) -- Containerize you
 projects: []
 
 # Date published
-date: "2023-03-03T00:00:00Z"
+date: "2023-03-03T00:06:00Z"
 
 # Date updated
-lastmod: "2023-03-03T00:00:00Z"
+lastmod: "2023-03-03T00:06:00Z"
 
 # Is this an unpublished draft?
 draft: false
