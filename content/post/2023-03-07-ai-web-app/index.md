@@ -155,3 +155,5 @@ For next steps in this pipeline, you can have a look at
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/b91b29a4baf45969446068c1b2b53913b5f933ee
 {{% /callout %}}
+
+To continue this tutorial, go to [Part 8](/post/2023-03-08-ai-web-app).

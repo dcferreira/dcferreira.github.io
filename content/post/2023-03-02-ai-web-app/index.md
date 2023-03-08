@@ -205,3 +205,5 @@ We could spend a lot more time making this part better, but in the spirit of [sh
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/19cda18ea099d46716b280694eed2677ef680e5d
 {{% /callout %}}
+
+To continue this tutorial, go to [Part 3](/post/2023-03-03-ai-web-app).

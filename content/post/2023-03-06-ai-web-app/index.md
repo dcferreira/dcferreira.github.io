@@ -152,3 +152,5 @@ The build process will then take a bit more time, but the startup will be almost
 
 Indeed this is [what we did in this commit](https://github.com/dcferreira/ai-web-app/commit/92099b561bc4e8db3d567244cebf2e7eb1a2df56).
 After doing those optimizations, the startup is now almost instant.
+
+To continue this tutorial, go to [Part 7](/post/2023-03-07-ai-web-app).

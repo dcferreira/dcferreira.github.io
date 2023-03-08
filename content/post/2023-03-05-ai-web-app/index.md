@@ -216,3 +216,5 @@ Now we can differentiate between running unit tests (`hatch run cov`) and integr
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/1ac21850a30e8d5efacba162ba8e7eefec08b8ac
 {{% /callout %}}
+
+To continue this tutorial, go to [Part 6](/post/2023-03-06-ai-web-app).

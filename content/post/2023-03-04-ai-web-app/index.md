@@ -359,3 +359,5 @@ Running `hatch run cov` should now show the tests as passing.
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/afe845ca0a5866d4a2d4ef6bb687c31f3384d473
 {{% /callout %}}
+
+To continue this tutorial, go to [Part 5](/post/2023-03-05-ai-web-app).

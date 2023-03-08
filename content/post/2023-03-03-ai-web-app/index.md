@@ -237,3 +237,5 @@ touch ai_web_app/py.typed
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe
 {{% /callout %}}
+
+To continue this tutorial, go to [Part 4](/post/2023-03-04-ai-web-app).

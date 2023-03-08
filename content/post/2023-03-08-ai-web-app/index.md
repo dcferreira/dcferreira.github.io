@@ -190,3 +190,5 @@ About keeping your budget low:
   [cleanup policy](https://cloud.google.com/artifact-registry/docs/repositories/cleanup-policy).
 
 {{% /callout %}}
+
+To continue this tutorial, go to [Part 9](/post/2023-03-09-ai-web-app).
