@@ -1,0 +1,252 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=generator content="Wowchemy 5.4.0 for Hugo"><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media=print onload='this.media="all"'><meta name=description content="How and why we should use pytest and unit tests to facilitate development when writing an AI App."><link rel=alternate hreflang=en-us href=https://dcferreira.com/post/2023-03-04-ai-web-app/><meta name=theme-color content="hsl(339, 90%, 68%)"><link rel=stylesheet href=/css/vendor-bundle.min.c7b8d9abd591ba2253ea42747e3ac3f5.css media=print onload='this.media="all"'><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css integrity="sha512-W0xM4mr6dEP9nREo7Z9z+9X70wytKvMGeDsj7ps2+xg5QPrEBXC8tAW1IFnzjR6eoJ90JmCnFzerQJTLzIEHjA==" crossorigin=anonymous media=print onload='this.media="all"'><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/github.min.css crossorigin=anonymous title=hl-light media=print onload='this.media="all"' disabled><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/dracula.min.css crossorigin=anonymous title=hl-dark media=print onload='this.media="all"'><link rel=stylesheet href=/css/wowchemy.ad6ecacece4e570505517f526b6aa54a.css><script async src="https://www.googletagmanager.com/gtag/js?id=UA-137896487-1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}function trackOutboundLink(e,t){gtag("event","click",{event_category:"outbound",event_label:e,transport_type:"beacon",event_callback:function(){t!=="_blank"&&(document.location=e)}}),console.debug("Outbound link clicked: "+e)}function onClickCallback(e){if(e.target.tagName!=="A"||e.target.host===window.location.host)return;trackOutboundLink(e.target,e.target.getAttribute("target"))}gtag("js",new Date),gtag("config","UA-137896487-1",{}),gtag("set",{cookie_flags:"SameSite=None;Secure"}),document.addEventListener("click",onClickCallback,!1)</script><link rel=manifest href=/manifest.webmanifest><link rel=icon type=image/png href=/media/icon_hu4876d3cb97a4ad0b3222b8f65edef0fe_436070_32x32_fill_lanczos_center_3.png><link rel=apple-touch-icon type=image/png href=/media/icon_hu4876d3cb97a4ad0b3222b8f65edef0fe_436070_180x180_fill_lanczos_center_3.png><link rel=canonical href=https://dcferreira.com/post/2023-03-04-ai-web-app/><meta property="twitter:card" content="summary"><meta property="twitter:site" content="@dcferreira1"><meta property="twitter:creator" content="@dcferreira1"><meta property="og:site_name" content="Daniel C Ferreira <dcferreira>"><meta property="og:url" content="https://dcferreira.com/post/2023-03-04-ai-web-app/"><meta property="og:title" content="Making and Deploying an AI Web App in 2023 (Part 4) | Daniel C Ferreira <dcferreira>"><meta property="og:description" content="How and why we should use pytest and unit tests to facilitate development when writing an AI App."><meta property="og:image" content="https://dcferreira.com/media/icon_hu4876d3cb97a4ad0b3222b8f65edef0fe_436070_512x512_fill_lanczos_center_3.png"><meta property="twitter:image" content="https://dcferreira.com/media/icon_hu4876d3cb97a4ad0b3222b8f65edef0fe_436070_512x512_fill_lanczos_center_3.png"><meta property="og:locale" content="en-us"><meta property="article:published_time" content="2023-03-08T00:04:00+00:00"><meta property="article:modified_time" content="2023-03-08T00:04:00+00:00"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://dcferreira.com/post/2023-03-04-ai-web-app/"},"headline":"Making and Deploying an AI Web App in 2023 (Part 4)","datePublished":"2023-03-08T00:04:00Z","dateModified":"2023-03-08T00:04:00Z","author":{"@type":"Person","name":"Daniel C. Ferreira"},"publisher":{"@type":"Organization","name":"Daniel C Ferreira \u003cdcferreira\u003e","logo":{"@type":"ImageObject","url":"https://dcferreira.com/media/icon_hu4876d3cb97a4ad0b3222b8f65edef0fe_436070_192x192_fill_lanczos_center_3.png"}},"description":"How and why we should use pytest and unit tests to facilitate development when writing an AI App."}</script><title>Making and Deploying an AI Web App in 2023 (Part 4) | Daniel C Ferreira &lt;dcferreira></title></head><body id=top data-spy=scroll data-offset=70 data-target=#TableOfContents class="page-wrapper dark" data-wc-page-id=f4293b93ac02246b1969d1c18c32d4ed><script src=/js/wowchemy-init.min.6c07fd79b08c404df0504bd310968f2f.js></script><aside class=search-modal id=search><div class=container><section class=search-header><div class="row no-gutters justify-content-between mb-3"><div class=col-6><h1>Search</h1></div><div class="col-6 col-search-close"><a class=js-search href=# aria-label=Close><i class="fas fa-times-circle text-muted" aria-hidden=true></i></a></div></div><div id=search-box><input name=q id=search-query placeholder=Search... autocapitalize=off autocomplete=off autocorrect=off spellcheck=false type=search class=form-control aria-label=Search...></div></section><section class=section-search-results><div id=search-hits></div></section></div></aside><div class=page-header><header class=header--fixed><nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id=navbar-main><div class=container-xl><button type=button class=navbar-toggler data-toggle=collapse data-target=#navbar-content aria-controls=navbar-content aria-expanded=false aria-label="Toggle navigation">
+<span><i class="fas fa-bars"></i></span></button><div class="navbar-collapse main-menu-item collapse justify-content-start" id=navbar-content><ul class="navbar-nav d-md-inline-flex"><li class=nav-item><a class=nav-link href=/#about><span>Home</span></a></li><li class=nav-item><a class=nav-link href=/#experience><span>Experience</span></a></li><li class=nav-item><a class=nav-link href=/#featured><span>Publications</span></a></li><li class=nav-item><a class=nav-link href=/#posts><span>Posts</span></a></li><li class=nav-item><a class=nav-link href=/#projects><span>Projects</span></a></li></ul></div><ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2"><li class=nav-item><a class="nav-link js-search" href=# aria-label=Search><i class="fas fa-search" aria-hidden=true></i></a></li></ul></div></nav></header></div><div class=page-body><article class=article><div class="article-container pt-3"><h1>Making and Deploying an AI Web App in 2023 (Part 4)</h1><p class=page-subtitle>Develop an App with Test-Driven Development</p><div class=article-metadata><div></div><span class=article-date>Mar 8, 2023</span>
+<span class=middot-divider></span>
+<span class=article-reading-time>8 min read</span>
+<span class=middot-divider></span>
+<span class=article-categories><i class="fas fa-folder mr-1"></i><a href=/category/ai/>AI</a>, <a href=/category/nlp/>NLP</a></span></div></div><div class=article-container><div class=article-style><div class="alert alert-note"><div>This is part of a multi-part blogpost about how to build an AI Web App.
+Please refer to <a href=/post/2023-03-01-ai-web-app>Part 1</a> for more context.</div></div><p>In this post we&rsquo;ll have a look <a href=https://en.wikipedia.org/wiki/Test-driven_development target=_blank rel=noopener>test-driven development</a>.
+The idea is to first write some simple unit tests, where we describe how our code
+should work.
+Doing this forces you to think about what functions you actually need to write and, if you&rsquo;re part of a team, helps
+ensure that everyone is one the same page.
+Only after having a few simple tests will we actually start writing code, and make
+it pass the unit tests.</p><p>For a smaller project that you do not which to maintain for a long time, having
+these simple unit tests is not a strong necessity.
+But be warned: your project <em>will</em> eventually break if used enough, and unit tests will likely be your only warning.</p><h1 id=setup>Setup</h1><p>In our example we have a database with articles about COVID-19
+(see <a href=/post/2023-03-02-ai-web-app>Part 2</a>).
+For our unit tests, we want to use the same data, but a lot smaller so tests run fast, and we have control of the outputs.</p><p>Let&rsquo;s then think about what kind of simple examples we need.
+The database has a <code>articles</code> table and a <code>sections</code> table.
+Let&rsquo;s open up the database and extract 2 articles, and a couple of sections from each of them.
+It&rsquo;s important here that you choose examples that are helpful.
+In this case I chose 2 sections from each article: a Title and an Abstract, because the Titles won&rsquo;t be indexed in
+our use case (see <a href=/post/2023-03-02-ai-web-app>Part 2</a> of this series for details).
+I also chose sections that are different enough among themselves that I can make a query for each of them, and
+verify that the result is the section I wanted.</p><p>Put these 2 files in <code>tests/assets</code>:</p><ul><li><p><code>articles.csv</code>:</p><pre tabindex=0><code class=language-csv data-lang=csv>id,source,published,publication,authors,title,tags,design,size,sample,method,reference,entry
+071hvhme,WHO,2020-01-01 00:00:00,MSMR,&#34;Kebisek, Julianna; Forrest, Lanna J; Maule, Alexis L; Steelman, Ryan A; Ambrose, John F&#34;,&#34;Special report: Prevalence of selected underlying health conditions among active component Army service members with coronavirus disease 2019, 11 February-6 April 2020&#34;,COVID-19,0,873,&#34;COVID-19 has been a reportable condition for the Department of Defense since 5 February 2020, and, as of the morning of 6 April, a total of 873 cases were reported to the Disease Reporting System internet from Army installations.&#34;,,https://doi.org/,2020-06-07
+08as6hga,WHO,2020-01-01 00:00:00,Int. j. sports med,&#34;Stokes, Keith A; Jones, Ben; Bennett, Mark; Close, Graeme L; Gill, Nicholas; Hull, James H; Kasper, Andreas M; Kemp, Simon P T; Mellalieu, Stephen D; Peirce, Nicholas; Stewart, Bob; Wall, Benjamin T; West, Stephen W; Cross, Matthew&#34;,Returning to Play after Prolonged Training Restrictions in Professional Collision Sports,COVID-19,0,,The COVID-19 pandemic in 2020 has resulted in widespread training disruption in many sports.,,https://doi.org/,2020-06-08
+</code></pre></li><li><p><code>sections.csv</code>:</p><pre tabindex=0><code class=language-csv data-lang=csv>id,article,tags,design,name,text,labels
+1749694,071hvhme,COVID-19,0,TITLE,&#34;Special report: Prevalence of selected underlying health conditions among active component Army service members with coronavirus disease 2019, 11 February-6 April 2020&#34;,FRAGMENT
+1749697,071hvhme,COVID-19,0,ABSTRACT,&#34;COVID-19 has been a reportable condition for the Department of Defense since 5 February 2020, and, as of the morning of 6 April, a total of 873 cases were reported to the Disease Reporting System internet from Army installations.&#34;,SAMPLE_SIZE
+1867855,08as6hga,COVID-19,0,TITLE,Returning to Play after Prolonged Training Restrictions in Professional Collision Sports,FRAGMENT
+1867856,08as6hga,COVID-19,0,ABSTRACT,The COVID-19 pandemic in 2020 has resulted in widespread training disruption in many sports.,SAMPLE_SIZE
+</code></pre></li></ul><p>We also need to setup some <a href=https://docs.pytest.org/en/6.2.x/fixture.html target=_blank rel=noopener>fixtures</a>
+to access these files.
+The original data is a SQLite file with 2 tables, so we need to write a fixture that reads the CSV files and
+generates a SQLite file.</p><p>Create a <code>tests/conftest.py</code> file:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sqlite3</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>tempfile</span> <span class=kn>import</span> <span class=n>NamedTemporaryFile</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pytest</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@pytest</span><span class=o>.</span><span class=n>fixture</span><span class=p>(</span><span class=n>scope</span><span class=o>=</span><span class=s2>&#34;module&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>assets_path</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>Path</span><span class=p>(</span><span class=vm>__file__</span><span class=p>)</span><span class=o>.</span><span class=n>resolve</span><span class=p>()</span><span class=o>.</span><span class=n>parent</span> <span class=o>/</span> <span class=s2>&#34;assets&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@pytest</span><span class=o>.</span><span class=n>fixture</span><span class=p>(</span><span class=n>scope</span><span class=o>=</span><span class=s2>&#34;module&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>articles_database</span><span class=p>(</span><span class=n>assets_path</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Path</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>NamedTemporaryFile</span><span class=p>()</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>conn</span> <span class=o>=</span> <span class=n>sqlite3</span><span class=o>.</span><span class=n>connect</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># load CSVs</span>
+</span></span><span class=line><span class=cl>        <span class=n>articles</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>assets_path</span> <span class=o>/</span> <span class=s2>&#34;articles.csv&#34;</span><span class=p>,</span> <span class=n>sep</span><span class=o>=</span><span class=s2>&#34;,&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>sections</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>assets_path</span> <span class=o>/</span> <span class=s2>&#34;sections.csv&#34;</span><span class=p>,</span> <span class=n>sep</span><span class=o>=</span><span class=s2>&#34;,&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># write CSVs to DB</span>
+</span></span><span class=line><span class=cl>        <span class=n>articles</span><span class=o>.</span><span class=n>to_sql</span><span class=p>(</span><span class=s2>&#34;articles&#34;</span><span class=p>,</span> <span class=n>conn</span><span class=p>,</span> <span class=n>index</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>sections</span><span class=o>.</span><span class=n>to_sql</span><span class=p>(</span><span class=s2>&#34;sections&#34;</span><span class=p>,</span> <span class=n>conn</span><span class=p>,</span> <span class=n>index</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>yield</span> <span class=n>Path</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>name</span><span class=p>)</span>
+</span></span></code></pre></div><p>You can then use these fixtures for all your tests.</p><h1 id=writing-tests>Writing tests</h1><p>We can already make a skeleton of what we want, before actually starting programming.
+Let&rsquo;s then make a <code>ai_web_app/main.py</code> file, where we will in the future
+implement the functions that we used in <a href=/post/2023-03-02-ai-web-app>Part 2</a>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>txtai.embeddings</span> <span class=kn>import</span> <span class=n>Embeddings</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>index_embeddings</span><span class=p>(</span><span class=n>database</span><span class=p>:</span> <span class=n>Path</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Embeddings</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>raise</span> <span class=ne>NotImplementedError</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>search</span><span class=p>(</span><span class=n>embeddings</span><span class=p>:</span> <span class=n>Embeddings</span><span class=p>,</span> <span class=n>database</span><span class=p>:</span> <span class=n>Path</span><span class=p>,</span> <span class=n>query</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>topn</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>5</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>raise</span> <span class=ne>NotImplementedError</span>
+</span></span></code></pre></div><p>If you use an IDE, it will start complaining that <code>txtai</code> isn&rsquo;t installed.
+That&rsquo;s because we haven&rsquo;t yet added it to our package dependencies.
+So open up <code>pyproject.toml</code> and add the latest version as a dependency:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=line><span class=cl><span class=nx>dependencies</span> <span class=p>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;txtai[similarity]==5.3.0&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span></code></pre></div><p>Now we&rsquo;re ready to implement our tests.
+At this stage we just need some very simple tests, to make sure the indexing and
+querying are doing what we expect.</p><p>Let&rsquo;s create a new file <code>tests/test_main.py</code> and add this:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pytest</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>ai_web_app.main</span> <span class=kn>import</span> <span class=n>index_embeddings</span><span class=p>,</span> <span class=n>search</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@pytest</span><span class=o>.</span><span class=n>fixture</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>example_embeddings</span><span class=p>(</span><span class=n>articles_database</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>index_embeddings</span><span class=p>(</span><span class=n>articles_database</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>test_index_embeddings_count</span><span class=p>(</span><span class=n>example_embeddings</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>assert</span> <span class=n>example_embeddings</span><span class=o>.</span><span class=n>count</span><span class=p>()</span> <span class=o>==</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>test_search</span><span class=p>(</span><span class=n>example_embeddings</span><span class=p>,</span> <span class=n>articles_database</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>res_sports</span> <span class=o>=</span> <span class=n>search</span><span class=p>(</span><span class=n>example_embeddings</span><span class=p>,</span> <span class=n>articles_database</span><span class=p>,</span> <span class=s2>&#34;sports&#34;</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>assert</span> <span class=n>res_sports</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>id</span> <span class=o>==</span> <span class=s2>&#34;08as6hga&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>res_military</span> <span class=o>=</span> <span class=n>search</span><span class=p>(</span><span class=n>example_embeddings</span><span class=p>,</span> <span class=n>articles_database</span><span class=p>,</span> <span class=s2>&#34;army&#34;</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>assert</span> <span class=n>res_military</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>id</span> <span class=o>==</span> <span class=s2>&#34;071hvhme&#34;</span>
+</span></span></code></pre></div><p>There are 2 tests there:</p><ul><li><code>test_index_embeddings_count</code> tests the size of the generated index.
+We expect the index to have only 2 entries, as sections of type <code>TITLE</code> are not indexed.</li><li><code>test_search</code> tests the correction of the queries.
+We have one example about sports and another about the army, and in this text we just make
+sure that the correct section is returned for each query.</li></ul><h1 id=testing>Testing</h1><p>To run the tests use</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>hatch run cov
+</span></span></code></pre></div><p>This command will fail with <code>NotImplementedError</code>, as the functions we&rsquo;re testing aren&rsquo;t yet implemented.
+If you&rsquo;re following along and got a different error, check the link below for the full code.</p><div class="alert alert-note"><div>If you&rsquo;ve been following these instructions, your code should look like this:
+<a href=https://github.com/dcferreira/ai-web-app/tree/0d29f2c81a628fb5e856f7da5314995a6bf601bf target=_blank rel=noopener>https://github.com/dcferreira/ai-web-app/tree/0d29f2c81a628fb5e856f7da5314995a6bf601bf</a></div></div><h1 id=implementing-functions>Implementing Functions</h1><p>We now need to implement the functions <code>index_embeddings</code> and <code>search</code> that pass the tests above.
+We take most of the code from <a href=/post/2023-03-02-ai-web-app>Part 2</a>, but change a couple of things to
+make it more production-ready.
+The biggest changes we do in this case are: (1) moving away from using <code>print</code> towards using a proper
+logging library (<a href=https://loguru.readthedocs.io/en/stable/ target=_blank rel=noopener>loguru</a> in this case), and (2) removing the dependency
+on the <code>pandas</code> library, as it wasn&rsquo;t really necessary and in this case will only add overhead to our functions.</p><p>The first thing to do is to add <code>loguru</code> to the dependencies section of our <code>pyproject.toml</code>.
+We can then add the imports we need for <code>index_embeddings</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sqlite3</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>regex</span> <span class=k>as</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>loguru</span> <span class=kn>import</span> <span class=n>logger</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>txtai.embeddings</span> <span class=kn>import</span> <span class=n>Embeddings</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>txtai.pipeline</span> <span class=kn>import</span> <span class=n>Tokenizer</span>
+</span></span></code></pre></div><p>and the function itself is copied from <a href=/post/2023-03-02-ai-web-app>Part 2</a>, but using <code>loguru</code> instead of <code>print</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>index_embeddings</span><span class=p>(</span><span class=n>database</span><span class=p>:</span> <span class=n>Path</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Embeddings</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>stream</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Connection to database file</span>
+</span></span><span class=line><span class=cl>        <span class=n>db</span> <span class=o>=</span> <span class=n>sqlite3</span><span class=o>.</span><span class=n>connect</span><span class=p>(</span><span class=n>database</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>cur</span> <span class=o>=</span> <span class=n>db</span><span class=o>.</span><span class=n>cursor</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Select tagged sentences without a NLP label.</span>
+</span></span><span class=line><span class=cl>        <span class=c1># NLP labels are set for non-informative sentences.</span>
+</span></span><span class=line><span class=cl>        <span class=n>cur</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;SELECT Id, Name, Text FROM sections &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;WHERE (labels is null or labels NOT IN (&#39;FRAGMENT&#39;, &#39;QUESTION&#39;)) &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;AND tags is not null&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>count</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>row</span> <span class=ow>in</span> <span class=n>cur</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Unpack row</span>
+</span></span><span class=line><span class=cl>            <span class=n>uid</span><span class=p>,</span> <span class=n>name</span><span class=p>,</span> <span class=n>text</span> <span class=o>=</span> <span class=n>row</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1># Only process certain document sections</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=ow>not</span> <span class=n>name</span> <span class=ow>or</span> <span class=ow>not</span> <span class=n>re</span><span class=o>.</span><span class=n>search</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=sa>r</span><span class=s2>&#34;background|(?&lt;!.*?results.*?)discussion|introduction|reference&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>name</span><span class=o>.</span><span class=n>lower</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>            <span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=c1># Tokenize text</span>
+</span></span><span class=line><span class=cl>                <span class=n>tokens</span> <span class=o>=</span> <span class=n>Tokenizer</span><span class=o>.</span><span class=n>tokenize</span><span class=p>(</span><span class=n>text</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>document</span> <span class=o>=</span> <span class=p>(</span><span class=n>uid</span><span class=p>,</span> <span class=n>tokens</span><span class=p>,</span> <span class=kc>None</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>count</span> <span class=o>+=</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>count</span> <span class=o>%</span> <span class=mi>1000</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Streamed </span><span class=si>{</span><span class=n>count</span><span class=si>}</span><span class=s2> documents&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=c1># Skip documents with no tokens parsed</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>tokens</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=k>yield</span> <span class=n>document</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Iterated over </span><span class=si>{</span><span class=n>count</span><span class=si>}</span><span class=s2> total rows&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Free database resources</span>
+</span></span><span class=line><span class=cl>        <span class=n>db</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># BM25 + fastText vectors</span>
+</span></span><span class=line><span class=cl>    <span class=n>embeddings</span> <span class=o>=</span> <span class=n>Embeddings</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;method&#34;</span><span class=p>:</span> <span class=s2>&#34;sentence-transformers&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;path&#34;</span><span class=p>:</span> <span class=s2>&#34;all-MiniLM-L6-v2&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;scoring&#34;</span><span class=p>:</span> <span class=s2>&#34;bm25&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>embeddings</span><span class=o>.</span><span class=n>index</span><span class=p>(</span><span class=n>stream</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>embeddings</span>
+</span></span></code></pre></div><p>For the <code>search</code> function, in the notebook version we&rsquo;re outputting a <code>pandas</code> DataFrame.
+In the notebook that&rsquo;s a nice way to visualize the output of the function, but actually we
+don&rsquo;t really the dataframe and can use something simpler.
+Furthermore, as this function will be exposed as an API, it would be nice to have a schema
+of what the output will actually look like.</p><p>For that we can use Python&rsquo;s <a href=https://docs.python.org/3/library/dataclasses.html target=_blank rel=noopener>dataclasses</a>
+(an alternative would be <a href=https://docs.pydantic.dev/ target=_blank rel=noopener>pydantic</a>&rsquo;s <code>BaseModel</code>, with more functionality
+but requires one more library to be installed).
+We can have a look at what fields we want to fetch from our database and return as a result from search
+and make our own <code>Result</code> class:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>datetime</span> <span class=kn>import</span> <span class=n>datetime</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Result</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>title</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>published</span><span class=p>:</span> <span class=n>datetime</span>
+</span></span><span class=line><span class=cl>    <span class=n>reference</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>text</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>score</span><span class=p>:</span> <span class=nb>float</span>
+</span></span></code></pre></div><p>We then change our original <code>search</code> function to</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>search</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>embeddings</span><span class=p>:</span> <span class=n>Embeddings</span><span class=p>,</span> <span class=n>database</span><span class=p>:</span> <span class=n>Path</span><span class=p>,</span> <span class=n>query</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>topn</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>5</span>
+</span></span><span class=line><span class=cl><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>List</span><span class=p>[</span><span class=n>Result</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>    <span class=n>db</span> <span class=o>=</span> <span class=n>sqlite3</span><span class=o>.</span><span class=n>connect</span><span class=p>(</span><span class=n>database</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>cur</span> <span class=o>=</span> <span class=n>db</span><span class=o>.</span><span class=n>cursor</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>results</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=n>Result</span><span class=p>]</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>uid</span><span class=p>,</span> <span class=n>score</span> <span class=ow>in</span> <span class=n>embeddings</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>query</span><span class=p>,</span> <span class=n>topn</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>cur</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;SELECT article, text FROM sections WHERE id = ?&#34;</span><span class=p>,</span> <span class=p>[</span><span class=n>uid</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=n>uid</span><span class=p>,</span> <span class=n>text</span> <span class=o>=</span> <span class=n>cur</span><span class=o>.</span><span class=n>fetchone</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>cur</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;SELECT Title, Published, Reference from articles where id = ?&#34;</span><span class=p>,</span> <span class=p>[</span><span class=n>uid</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>=</span> <span class=n>cur</span><span class=o>.</span><span class=n>fetchone</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>results</span><span class=o>.</span><span class=n>append</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>Result</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=nb>id</span><span class=o>=</span><span class=n>uid</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>title</span><span class=o>=</span><span class=n>res</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=n>published</span><span class=o>=</span><span class=n>res</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=n>reference</span><span class=o>=</span><span class=n>res</span><span class=p>[</span><span class=mi>2</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=n>text</span><span class=o>=</span><span class=n>text</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>score</span><span class=o>=</span><span class=n>score</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>db</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>results</span>
+</span></span></code></pre></div><p>Running <code>hatch run cov</code> should now show the tests as passing.</p><div class="alert alert-note"><div>If you&rsquo;ve been following these instructions, your code should look like this:
+<a href=https://github.com/dcferreira/ai-web-app/tree/afe845ca0a5866d4a2d4ef6bb687c31f3384d473 target=_blank rel=noopener>https://github.com/dcferreira/ai-web-app/tree/afe845ca0a5866d4a2d4ef6bb687c31f3384d473</a></div></div><p>To continue this tutorial, go to <a href=/post/2023-03-05-ai-web-app>Part 5</a>.</p></div><div class=article-tags><a class="badge badge-light" href=/tag/ai/>AI</a>
+<a class="badge badge-light" href=/tag/machine-learning/>Machine Learning</a>
+<a class="badge badge-light" href=/tag/web-app/>Web App</a>
+<a class="badge badge-light" href=/tag/txtai/>txtai</a>
+<a class="badge badge-light" href=/tag/web-development/>Web Development</a>
+<a class="badge badge-light" href=/tag/serverless/>Serverless</a>
+<a class="badge badge-light" href=/tag/nlp/>NLP</a></div></div></article></div><div class=page-footer><div class=container><footer class=site-footer><p class=powered-by>Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target=_blank rel=noopener>Wowchemy</a> — the free, <a href=https://github.com/wowchemy/wowchemy-hugo-themes target=_blank rel=noopener>open source</a> website builder that empowers creators.</p></footer></div></div><script src=/js/vendor-bundle.min.3d946de2e8784a477845261d87025092.js></script>
+<script src=https://cdn.jsdelivr.net/gh/desandro/imagesloaded@v4.1.4/imagesloaded.pkgd.min.js integrity="sha512-S5PZ9GxJZO16tT9r3WJp/Safn31eu8uWrzglMahDT4dsmgqWonRY9grk3j+3tfuPr9WJNsfooOR7Gi7HL5W2jw==" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/gh/metafizzy/isotope@v3.0.6/dist/isotope.pkgd.min.js integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/highlight.min.js integrity="sha512-Ypjm0o7jOxAd4hpdoppSEN0TQOC19UtPAqD+4s5AlXmUvbmmS/YMxYqAqarQYyxTnB6/rqip9qcxlNB/3U9Wdg==" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/r.min.js crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/latex.min.js crossorigin=anonymous></script>
+<script id=search-hit-fuse-template type=text/x-template>
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script><script src=https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin=anonymous></script>
+<script id=page-data type=application/json>{"use_headroom":true}</script><script src=/js/wowchemy-headroom.e8fd2d733eef6a8bbbe0539398fc0547.js type=module></script>
+<script src=/en/js/wowchemy.min.9162604ef5b82e6fdeff386200ab6db9.js></script><div id=modal class="modal fade" role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title>Cite</h5><button type=button class=close data-dismiss=modal aria-label=Close>
+<span aria-hidden=true>&#215;</span></button></div><div class=modal-body><pre><code class="tex hljs"></code></pre></div><div class=modal-footer><a class="btn btn-outline-primary my-1 js-copy-cite" href=# target=_blank><i class="fas fa-copy"></i> Copy</a>
+<a class="btn btn-outline-primary my-1 js-download-cite" href=# target=_blank><i class="fas fa-download"></i> Download</a><div id=modal-error></div></div></div></div></div><script src=/js/wowchemy-publication.b0d291ed6d27eacec233e6cf5204f99a.js type=module></script></body></html>
