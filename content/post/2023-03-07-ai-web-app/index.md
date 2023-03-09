@@ -108,10 +108,11 @@ With the scripts, it's easy to make sure that we run the same command locally as
 CI pipeline, since all the parameters are in the config file.
 
 We also want to run the integration tests.
-For that, we will need to download our database (or, in a real world case, a subset of our real database).
+For that, we will need to download our database (or, if it's too big, a subset of our real database).
 This download will take some time, and the integration tests themselves are also heavy.
 Therefore, we don't want to run this job for every commit.
-In this case, we want to limit to only commits in Pull Requests, or in the `main` branch.
+In this case, we'll limit the integration tests job to run only on commits in
+Pull Requests, or in the `main` branch.
 
 This is our job configuration (just append to `.github/workflows/backend.yaml`):
 
@@ -147,7 +148,7 @@ In my case, I had to make [some small changes to my code to get it working](http
 
 Having this pipeline always running is a pretty good start, as it ensures that tests are
 run regularly and you're notified if they fail.
-For next steps in this pipeline, you can have a look at
+For next things to do with the pipelines, you can have a look at
 [building/pushing docker images](https://github.com/marketplace/actions/build-and-push-docker-images)
 (such as the one we built in [Part 6](/post/2023-03-06-ai-web-app)).
 

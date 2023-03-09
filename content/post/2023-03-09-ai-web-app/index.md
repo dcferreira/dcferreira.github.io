@@ -52,7 +52,8 @@ Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 
 By this point we have everything on the backend already setup, we just need a nice
 way to interact with it.
-In this post we'll make a very simple website which will call our backend with a JavaScript script.
+In this post we'll make a very simple website which will call our backend
+and display the results using a bit of JavaScript.
 
 # Basic Functionality
 
@@ -91,9 +92,9 @@ This is just a simple text field where you will write the query, a button to exe
 and a table in the bottom where the results will appear.
 When the button is pressed, the JavaScript engine calls the `search` function, which we still need to write.
 
-We'll add a `search` function to the `<head></head>` section of the page
+Let's add the `search` function to the `<head></head>` section of the page
 which takes the input from the text field, submits a request to our backend,
-and populates the table with the results.
+and populates the table with the results:
 
 ```html
 <script type="text/javascript">
@@ -145,11 +146,12 @@ You can now visit http://127.0.0.1:8000 and will see the page
 ![image.png](/assets/ai-web-app/image_1677846193175_0.png)
 
 You can try writing a query and submitting it.
-Your browser will display an error, [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+Your browser will display an error: [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 doesn't allow the browser to fetch content from `http://127.0.0.1:8080` (the backend) while the
 user is visiting `http://127.0.0.1:8000` (the frontend).
 We need to set some headers in our backend to allow this.
-In `app.py` add the CORS middleware, and configure it take the CORS origin from an environment variable.
+In `app.py` add the CORS middleware, and configure it take the CORS origin from an environment
+variable `CORS_ORIGIN`.
 Add this code to the file (after the `app` variable is defined):
 
 ```python
@@ -234,7 +236,7 @@ to the blob with the HTML.
 
 Remember to update your backend deployment with the new code above (introducing the CORS middleware),
 and to setup the `CORS_ORIGIN` to the URL of the frontend.
-Also remember to update the URL of the backend in the HTML file above.
+Also don't forget to update the URL of the backend in the HTML file above.
 
 And that's all, we finally have a fully functioning AI web app! :)
 

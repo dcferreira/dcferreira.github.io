@@ -55,33 +55,31 @@ Alternatives would be: [transformers](https://huggingface.co/docs/transformers/i
 {{% /callout %}}
 
 The first step in any project is always to make a proof of concept.
-At this stage, we don't care about performance, edge cases, or any other intricacies.
-We just want to confirm that what we want to do is viable.
+At this stage, we don't care about performance, edge cases, or any other intricacies—
+we just want to confirm that the project is viable.
 
 For the sake of example, we will take strong inspiration from [this example from the `txtai` library](https://github.com/neuml/txtai/blob/master/examples/03_Build_an_Embeddings_index_from_a_data_source.ipynb).
-We will index a database of documents and then query for them with natural language.
-We're implementing our own little Google Search, which only returns results from the files we give it.
+We'll index a database of documents and then query for them with natural language.
+Basically we'll be implementing our own little Google Search, which only returns results from the files we feed it.
 
-But we're not just search for keywords, like classical search engines.
+But we won't just search for keywords, like classical search engines.
+It's 2023 and we have AI at our disposal!
 We will use [text embeddings](https://en.wikipedia.org/wiki/Word_embedding) to search for the closest match.
 By searching for embeddings we're not literally searching for the words we give it, but for the meaning of the whole query.
 This is called [Semantic search](https://en.wikipedia.org/wiki/Semantic_search).
 
-The first step in any project is to create a new directory for it.
+So, let's get thing going by creating a new directory for our little project:
 
 ```bash
 mkdir ai-web-app
-```
-
-We should also create a directory for notebooks, to keep things tidy:
-
-```bash
 cd ai-web-app
-mkdir notebooks
 ```
 
+We will need a database to index and query.
 For this example, we will use a test dataset that `txtai` made available.
-This data is a collection of research documents into COVID-19. The original version of this dataset can be found [on Kaggle](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge).
+This data is a collection of research documents into COVID-19.
+The original version of this dataset can be found [on Kaggle](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge).
+
 We download the dataset with the following shell commands:
 
 ```bash
@@ -99,11 +97,13 @@ pip install txtai sentence-transformers pandas jupyterlab
 We can then start a notebook server with [Jupyter Lab](https://docs.jupyter.org/en/latest/) with
 
 ```bash
-cd notebooks && jupyter lab
+mkdir notebooks && cd notebooks && jupyter lab
 ```
 
-Our app needs an index (a searchable database of documents), and a way to query (search) the index.
-The following code (mostly stolen from [`txtai`'s example](https://github.com/neuml/txtai/blob/master/examples/03_Build_an_Embeddings_index_from_a_data_source.ipynb)) creates an index with the COVID-19 dataset downloaded above:
+From our database, we will need to create an index (a searchable database of
+documents), and a way to query (search) the index.
+The following code (mostly stolen from [`txtai`'s example](https://github.com/neuml/txtai/blob/master/examples/03_Build_an_Embeddings_index_from_a_data_source.ipynb))
+creates an index with the COVID-19 dataset downloaded above:
 
 ```python
 import sqlite3
@@ -159,7 +159,8 @@ embeddings.index(stream())
 ```
 
 In the code above, the text embeddings are generated using the [`all-MiniLM-L6-v2` model](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2).
-We could also train our own model instead of using a pre-trained model, but that can be quite some work.
+We could also train our own model instead of using a pre-trained model, but that
+would require a lot of work.
 If we can avoid it, why not?
 
 So at this point, we have a database and want to search it.
@@ -191,7 +192,7 @@ def search(query: str, topn: int = 5) -> pd.DataFrame:
 search("risk factors")
 ```
 
-The output of that cell will be a pandas dataframe with the results.
+The output of that cell will be a pandas dataframe with the results:
 ![image.png](/assets/ai-web-app/image_1674755971020_0.png)
 
 We can also try other queries:

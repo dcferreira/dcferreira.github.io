@@ -98,7 +98,7 @@ See more about this in [Docker's docs](https://docs.docker.com/engine/reference/
 {{% /callout %}}
 
 To simplify our workflow, we should also add a couple of scripts to our `pyproject.toml`, to build and run our
-docker image, like these:
+docker image:
 
 ```toml
 [tool.hatch.envs.default.scripts]
@@ -137,7 +137,7 @@ https://github.com/dcferreira/ai-web-app/tree/1a9b73f17d99536801e6672d6161056d71
 # \[Optional\] Optimize the Image
 
 In this case, the container startup is taking around 2 minutes in my machine.
-That could be fine if I'm deploying the image in a server I control, and we just run once and forget about it.
+That could be fine if we're deploying the image in our own premises, and we just start it up once and it will running.
 However, we want to deploy it to some serverless provider, which means the container will need to startup
 from scratch more or less for each request.
 

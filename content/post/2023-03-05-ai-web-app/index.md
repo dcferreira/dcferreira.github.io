@@ -72,7 +72,7 @@ as well as the Python logic to be executed (what happens in between).
 
 Let's start by making a new file `app.py` in the root of our project.
 In this file, we define a function `search_endpoint` which receives a query and calls our `search` function to
-make the query in our database.
+query our database.
 
 ```python
 from pathlib import Path
@@ -121,15 +121,15 @@ curl -X GET "http://127.0.0.1:8080/search?query=symptoms%20of%20covid"
 ```
 
 If you've been following so far, this is what you should get as a response
-![image.png](/assets/ai-web-app/image_1674756005367_0.png)
+![image.png](/assets/ai-web-app/image_1678198357583_0.png)
 
 # Integration Tests
 
 To make sure our backend endpoint behaves as expected even if we change it in the future,
 we should set up some simple [integration tests](https://en.wikipedia.org/wiki/Integration_testing).
 
-For this, we will use [pytest-xprocess](https://pytest-xprocess.readthedocs.io), launch our server as a
-separate process, make some simple requests, and assert that the response is as expected.
+For this, we will use [pytest-xprocess](https://pytest-xprocess.readthedocs.io) to launch our server as a
+separate process, and then make some simple requests and assert that the response is as expected.
 
 First of all, we need to add `pytest-xprocess` to our dev dependencies in `pyproject.toml`.
 
@@ -180,7 +180,7 @@ This file defines a class with 3 methods:
   `hatch run serve`.
 - `test_valid_search` makes a simple request and assures that the response is valid, and has the correct
   number of requested results.
-  You could spend a lot of time here coming up with better test cases, but for this simple example there's
+  You could spend a lot of time here coming up with better test cases, but for this simple app there's
   not that much that can go wrong.
 - `test_empty_search` tests a case where the incoming request doesn't have any query.
   In this case, the server should return an error.

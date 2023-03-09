@@ -55,8 +55,8 @@ Alternatives would be [AWS's Lambda](https://aws.amazon.com/lambda/), [Azure Fun
 
 It's finally time to deploy our web app so that everyone can reach it.
 We'll deploy our app in a [serverless](https://en.wikipedia.org/wiki/Serverless_computing) fashion.
-This means that every time someone makes a request, a new container will be started, which will respond
-to it.
+This means that every time someone makes a request, a new container will be
+started and run only for the needed time to respond to it.
 By doing it this way, we avoid wasting money on compute when no one is making requests to our server.
 Furthermore, scaling happens automatically: if suddenly our web app gets very popular, our cloud
 provider automatically starts as many containers as needed.
@@ -79,19 +79,21 @@ Then we need the following setup steps:
    ```
 
    Note that the project ID (`my-example-webapp-23867`) needs to be unique.
-   So this exact command won't work for you, you will need to create your own project ID. 2. Configure `gcloud` to use your project:
+   So this exact command won't work for you, you will need to create your own project ID.
+
+2. Configure `gcloud` to use your project:
 
    ```bash
    gcloud config set project my-example-webapp-23867
    ```
 
-2. Activate the [Cloud Run API](https://cloud.google.com/run/docs/reference/rest)
+3. Activate the [Cloud Run API](https://cloud.google.com/run/docs/reference/rest)
 
    ```bash
    gcloud services enable run.googleapis.com
    ```
 
-3. Activate the [Artifact Registry](https://cloud.google.com/artifact-registry),
+4. Activate the [Artifact Registry API](https://cloud.google.com/artifact-registry),
    which we will use to upload our docker images.
 
    ```bash
@@ -99,8 +101,8 @@ Then we need the following setup steps:
    ```
 
    Note that this step requires that billing is enabled in the project.
-   This step is not strictly required: you could upload the docker images to anywhere else.
-   The [docker hub](https://hub.docker.com/) would be a good alternative.
+   This step is not strictly required: you could upload the docker images somewhere else,
+   such as [docker hub](https://hub.docker.com/).
 
    To activate billing for the project, first set up a billing account on the [Google Cloud Console](https://console.cloud.google.com/).
    Using the CLI, you can list the existing billing accounts:
@@ -117,7 +119,7 @@ Then we need the following setup steps:
 
    (don't forget to replace the billing account ID by your own)
 
-4. Create a new artifacts repository
+5. Create a new artifacts repository
 
    ```bash
    gcloud artifacts repositories create ai-web-app-artifacts --repository-format=docker --location=us-central1 --description="Docker artifacts"
@@ -125,14 +127,14 @@ Then we need the following setup steps:
 
    Choose the location that is closer to you and your users.
 
-   Setup docker authentication for this repo with
+   Setup your docker client to authenticate to this repo with
 
    ```bash
    gcloud auth configure-docker us-central1-docker.pkg.dev
    ```
 
    If you chose something else than `us-central1` for the location in the last step, be sure to reflect that in this auth command.
-   If your region is `europe-west1`, you would instead run
+   For example, if your region is `europe-west1`, you would instead run
 
    ```bash
    gcloud auth configure-docker europe-west1-docker.pkg.dev

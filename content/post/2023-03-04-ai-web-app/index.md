@@ -1,6 +1,6 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 4)
-subtitle: Develop an App with Test-driven Development
+subtitle: Develop an App with Test-Driven Development
 
 # Summary for listings and search engines
 summary: How and why we should use pytest and unit tests to facilitate development when writing an AI App.
@@ -50,21 +50,28 @@ This is part of a multi-part blogpost about how to build an AI Web App.
 Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 {{% /callout %}}
 
-Often a good practice when programming is to start by setting up some unit tests which your code will have to pass.
-This forces you to think about what functions you actually need to write, and if you're part of a team, helps
+In this post we'll have a look [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development).
+The idea is to first write some simple unit tests, where we describe how our code
+should work.
+Doing this forces you to think about what functions you actually need to write and, if you're part of a team, helps
 ensure that everyone is one the same page.
-For a smaller project that you do not which to maintain for a long time, this step can be skipped.
+Only after having a few simple tests will we actually start writing code, and make
+it pass the unit tests.
+
+For a smaller project that you do not which to maintain for a long time, having
+these simple unit tests is not a strong necessity.
 But be warned: your project _will_ eventually break if used enough, and unit tests will likely be your only warning.
 
 # Setup
 
-In our example we have a database with articles about COVID-19.
+In our example we have a database with articles about COVID-19
+(see [Part 2](/post/2023-03-02-ai-web-app)).
 For our unit tests, we want to use the same data, but a lot smaller so tests run fast, and we have control of the outputs.
 
-So the first step is to make some simple examples.
+Let's then think about what kind of simple examples we need.
 The database has a `articles` table and a `sections` table.
-I opened up the database and extracted 2 articles, and a couple of sections from each of them.
-It's important here that you choose examples that would help you.
+Let's open up the database and extract 2 articles, and a couple of sections from each of them.
+It's important here that you choose examples that are helpful.
 In this case I chose 2 sections from each article: a Title and an Abstract, because the Titles won't be indexed in
 our use case (see [Part 2](/post/2023-03-02-ai-web-app) of this series for details).
 I also chose sections that are different enough among themselves that I can make a query for each of them, and
@@ -89,7 +96,8 @@ Put these 2 files in `tests/assets`:
   1867856,08as6hga,COVID-19,0,ABSTRACT,The COVID-19 pandemic in 2020 has resulted in widespread training disruption in many sports.,SAMPLE_SIZE
   ```
 
-You should also setup some fixtures to access these files.
+We also need to setup some [fixtures](https://docs.pytest.org/en/6.2.x/fixture.html)
+to access these files.
 The original data is a SQLite file with 2 tables, so we need to write a fixture that reads the CSV files and
 generates a SQLite file.
 
@@ -131,7 +139,8 @@ You can then use these fixtures for all your tests.
 # Writing tests
 
 We can already make a skeleton of what we want, before actually starting programming.
-Let's then make a `ai_web_app/main.py` file, where we implement the functions that we used in [Part 2](/post/2023-03-02-ai-web-app):
+Let's then make a `ai_web_app/main.py` file, where we will in the future
+implement the functions that we used in [Part 2](/post/2023-03-02-ai-web-app):
 
 ```python
 from pathlib import Path

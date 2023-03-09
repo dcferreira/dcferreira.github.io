@@ -50,7 +50,15 @@ This is part of a multi-part blogpost about how to build an AI Web App.
 Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 {{% /callout %}}
 
-In this post we will have a look at how to setup Python projects using modern tools in the Python ecosystem.
+In this post we will have a look at how to setup Python projects using modern
+tools in the Python ecosystem.
+This post is all about the tools, and there's basically no code.
+
+The tools recommended here are mostly very new, and in my opinion, better than
+the older alternatives.
+If you haven't yet tried these tools but are familiar with the alternatives,
+I'd suggest you give them a go: all of these tools had basically 0 friction
+while integrating with my workflows.
 
 # Project Manager
 
@@ -60,7 +68,7 @@ Alternatives to `hatch`: [Poetry](https://python-poetry.org/), [PDM](https://pdm
 {{% /callout %}}
 
 My currently favorite project manager is [hatch](https://hatch.pypa.io/).
-If you've never used a project manager before, it's main job is keeping track of your dependencies,
+If you've never used a project manager before, its main job is keeping track of your dependencies,
 making sure there are no incompatibilities between libraries, and keeping your environment clean of unnecessary clutter.
 Project managers also allow you to build or publish your own Python packages with a single command.
 
@@ -122,12 +130,12 @@ It's an opinionated code formatter.
 I love it because I can just set it up in my IDE to run whenever I save a file, and then I don't have to worry about
 style or formatting when writing the code.
 If you're collaborating on the same code with someone else, `black` is really indispensable: it forces your team to keep
-the same style throughout, and it makes the git differences much simpler.
+the same style throughout the code, and it makes the git differences much simpler.
 
 The final tool here is [isort](https://pycqa.github.io/isort/).
 This is a very simple tool, which forces imports to have a specific order.
-That's it.
-Also makes the git diffs simpler, and is simple to setup and forget.
+That's it!
+That also makes the git diffs simpler, and is simple to setup and forget.
 
 To install all of these tools, you just need to edit the `pyproject.toml` file.
 Look for the dev dependencies section (it's the `default` env in `hatch`), and just add them there.
@@ -167,7 +175,8 @@ format = ["black .", "isort ."]
 # Pre-commit hooks
 
 Another essential tool, especially if you work in a team: pre-commit git hooks.
-These are scripts that will be executed before every commit you make, to make sure you don't make a stupid mistake.
+These are scripts that will be executed before every commit you make, to make
+sure you don't make a stupid mistake and commit it into the repo.
 You can enforce linting in this step, and make it automatic.
 
 For this you need the [pre-commit](https://pre-commit.com/) Python package (just add it to your dev environment, like above),
