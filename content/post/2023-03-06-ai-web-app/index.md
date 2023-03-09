@@ -154,3 +154,7 @@ Indeed this is [what we did in this commit](https://github.com/dcferreira/ai-web
 After doing those optimizations, the startup is now almost instant.
 
 To continue this tutorial, go to [Part 7](/post/2023-03-07-ai-web-app).
+
+For comments or questions, use the
+[Reddit discussion](https://www.reddit.com/user/dlcferreira/comments/11mv3hb/making_and_deploying_an_ai_web_app_in_2023_part_6/)
+or reach out to me [directly via email](mailto:daniel.ferreira.1@gmail.com).

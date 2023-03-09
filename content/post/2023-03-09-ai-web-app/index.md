@@ -244,3 +244,7 @@ And that's all, we finally have a fully functioning AI web app! :)
 If you've been following these instructions, your code should look like this:
 https://github.com/dcferreira/ai-web-app/tree/656ebd505131d7f96e5366e1a3f0e5c76a1007c0
 {{% /callout %}}
+
+For comments or questions, use the
+[Reddit discussion](https://www.reddit.com/user/dlcferreira/comments/11mv4en/making_and_deploying_an_ai_web_app_in_2023_part_9/)
+or reach out to me [directly via email](mailto:daniel.ferreira.1@gmail.com).

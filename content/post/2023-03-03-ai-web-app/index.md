@@ -229,7 +229,7 @@ Ideally every library you use would have type hints, and you could run [mypy](ht
 But most libraries don't have type hints, and then mypy has no way of knowing what the types of your imports are.
 
 All that being said, I would still recommend developing with type hints, and using at least your IDE for warnings.
-If most of the libraries you're using support type hints, you should also be running `mypy` often.
+If most of the libraries you're using support type hints, you should also be running `mypy` often (maybe even as a pre-commit hook?).
 
 In this particular case, the main library I'm using is `txtai` and it doesn't have type hints, so I won't be using
 `mypy` much.
@@ -248,3 +248,7 @@ https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e
 {{% /callout %}}
 
 To continue this tutorial, go to [Part 4](/post/2023-03-04-ai-web-app).
+
+For comments or questions, use the
+[Reddit discussion](https://www.reddit.com/user/dlcferreira/comments/11mv2rl/making_and_deploying_an_ai_web_app_in_2023_part_3/)
+or reach out to me [directly via email](mailto:daniel.ferreira.1@gmail.com).

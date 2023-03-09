@@ -208,3 +208,7 @@ https://github.com/dcferreira/ai-web-app/tree/19cda18ea099d46716b280694eed2677ef
 {{% /callout %}}
 
 To continue this tutorial, go to [Part 3](/post/2023-03-03-ai-web-app).
+
+For comments or questions, use the
+[Reddit discussion](https://www.reddit.com/user/dlcferreira/comments/11mv2k9/making_and_deploying_an_ai_web_app_in_2023_part_2/)
+or reach out to me [directly via email](mailto:daniel.ferreira.1@gmail.com).
