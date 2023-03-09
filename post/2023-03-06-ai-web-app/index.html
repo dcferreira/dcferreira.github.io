@@ -54,7 +54,9 @@ Another thing that takes time is downloading the <code>all-MiniLM-L6-v2</code> m
 which is also happening every time the container starts.</p><p>There is an easy fix in this case: since the model and the database will be the same for all containers
 we launch, we should just move these 2 steps to the build process.
 The build process will then take a bit more time, but the startup will be almost instant.</p><p>Indeed this is <a href=https://github.com/dcferreira/ai-web-app/commit/92099b561bc4e8db3d567244cebf2e7eb1a2df56 target=_blank rel=noopener>what we did in this commit</a>.
-After doing those optimizations, the startup is now almost instant.</p><p>To continue this tutorial, go to <a href=/post/2023-03-07-ai-web-app>Part 7</a>.</p></div><div class=article-tags><a class="badge badge-light" href=/tag/ai/>AI</a>
+After doing those optimizations, the startup is now almost instant.</p><p>To continue this tutorial, go to <a href=/post/2023-03-07-ai-web-app>Part 7</a>.</p><p>For comments or questions, use the
+<a href=https://www.reddit.com/user/dlcferreira/comments/11mv3hb/making_and_deploying_an_ai_web_app_in_2023_part_6/ target=_blank rel=noopener>Reddit discussion</a>
+or reach out to me <a href=mailto:daniel.ferreira.1@gmail.com>directly via email</a>.</p></div><div class=article-tags><a class="badge badge-light" href=/tag/ai/>AI</a>
 <a class="badge badge-light" href=/tag/machine-learning/>Machine Learning</a>
 <a class="badge badge-light" href=/tag/web-app/>Web App</a>
 <a class="badge badge-light" href=/tag/txtai/>txtai</a>

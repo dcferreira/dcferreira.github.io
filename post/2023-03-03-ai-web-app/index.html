@@ -96,14 +96,16 @@ If you&rsquo;re using an IDE, it will often alert you of simple mistakes you mak
 Ideally every library you use would have type hints, and you could run <a href=https://mypy-lang.org/ target=_blank rel=noopener>mypy</a> in
 <a href="https://mypy.readthedocs.io/en/stable/getting_started.html?highlight=strict#strict-mode-and-configuration" target=_blank rel=noopener>strict mode</a>.
 But most libraries don&rsquo;t have type hints, and then mypy has no way of knowing what the types of your imports are.</p><p>All that being said, I would still recommend developing with type hints, and using at least your IDE for warnings.
-If most of the libraries you&rsquo;re using support type hints, you should also be running <code>mypy</code> often.</p><p>In this particular case, the main library I&rsquo;m using is <code>txtai</code> and it doesn&rsquo;t have type hints, so I won&rsquo;t be using
+If most of the libraries you&rsquo;re using support type hints, you should also be running <code>mypy</code> often (maybe even as a pre-commit hook?).</p><p>In this particular case, the main library I&rsquo;m using is <code>txtai</code> and it doesn&rsquo;t have type hints, so I won&rsquo;t be using
 <code>mypy</code> much.
 However, this is how you would set it up: add <code>mypy</code> to your dev dependencies (like above), and add a new script in
 <code>pyproject.toml</code> to run it (e.g., <code>types = "mypy ."</code>).
 Furthermore, you should also make an empty file <code>py.typed</code> (see <a href=https://peps.python.org/pep-0561/#packaging-type-information target=_blank rel=noopener>PEP-561</a>)
 in your Python package.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>touch ai_web_app/py.typed
 </span></span></code></pre></div><div class="alert alert-note"><div>If you&rsquo;ve been following these instructions, your code should look like this:
-<a href=https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe target=_blank rel=noopener>https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe</a></div></div><p>To continue this tutorial, go to <a href=/post/2023-03-04-ai-web-app>Part 4</a>.</p></div><div class=article-tags><a class="badge badge-light" href=/tag/ai/>AI</a>
+<a href=https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe target=_blank rel=noopener>https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe</a></div></div><p>To continue this tutorial, go to <a href=/post/2023-03-04-ai-web-app>Part 4</a>.</p><p>For comments or questions, use the
+<a href=https://www.reddit.com/user/dlcferreira/comments/11mv2rl/making_and_deploying_an_ai_web_app_in_2023_part_3/ target=_blank rel=noopener>Reddit discussion</a>
+or reach out to me <a href=mailto:daniel.ferreira.1@gmail.com>directly via email</a>.</p></div><div class=article-tags><a class="badge badge-light" href=/tag/ai/>AI</a>
 <a class="badge badge-light" href=/tag/machine-learning/>Machine Learning</a>
 <a class="badge badge-light" href=/tag/web-app/>Web App</a>
 <a class="badge badge-light" href=/tag/txtai/>txtai</a>
