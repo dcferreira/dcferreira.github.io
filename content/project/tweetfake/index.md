@@ -2,6 +2,7 @@
 title: Tweet Fake
 summary:
 tags:
+  - Machine Learning
   - NLP
 date: "2022-12-11T00:00:00Z"
 
@@ -21,7 +22,7 @@ url_video: "https://devpost.com/software/tweet-fake"
 slides: ""
 ---
 
-This was a short project I did with a random team for a weekend-long Hackathon.
+This was a short project I did with a pick-up team for a weekend-long Hackathon.
 The idea was to take the most liked tweets for a specific user, and use a Large Language Model to generate new tweets in this user's style.
 
 At the moment you can try it out at https://tweetfake.dcferreira.com (need to be logged in to Twitter), although it's not clear for how long this link will stay up.
