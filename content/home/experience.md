@@ -26,8 +26,11 @@ experience:
     company: Freelancer
     date_start: "2022-10-01"
     description: |2-
-        Currently looking for clients. I'm mostly interested in short-term projects, in both NLP and 
-        cybersecurity topics.
+        Open to embarking on new challenging projects in NLP and cybersecurity. 
+        Feel free to reach out if you think I can help you :)
+
+        Also available via [Toptal](https://www.toptal.com/resume/daniel-c-ferreira).
+
   - title: DATA SCIENTIST
     company: CYAN SECURITY
     company_url: "https://cyansecurity.com"
@@ -36,7 +39,9 @@ experience:
     date_start: "2019-06-01"
     date_end: "2022-09-30"
     description: |2-
-        Topics include website categorization (using multilingual text and images), DNS tunneling detection,
+        I tackled a multitude of ML problems in the intersection of NLP and cybersecurity.
+
+        I worked on topics such as website categorization (using multilingual text and images), DNS tunneling detection,
         and IoT security. Heavy emphasis on developing production-ready ML models, and following MLOps best
         practices. Using state-of-the-art Machine Learning models (e.g., Transformers).
 

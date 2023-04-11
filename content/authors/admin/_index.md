@@ -21,7 +21,7 @@ interests:
   - Artificial Intelligence
   - Cyber Security
   - Natural Language Processing
-  - Cryptocurrencies
+  - Blockchain
   - Music
 
 # Education to show in About widget
@@ -69,7 +69,7 @@ email: ""
 highlight_name: true
 ---
 
-I am a Machine Learning expert based in Vienna, Austria with a background in mathematics and 6+ years of experience in academia and industry.
+I am a Machine Learning expert based in Vienna, Austria with a background in mathematics and working since 2016 in academia and industry.
 My focus is on applying ML techniques to Natural Language Processing and/or Cybersecurity topics.
 
 I have experience in the full lifecycle of ML, from data collection/processing/labeling all the way to deployment,
