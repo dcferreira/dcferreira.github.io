@@ -112,7 +112,7 @@ experience:
         I was part of the [SUMMA project](https://www.youtube.com/watch?v=OkLwDI-CvYM), an H2020 project for media monitoring
         with multiple industry and academic international partners.
 
-        I specifically tackled the problem of entity linking in which, given a text with some entity mentions
+        I specifically tackled the problem of named entity recognition in which, given a text with some entity mentions
         (e.g., David and Victoria), the goal is to find the corresponding entities in Wikipedia (e.g., David Beckham and
         Victoria Beckham). We used both classical methods (such as SVM) and modern Deep Learning approaches.
 
