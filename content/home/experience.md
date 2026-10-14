@@ -22,45 +22,41 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: Staff AI Engineer
-    company: Unitary
-    company_url: "https://www.unitary.ai"
-    location: Remote
-    date_start: "2025-09-01"
-    description: |2-
-        Technical lead for how Unitary builds AI agents: the platform they run on, the workflow format they're generated from, and the decision engine they use.
-
-        * Co-founded Agent Factory, the platform every Unitary customer agent is built and run on, drastically cutting new-customer delivery effort.
-        * Spearheaded the workflow design format, a structured spec of each customer's process that serves as the single source of truth agents are generated from.
-        * Led the team that built a shared decision engine with automated prompt optimisation, now standard for every new customer with automated decisions.
-        * Drove company-wide adoption of AI coding agents, from a few early adopters to every engineer.
-
-  - title: Senior Machine Learning Engineer
-    company: Unitary
-    company_url: "https://www.unitary.ai"
-    location: Remote
-    date_start: "2024-02-01"
-    date_end: "2025-08-31"
-    description: |2-
-        Led new-customer AI deliveries and helped shape Unitary's move from ML classifiers to AI agents.
-
-        * Authored Automation Rate as the company's core measure of value, and the product vision behind its pivot to AI agents.
-        * Led the team that built Trustpilot's AI agents, cutting manual moderation effort by 78% and making decisions 4x faster ([case study](https://www.unitary.ai/customer-stories/trustpilot)).
-        * Took a global gaming company's content moderation from manual review to its first production LLM system.
-        * Delivered AI automation for four more customers, including +19% customer satisfaction for [Attune](https://www.unitary.ai/customer-stories/attune).
-
-  - title: Machine Learning Engineer
-    company: Unitary
+  - company: Unitary
     company_url: "https://www.unitary.ai"
     location: Remote
     date_start: "2023-06-28"
-    date_end: "2024-01-31"
-    description: |2-
-        Built the data and evaluation foundations behind Unitary's content-moderation models.
+    positions:
+      - title: Staff AI Engineer
+        date_start: "2025-09-01"
+        description: |2-
+            Technical lead for how Unitary builds AI agents: the platform they run on, the workflow format they're generated from, and the decision engine they use.
 
-        * Built the ML data pipeline platform (Spark, Delta Lake, AWS) and one-command model training.
-        * Set the evaluation standards for custom customer models: gold-standard test sets and traffic-realistic benchmarks that model releases were measured against.
-        * Led the internal team that delivered a resale marketplace's image-moderation classifier.
+            * Co-founded Agent Factory, the platform every Unitary customer agent is built and run on, drastically cutting new-customer delivery effort.
+            * Spearheaded the workflow design format, a structured spec of each customer's process that serves as the single source of truth agents are generated from.
+            * Led the team that built a shared decision engine with automated prompt optimisation, now standard for every new customer with automated decisions.
+            * Drove company-wide adoption of AI coding agents, from a few early adopters to every engineer.
+
+      - title: Senior Machine Learning Engineer
+        date_start: "2024-02-01"
+        date_end: "2025-08-31"
+        description: |2-
+            Led new-customer AI deliveries and helped shape Unitary's move from ML classifiers to AI agents.
+
+            * Authored Automation Rate as the company's core measure of value, and the product vision behind its pivot to AI agents.
+            * Led the team that built Trustpilot's AI agents, cutting manual moderation effort by 78% and making decisions 4x faster ([case study](https://www.unitary.ai/customer-stories/trustpilot)).
+            * Took a global gaming company's content moderation from manual review to its first production LLM system.
+            * Delivered AI automation for four more customers, including +19% customer satisfaction for [Attune](https://www.unitary.ai/customer-stories/attune).
+
+      - title: Machine Learning Engineer
+        date_start: "2023-06-28"
+        date_end: "2024-01-31"
+        description: |2-
+            Built the data and evaluation foundations behind Unitary's content-moderation models.
+
+            * Built the ML data pipeline platform (Spark, Delta Lake, AWS) and one-command model training.
+            * Set the evaluation standards for custom customer models: gold-standard test sets and traffic-realistic benchmarks that model releases were measured against.
+            * Led the internal team that delivered a resale marketplace's image-moderation classifier.
 
   - title: Career break
     company: Personal projects
