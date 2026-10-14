@@ -6,22 +6,23 @@ title: Daniel C. Ferreira
 superuser: true
 
 # Role/position/tagline
-role: Machine Learning Engineer
+role: Staff AI Engineer
 
 # Organizations/Affiliations to show in About widget
 organizations:
-  - name: Freelancer
-    # url: https://www.cyansecurity.com/
+  - name: Unitary
+    url: https://www.unitary.ai
 
 # Short bio (displayed in user profile at end of posts)
 bio: ""
 
 # Interests to show in About widget
 interests:
-  - Artificial Intelligence
-  - Cyber Security
+  - AI Agents
+  - Large Language Models
+  - AI for Software Engineering
   - Natural Language Processing
-  - Blockchain
+  - Cyber Security
   - Music
 
 # Education to show in About widget
@@ -69,12 +70,15 @@ email: ""
 highlight_name: true
 ---
 
-I am a Machine Learning expert based in Vienna, Austria with a background in mathematics and working since 2016 in academia and industry.
-My focus is on applying ML techniques to Natural Language Processing and/or Cybersecurity topics.
+I am an AI engineer based in Vienna, Austria, with a background in mathematics, working on machine learning since 2016 in academia and industry.
+These days my focus is on AI agents: building the platforms they run on, and making them reliable enough to automate real work.
 
-I have experience in the full lifecycle of ML, from data collection/processing/labeling all the way to deployment,
-and like to work in projects where a little bit of everything is needed.
-My past professional experience includes a [leading cybersecurity company](https://cyansecurity.com), the
-[Technical University of Vienna](https://cn.tuwien.ac.at/), among others.
+At [Unitary](https://www.unitary.ai) I went from building the data and evaluation foundations behind content-moderation models
+to co-founding the platform every customer AI agent is built and run on, and driving company-wide adoption of AI coding agents.
+Before that I built ML systems for a [leading cybersecurity company](https://cyansecurity.com), and did research at the
+[Technical University of Vienna](https://www.cn.tuwien.ac.at/) and Priberam.
+
+I like to work on projects where a little bit of everything is needed. In my spare time I build tooling for coding agents,
+like [agent-pawl](/project/agent-pawl/).
 
 Outside of work I'm passionate about music, and in particular metal (check out [some of my work](https://mydementia.bandcamp.com/releases)), and also video-games.

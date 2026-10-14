@@ -43,11 +43,11 @@ featured: true
 #   url: http://example.org
 
 url_pdf: "https://dl.acm.org/citation.cfm?id=3097771"
-url_code: "https://cn.tuwien.ac.at/network-traffic/ntadatabase"
+url_code: "https://www.cn.tuwien.ac.at/network-traffic/ntadatabase"
 url_dataset: ""
 url_poster: ""
 url_project: ""
-url_slides: "https://www.dcferreira.com/presentation_ntarc_netsecseminar"
+url_slides: "https://dcferreira.com/presentation_ntarc_netsecseminar"
 url_source: ""
 url_video: ""
 
