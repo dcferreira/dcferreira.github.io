@@ -56,9 +56,10 @@ social:
   # Link to a PDF of your resume/CV.
   # To use: copy your resume to `static/uploads/resume.pdf`, enable `ai` icons in `params.toml`,
   # and uncomment the lines below.
-  - icon: cv
-    icon_pack: ai
-    link: uploads/CVDanielFerreira2023_unabridged.pdf
+  # TODO: add an up-to-date CV (the 2023 one predates Unitary), then re-enable this link.
+  # - icon: cv
+  #   icon_pack: ai
+  #   link: uploads/CVDanielFerreira2023_unabridged.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 email: ""
