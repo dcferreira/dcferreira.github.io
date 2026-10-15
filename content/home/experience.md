@@ -64,8 +64,8 @@ experience:
     date_end: "2023-06-27"
     description: |2-
         Took time off after CYAN, then explored independent machine-learning work: launched [Toxic News](/project/toxic-news/),
-        built [Tweet Fake](/project/tweetfake/) at a weekend hackathon, wrote a [nine-part series](/post/) on building and
-        deploying an AI web app end to end, and contributed a fix to [detoxify](https://github.com/unitaryai/detoxify).
+        built [Tweet Fake](/project/tweetfake/) at a weekend hackathon, and wrote a [nine-part series](/post/) on building and
+        deploying an AI web app end to end.
 
   - title: Machine Learning Engineer
     company: CYAN Security
