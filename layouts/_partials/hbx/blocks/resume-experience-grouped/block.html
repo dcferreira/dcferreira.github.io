@@ -1,0 +1,80 @@
+{{/* Site block: resume-experience-grouped
+     Like upstream `resume-experience`, but an entry may carry nested `positions:`
+     (several roles at one org, rendered inside one card).
+     Data source: author profile `experience:` in data/authors/<username>.yaml. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+{{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+{{ $design := $block.design }}
+{{ if not (reflect.IsMap $design) }}{{ $design = dict }}{{ end }}
+
+{{ $username := "me" }}
+{{ with index $content "username" }}{{ $username = . }}{{ end }}
+{{ $profile := partial "functions/get_author_profile" $username }}
+{{ $date_format := index $design "date_format" | default "Jan 2006" }}
+{{ $title := index $content "title" | default (i18n "experience" | default "Experience") }}
+
+{{ $items := $profile.experience | default slice }}
+
+
+{{ if gt (len $items) 0 }}
+<div class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8">
+  <h2 class="mb-10 text-3xl font-bold text-gray-900 dark:text-white text-center">{{ $title }}</h2>
+  <div class="relative">
+    <div class="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-primary-400 to-primary-600/50"></div>
+    <div class="space-y-8">
+      {{ range $items }}
+      {{ $positions := .positions | default slice }}
+      {{ $start := .start }}{{ $end := .end }}
+      <div class="group relative pl-12 sm:pl-16">
+        <div class="absolute left-0 sm:left-2 top-6">
+          <div class="relative w-8 h-8 bg-white dark:bg-gray-900 border-2 border-primary-500 rounded-full flex items-center justify-center">
+            {{ partial "functions/get_icon" (dict "name" (.icon | default "briefcase") "attributes" "class='w-4 h-4 text-primary-600 dark:text-primary-400'") }}
+          </div>
+        </div>
+        <div class="relative bg-white dark:bg-white/[0.02] rounded-xl border border-gray-200 dark:border-white/[0.06] p-6 shadow-sm dark:shadow-none">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+            <div>
+              {{ if $positions }}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ with .url }}<a href="{{ . }}" target="_blank" rel="noopener" class="hover:text-primary-600">{{ end }}{{ .org }}{{ if .url }}</a>{{ end }}
+                </h3>
+                {{ with .location }}<p class="text-primary-600 dark:text-primary-400 font-medium mt-1">{{ . }}</p>{{ end }}
+              {{ else }}
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ .role }}</h3>
+                <p class="text-primary-600 dark:text-primary-400 font-medium mt-1">
+                  {{ with .url }}<a href="{{ . }}" target="_blank" rel="noopener">{{ end }}{{ .org }}{{ if .url }}</a>{{ end }}{{ with .location }} · {{ . }}{{ end }}
+                </p>
+              {{ end }}
+            </div>
+            <div class="text-sm text-gray-500 dark:text-gray-400 shrink-0">
+              {{ time.Format $date_format (time $start) }} –
+              {{ if $end }}{{ time.Format $date_format (time $end) }}{{ else }}<span class="text-primary-600 dark:text-primary-400 font-medium">{{ i18n "present" | default "Present" }}</span>{{ end }}
+            </div>
+          </div>
+
+          {{ with .summary }}
+          <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">{{ . | emojify | $page.RenderString }}</div>
+          {{ end }}
+
+          {{ range $i, $p := $positions }}
+          {{ if $i }}<hr class="my-4 border-gray-200 dark:border-white/10">{{ else }}<div class="mt-2"></div>{{ end }}
+          <div class="flex flex-col sm:flex-row sm:justify-between gap-1 mb-2">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $p.role }}</h4>
+            <div class="text-sm text-gray-500 dark:text-gray-400 shrink-0">
+              {{ time.Format $date_format (time $p.start) }} –
+              {{ if $p.end }}{{ time.Format $date_format (time $p.end) }}{{ else }}{{ i18n "present" | default "Present" }}{{ end }}
+            </div>
+          </div>
+          {{ with $p.summary }}
+          <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">{{ . | emojify | $page.RenderString }}</div>
+          {{ end }}
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+{{ end }}

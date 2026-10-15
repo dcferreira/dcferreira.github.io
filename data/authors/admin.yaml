@@ -1,0 +1,136 @@
+schema: hugoblox/author/v1
+slug: admin
+is_owner: true
+name:
+  display: Daniel C. Ferreira
+  given: Daniel
+  family: Ferreira
+role: Staff AI Engineer
+affiliations:
+  - name: Unitary
+    url: https://www.unitary.ai
+bio: |
+  I am an AI engineer based in Vienna, Austria, with a background in mathematics, working on machine learning since 2016 in academia and industry.
+  These days my focus is on AI agents: building the platforms they run on, and making them reliable enough to automate real work.
+
+  At [Unitary](https://www.unitary.ai) I went from building the data and evaluation foundations behind content-moderation models
+  to co-founding the platform every customer AI agent is built and run on, and driving company-wide adoption of AI coding agents.
+  Before that I built ML systems for a [leading cybersecurity company](https://cyansecurity.com), and did research at the
+  [Technical University of Vienna](https://www.cn.tuwien.ac.at/) and Priberam.
+
+  I like to work on projects where a little bit of everything is needed. In my spare time I build tooling for coding agents,
+  like [agent-pawl](/project/agent-pawl/).
+
+  Outside of work I'm passionate about music, and in particular metal (check out [some of my work](https://mydementia.bandcamp.com/releases)), and also video-games.
+
+links:
+  - icon: at-symbol
+    url: "mailto:daniel.ferreira.1@gmail.com"
+    label: E-mail
+  - icon: brands/github
+    url: https://github.com/dcferreira
+  - icon: academicons/google-scholar
+    url: "https://scholar.google.com/citations?user=4PusPA4AAAAJ&hl=en"
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/daniel-c-ferreira-355aa677
+  - icon: academicons/cv
+    url: uploads/CVDanielFerreira2023_unabridged.pdf
+    label: CV
+
+interests:
+  - AI Agents
+  - Large Language Models
+  - AI for Software Engineering
+  - Natural Language Processing
+  - Cyber Security
+  - Music
+
+education:
+  - degree: MSc in Applied Mathematics
+    institution: Técnico Lisboa
+    year: 2015
+  - degree: BSc in Applied Mathematics and Computation
+    institution: Técnico Lisboa
+    year: 2013
+
+experience:
+- org: Unitary
+  url: https://www.unitary.ai
+  location: Remote
+  start: '2023-06-28'
+  positions:
+  - role: Staff AI Engineer
+    start: '2025-09-01'
+    summary: |
+      Technical lead for how Unitary builds AI agents: the platform they run on, the workflow format they're generated from, and the decision engine they use.
+
+      * Co-founded Agent Factory, the platform every Unitary customer agent is built and run on, drastically cutting new-customer delivery effort.
+      * Spearheaded the workflow design format, a structured spec of each customer's process that serves as the single source of truth agents are generated from.
+      * Led the team that built a shared decision engine with automated prompt optimisation, now standard for every new customer with automated decisions.
+      * Drove company-wide adoption of AI coding agents, from a few early adopters to every engineer.
+  - role: Senior Machine Learning Engineer
+    start: '2024-02-01'
+    end: '2025-08-31'
+    summary: |
+      Led new-customer AI deliveries and helped shape Unitary's move from ML classifiers to AI agents.
+
+      * Authored Automation Rate as the company's core measure of value, and the product vision behind its pivot to AI agents.
+      * Led the team that built Trustpilot's AI agents, cutting manual moderation effort by 78% and making decisions 4x faster ([case study](https://www.unitary.ai/customer-stories/trustpilot)).
+      * Took a global gaming company's content moderation from manual review to its first production LLM system.
+      * Delivered AI automation for four more customers, including +19% customer satisfaction for [Attune](https://www.unitary.ai/customer-stories/attune).
+  - role: Machine Learning Engineer
+    start: '2023-06-28'
+    end: '2024-01-31'
+    summary: |
+      Built the data and evaluation foundations behind Unitary's content-moderation models.
+
+      * Built the ML data pipeline platform (Spark, Delta Lake, AWS) and one-command model training.
+      * Set the evaluation standards for custom customer models: gold-standard test sets and traffic-realistic benchmarks that model releases were measured against.
+      * Led the internal team that delivered a resale marketplace's image-moderation classifier.
+- role: Career break
+  org: Personal projects
+  start: '2022-10-01'
+  end: '2023-06-27'
+  summary: |
+    Took time off after CYAN, then explored independent machine-learning work: launched [Toxic News](/project/toxic-news/),
+    built [Tweet Fake](/project/tweetfake/) at a weekend hackathon, and wrote a [nine-part series](/post/) on building and
+    deploying an AI web app end to end.
+- role: Machine Learning Engineer
+  org: CYAN Security
+  url: https://cyansecurity.com
+  location: Vienna, Austria
+  start: '2019-06-01'
+  end: '2022-09-30'
+  summary: |
+    Built the machine-learning systems that classified the web for CYAN's content-filtering products.
+
+    * Led modelling for a multimodal (text and image) website classifier covering 100+ languages, which found over 10x more harmful sites than the system it replaced.
+    * Built the Spark/Databricks pipelines on AWS feeding it ~100k websites a day, plus a serverless scraper fetching millions of pages daily.
+    * Built a domain-embedding model over DNS traffic for phishing detection.
+    * Stepped in as interim ML team lead (4 engineers), and represented CYAN in an FFG-funded research collaboration with SBA Research and Politecnico di Torino.
+- role: Researcher
+  org: TU Wien
+  url: https://www.cn.tuwien.ac.at/
+  location: Vienna, Austria
+  start: '2016-08-01'
+  end: '2019-02-28'
+  summary: |
+    I was part of the [BigDAMA project](https://bigdama.ait.ac.at/), a fundamental research project focused on big data analytics for network traffic monitoring and analysis.
+
+    My research topics are mostly related to how to represent network traffic for detecting attacks at the
+    network level (i.e., which features to use). Experimented with both classical features (what have people
+    been using and why?), and feature learning approaches using Deep Learning techniques, and in particular
+    representing traffic in 2-dimensional spaces.
+- role: Junior Researcher
+  org: Priberam
+  url: https://www.priberam.pt
+  location: Lisbon, Portugal
+  start: '2016-03-01'
+  end: '2016-07-31'
+  summary: |
+    I was part of the [SUMMA project](https://www.youtube.com/watch?v=OkLwDI-CvYM), an H2020 project for media monitoring
+    with multiple industry and academic international partners.
+
+    I specifically tackled the problem of named entity recognition in which, given a text with some entity mentions
+    (e.g., David and Victoria), the goal is to find the corresponding entities in Wikipedia (e.g., David Beckham and
+    Victoria Beckham). We used both classical methods (such as SVM) and modern Deep Learning approaches.
