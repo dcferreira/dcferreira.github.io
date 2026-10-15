@@ -20,7 +20,7 @@ marketing:
     description: "Daniel's personal page"
     twitter: "dcferreira1"
   analytics:
-    google_analytics: "UA-137896487-1"
+    google_analytics: ""
     baidu_tongji: ""
   verification:
     google: ""
