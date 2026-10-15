@@ -1,6 +1,6 @@
 ---
 title: Tweet Fake
-summary:
+summary: A weekend hackathon project generating new tweets in a user's style with a Large Language Model.
 tags:
   - Machine Learning
   - NLP
@@ -25,5 +25,4 @@ slides: ""
 This was a short project I did with a pick-up team for a weekend-long Hackathon.
 The idea was to take the most liked tweets for a specific user, and use a Large Language Model to generate new tweets in this user's style.
 
-At the moment you can try it out at https://tweetfake.dcferreira.com (need to be logged in to Twitter), although it's not clear for how long this link will stay up.
-There is also a short video in [the devpost project page](https://devpost.com/software/tweet-fake).
+The demo is no longer online, but there is a short video in [the devpost project page](https://devpost.com/software/tweet-fake).

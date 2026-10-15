@@ -22,32 +22,69 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: Machine Learning Engineer
-    company: Freelancer
+  - company: Unitary
+    company_url: "https://www.unitary.ai"
+    location: Remote
+    date_start: "2023-06-28"
+    positions:
+      - title: Staff AI Engineer
+        date_start: "2025-09-01"
+        description: |2-
+            Technical lead for how Unitary builds AI agents: the platform they run on, the workflow format they're generated from, and the decision engine they use.
+
+            * Co-founded Agent Factory, the platform every Unitary customer agent is built and run on, drastically cutting new-customer delivery effort.
+            * Spearheaded the workflow design format, a structured spec of each customer's process that serves as the single source of truth agents are generated from.
+            * Led the team that built a shared decision engine with automated prompt optimisation, now standard for every new customer with automated decisions.
+            * Drove company-wide adoption of AI coding agents, from a few early adopters to every engineer.
+
+      - title: Senior Machine Learning Engineer
+        date_start: "2024-02-01"
+        date_end: "2025-08-31"
+        description: |2-
+            Led new-customer AI deliveries and helped shape Unitary's move from ML classifiers to AI agents.
+
+            * Authored Automation Rate as the company's core measure of value, and the product vision behind its pivot to AI agents.
+            * Led the team that built Trustpilot's AI agents, cutting manual moderation effort by 78% and making decisions 4x faster ([case study](https://www.unitary.ai/customer-stories/trustpilot)).
+            * Took a global gaming company's content moderation from manual review to its first production LLM system.
+            * Delivered AI automation for four more customers, including +19% customer satisfaction for [Attune](https://www.unitary.ai/customer-stories/attune).
+
+      - title: Machine Learning Engineer
+        date_start: "2023-06-28"
+        date_end: "2024-01-31"
+        description: |2-
+            Built the data and evaluation foundations behind Unitary's content-moderation models.
+
+            * Built the ML data pipeline platform (Spark, Delta Lake, AWS) and one-command model training.
+            * Set the evaluation standards for custom customer models: gold-standard test sets and traffic-realistic benchmarks that model releases were measured against.
+            * Led the internal team that delivered a resale marketplace's image-moderation classifier.
+
+  - title: Career break
+    company: Personal projects
     date_start: "2022-10-01"
+    date_end: "2023-06-27"
     description: |2-
-        Open to embarking on new challenging projects in NLP and cybersecurity. 
-        Feel free to reach out if you think I can help you :)
+        Took time off after CYAN, then explored independent machine-learning work: launched [Toxic News](/project/toxic-news/),
+        built [Tweet Fake](/project/tweetfake/) at a weekend hackathon, and wrote a [nine-part series](/post/) on building and
+        deploying an AI web app end to end.
 
-        Also available via [Toptal](https://www.toptal.com/resume/daniel-c-ferreira).
-
-  - title: DATA SCIENTIST
-    company: CYAN SECURITY
+  - title: Machine Learning Engineer
+    company: CYAN Security
     company_url: "https://cyansecurity.com"
     # company_logo: org-gc
     location: Vienna, Austria
     date_start: "2019-06-01"
     date_end: "2022-09-30"
     description: |2-
-        I tackled a multitude of ML problems in the intersection of NLP and cybersecurity.
+        Built the machine-learning systems that classified the web for CYAN's content-filtering products.
 
-        I worked on topics such as website categorization (using multilingual text and images), DNS tunneling detection,
-        and IoT security. Heavy emphasis on developing production-ready ML models, and following MLOps best
-        practices. Using state-of-the-art Machine Learning models (e.g., Transformers).
+        * Led modelling for a multimodal (text and image) website classifier covering 100+ languages, which found over 10x more harmful sites than the system it replaced.
+        * Built the Spark/Databricks pipelines on AWS feeding it ~100k websites a day, plus a serverless scraper fetching millions of pages daily.
+        * Built a domain-embedding model over DNS traffic for phishing detection.
+        * Stepped in as interim ML team lead (4 engineers), and represented CYAN in an FFG-funded research collaboration with SBA Research and Politecnico di Torino.
 
-  - title: RESEARCHER
-    company: TU WIEN
-    company_url: "https://cn.tuwien.ac.at/"
+  - title: Researcher
+    company: TU Wien
+    company_url: "https://www.cn.tuwien.ac.at/"
     # company_logo: org-x
     location: Vienna, Austria
     date_start: "2016-08-01"
@@ -60,8 +97,8 @@ experience:
         been using and why?), and feature learning approaches using Deep Learning techniques, and in particular
         representing traffic in 2-dimensional spaces.
 
-  - title: JUNIOR RESEARCHER
-    company: PRIBERAM
+  - title: Junior Researcher
+    company: Priberam
     company_url: "https://www.priberam.pt"
     # company_logo: org-x
     location: Lisbon, Portugal

@@ -1,6 +1,6 @@
 ---
 title: Infinity for Youtube
-summary:
+summary: A browser extension that hides YouTube video length for user-selected channels.
 tags:
   - Webdev
 date: "2022-10-24T00:00:00Z"
@@ -24,4 +24,4 @@ slides: ""
 A simple browser extension that hides YouTube video length for user-selected channels.
 Unlike other similar browser extensions, this one also hides the video length in video thumbnails.
 
-You can easily install it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/infinity-for-youtube/dikhofideaigolhecjcmfeifbchnebeo).
+You can easily install it from the [Chrome Web Store](https://chromewebstore.google.com/detail/infinity-for-youtube/dikhofideaigolhecjcmfeifbchnebeo).
