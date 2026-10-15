@@ -1,58 +1,33 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 2)
 subtitle: Make a Proof of Concept for an AI App
-
-# Summary for listings and search engines
 summary: How and why to make a proof of concept for an AI app, using Jupyter Notebook.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:02:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:02:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:02:00Z'
+lastmod: '2023-03-08T00:02:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-
-This post uses [txtai](https://neuml.github.io/txtai/) as the AI library.
-
-Alternatives would be: [transformers](https://huggingface.co/docs/transformers/index), [sentence-transformers](https://www.sbert.net/), [PyTorch](https://pytorch.org/), [Keras](https://keras.io/), [scikit-learn](https://scikit-learn.org/stable/), among many others.
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
+>
+> This post uses [txtai](https://neuml.github.io/txtai/) as the AI library.
+>
+> Alternatives would be: [transformers](https://huggingface.co/docs/transformers/index), [sentence-transformers](https://www.sbert.net/), [PyTorch](https://pytorch.org/), [Keras](https://keras.io/), [scikit-learn](https://scikit-learn.org/stable/), among many others.
 
 The first step in any project is always to make a proof of concept.
 At this stage, we don't care about performance, edge cases, or any other intricacies—
@@ -202,10 +177,9 @@ We can also try other queries:
 As you can see, while the results maybe aren't the best, they are good enough for our proof of concept.
 We could spend a lot more time making this part better, but in the spirit of [shipping early and often](https://www.ycombinator.com/library/40-the-art-of-shipping-early-and-often), this is enough for now.
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/19cda18ea099d46716b280694eed2677ef680e5d
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/19cda18ea099d46716b280694eed2677ef680e5d
 
 To continue this tutorial, go to [Part 3](/post/2023-03-03-ai-web-app).
 

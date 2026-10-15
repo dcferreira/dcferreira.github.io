@@ -1,43 +1,19 @@
 ---
 title: Efficient UDFs on Databricks with unpickleable objects
 subtitle: How to avoid `PicklingError` on custom UDFs on Databricks/Spark, while keeping optimal performance.
-
-# Summary for listings and search engines
 summary: How to avoid `PicklingError` on custom UDFs on Databricks/Spark, while keeping optimal performance.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2022-03-21T17:30:00Z"
-
-# Date updated
-lastmod: "2022-03-21T17:30:00Z"
-
-# Is this an unpublished draft?
+date: '2022-03-21T17:30:00Z'
+lastmod: '2022-03-21T17:30:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - Spark
-  - Databricks
-
+- Spark
+- Databricks
 categories:
-  - Spark
-  - Databricks
+- Spark
+- Databricks
 ---
 
 ## Overview
@@ -120,11 +96,10 @@ On Databricks, you can install it by running the following cell
 %pip install cachetools
 ```
 
-{{% callout note %}}
-We can't use [`lru_cache`](https://docs.python.org/3/library/functools.html#functools.lru_cache) from the standard library,
-because it requires serialization.
-Trying it gives us the error: `PicklingError: Could not serialize object: AttributeError: 'functools._lru_cache_wrapper' object has no attribute '__bases__'`
-{{% /callout %}}
+> [!NOTE]
+> We can't use [`lru_cache`](https://docs.python.org/3/library/functools.html#functools.lru_cache) from the standard library,
+> because it requires serialization.
+> Trying it gives us the error: `PicklingError: Could not serialize object: AttributeError: 'functools._lru_cache_wrapper' object has no attribute '__bases__'`
 
 Usage is very simple:
 

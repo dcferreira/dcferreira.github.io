@@ -2,24 +2,14 @@
 title: Tweet Fake
 summary: A weekend hackathon project generating new tweets in a user's style with a Large Language Model.
 tags:
-  - Machine Learning
-  - NLP
-date: "2022-12-11T00:00:00Z"
-
-# Optional external URL for project (replaces project detail page).
-external_link: ""
-
-url_code: "https://github.com/ahmedsaleem111/socials_summ/tree/ui_dferreira"
-url_pdf: ""
-url_slides: ""
-url_video: "https://devpost.com/software/tweet-fake"
-
-# Slides (optional).
-#   Associate this project with Markdown slides.
-#   Simply enter your slide deck's filename without extension.
-#   E.g. `slides = "example-slides"` references `content/slides/example-slides.md`.
-#   Otherwise, set `slides = ""`.
-slides: ""
+- Machine Learning
+- NLP
+date: '2022-12-11T00:00:00Z'
+links:
+- type: code
+  url: https://github.com/ahmedsaleem111/socials_summ/tree/ui_dferreira
+- type: video
+  url: https://devpost.com/software/tweet-fake
 ---
 
 This was a short project I did with a pick-up team for a weekend-long Hackathon.

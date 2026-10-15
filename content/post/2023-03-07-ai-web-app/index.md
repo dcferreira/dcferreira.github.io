@@ -1,58 +1,33 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 7)
 subtitle: Build a CI/CD Pipeline for an AI App
-
-# Summary for listings and search engines
 summary: How to develop a simple CI/CD pipeline for testing your code with GitHub Actions.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:07:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:07:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:07:00Z'
+lastmod: '2023-03-08T00:07:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-
-This post uses [GitHub Actions](https://docs.github.com/en/actions).
-Possible alternatives are: [GitLab Pipelines](https://docs.gitlab.com/ee/ci/pipelines/), [Jenkins](https://www.jenkins.io/),
-[pypyr](https://pypyr.io/), and [many others](https://github.com/pditommaso/awesome-pipeline).
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
+>
+> This post uses [GitHub Actions](https://docs.github.com/en/actions).
+> Possible alternatives are: [GitLab Pipelines](https://docs.gitlab.com/ee/ci/pipelines/), [Jenkins](https://www.jenkins.io/),
+> [pypyr](https://pypyr.io/), and [many others](https://github.com/pditommaso/awesome-pipeline).
 
 Now that we have a first version of our app working, it's time to setup a CI pipeline.
 In this post, we'll make a very simple pipeline which runs linting and unit/integration tests.
@@ -152,10 +127,9 @@ For next things to do with the pipelines, you can have a look at
 [building/pushing docker images](https://github.com/marketplace/actions/build-and-push-docker-images)
 (such as the one we built in [Part 6](/post/2023-03-06-ai-web-app)).
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/b91b29a4baf45969446068c1b2b53913b5f933ee
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/b91b29a4baf45969446068c1b2b53913b5f933ee
 
 To continue this tutorial, go to [Part 8](/post/2023-03-08-ai-web-app).
 

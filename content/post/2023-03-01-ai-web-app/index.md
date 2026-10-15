@@ -1,48 +1,24 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 1)
 subtitle: A Complete Guide from 0 to Deployment for AI Web Apps
-
-# Summary for listings and search engines
 summary: A complete guide to developing and deploying an AI Web App with modern tools.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:01:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:01:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:01:00Z'
+lastmod: '2023-03-08T00:01:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
 Did you hear the news?

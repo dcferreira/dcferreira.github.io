@@ -1,57 +1,32 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 8)
 subtitle: Deploy a Serverless AI App with Google Cloud
-
-# Summary for listings and search engines
 summary: How to deploy a serverless AI app to Google Cloud almost for free using Cloud Run and the Artifact Registry.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:08:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:08:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:08:00Z'
+lastmod: '2023-03-08T00:08:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-
-This post uses [Google's Cloud Run](https://cloud.google.com/run).
-Alternatives would be [AWS's Lambda](https://aws.amazon.com/lambda/), [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview).
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
+>
+> This post uses [Google's Cloud Run](https://cloud.google.com/run).
+> Alternatives would be [AWS's Lambda](https://aws.amazon.com/lambda/), [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview).
 
 It's finally time to deploy our web app so that everyone can reach it.
 We'll deploy our app in a [serverless](https://en.wikipedia.org/wiki/Serverless_computing) fashion.
@@ -180,18 +155,17 @@ and you can reach it with
 curl -X GET "https://<SERVICE-URL>/search?query=risk%20factors"
 ```
 
-{{% callout warning %}}
-About keeping your budget low:
-
-- If you setup your Cloud Run function without authentication, it's a good idea
-  to set [budget limits](https://cloud.google.com/billing/docs/how-to/budgets)
-  and avoid unpleasant billing surprises.
-- If you're pushing many images to the Artifact Registry, the costs can also quickly
-  add up.
-  You should regularly delete old images, or create a
-  [cleanup policy](https://cloud.google.com/artifact-registry/docs/repositories/cleanup-policy).
-
-{{% /callout %}}
+> [!WARNING]
+> About keeping your budget low:
+>
+> - If you setup your Cloud Run function without authentication, it's a good idea
+>   to set [budget limits](https://cloud.google.com/billing/docs/how-to/budgets)
+>   and avoid unpleasant billing surprises.
+> - If you're pushing many images to the Artifact Registry, the costs can also quickly
+>   add up.
+>   You should regularly delete old images, or create a
+>   [cleanup policy](https://cloud.google.com/artifact-registry/docs/repositories/cleanup-policy).
+>
 
 To continue this tutorial, go to [Part 9](/post/2023-03-09-ai-web-app).
 

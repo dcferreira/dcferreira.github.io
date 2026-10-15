@@ -1,54 +1,29 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 6)
 subtitle: Containerize an App with Docker
-
-# Summary for listings and search engines
 summary: How to use multi-stage building in Docker to containerize a hatch project with a web app.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:06:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:06:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:06:00Z'
+lastmod: '2023-03-08T00:06:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 
 Now that your web app is working locally, it's time to think about deploying it somewhere.
 The easiest way to do that is to make a Docker image, and send it to wherever you want to deploy it.
@@ -91,11 +66,10 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
 
 ```
 
-{{% callout warning %}}
-If your project directory contains many files (or some big ones), building this image might take a long time.
-If that is the case, you should make a `.dockerignore` file to avoid having docker run through all your files.
-See more about this in [Docker's docs](https://docs.docker.com/engine/reference/builder/#dockerignore-file).
-{{% /callout %}}
+> [!WARNING]
+> If your project directory contains many files (or some big ones), building this image might take a long time.
+> If that is the case, you should make a `.dockerignore` file to avoid having docker run through all your files.
+> See more about this in [Docker's docs](https://docs.docker.com/engine/reference/builder/#dockerignore-file).
 
 To simplify our workflow, we should also add a couple of scripts to our `pyproject.toml`, to build and run our
 docker image:
@@ -129,10 +103,9 @@ curl -X GET "http://127.0.0.1:5000/search?query=symptoms%20of%20covid"
 
 This request should get the same result as the one in [Part 5](/post/2023-03-05-ai-web-app)
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/1a9b73f17d99536801e6672d6161056d71fa44b4
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/1a9b73f17d99536801e6672d6161056d71fa44b4
 
 # \[Optional\] Optimize the Image
 

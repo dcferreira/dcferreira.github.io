@@ -2,24 +2,13 @@
 title: Toxic News
 summary: Ranking online news outlets by the toxicity of their daily headlines, using machine learning.
 tags:
-  - NLP
-date: "2023-03-11T00:00:00Z"
-
-# Optional external URL for project (replaces project detail page).
-external_link: ""
-
-url_project: "https://toxicnews.dcferreira.com"
-url_code: "https://github.com/dcferreira/toxic-news"
-url_pdf: ""
-url_slides: ""
-url_video: ""
-
-# Slides (optional).
-#   Associate this project with Markdown slides.
-#   Simply enter your slide deck's filename without extension.
-#   E.g. `slides = "example-slides"` references `content/slides/example-slides.md`.
-#   Otherwise, set `slides = ""`.
-slides: ""
+- NLP
+date: '2023-03-11T00:00:00Z'
+links:
+- type: code
+  url: https://github.com/dcferreira/toxic-news
+- type: site
+  url: https://toxicnews.dcferreira.com
 ---
 
 A website enabling automatic ranking of online media outlets using machine learning models (for now, only using Unitary.ai's [detoxify model](https://github.com/unitaryai/detoxify)).

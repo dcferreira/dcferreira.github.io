@@ -1,54 +1,29 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 9)
 subtitle: Deploy a Simple Frontend for an AI App
-
-# Summary for listings and search engines
 summary: How to make and deploy a simple frontend for an AI web app that interacts with a serverless backend.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:09:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:09:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:09:00Z'
+lastmod: '2023-03-08T00:09:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 
 By this point we have everything on the backend already setup, we just need a nice
 way to interact with it.
@@ -240,10 +215,9 @@ Also don't forget to update the URL of the backend in the HTML file above.
 
 And that's all, we finally have a fully functioning AI web app! :)
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/656ebd505131d7f96e5366e1a3f0e5c76a1007c0
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/656ebd505131d7f96e5366e1a3f0e5c76a1007c0
 
 For comments or questions, use the
 [Reddit discussion](https://www.reddit.com/user/dlcferreira/comments/11mv4en/making_and_deploying_an_ai_web_app_in_2023_part_9/)

@@ -2,19 +2,12 @@
 title: Budgebell
 summary: An agent-first, fully-local desktop app that nudges you through habits, managed by your AI agent over MCP.
 tags:
-  - AI Agents
-  - Webdev
-date: "2026-09-15T00:00:00Z"
-
-# Optional external URL for project (replaces project detail page).
-external_link: ""
-
-url_code: "https://github.com/dcferreira/budgebell"
-url_pdf: ""
-url_slides: ""
-url_video: ""
-
-slides: ""
+- AI Agents
+- Webdev
+date: '2026-09-15T00:00:00Z'
+links:
+- type: code
+  url: https://github.com/dcferreira/budgebell
 ---
 
 An agent-first desktop app that nudges you through habits (movement drills first, general habits too), shows you what to do, and logs what you actually did.

@@ -1,60 +1,35 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 5)
 subtitle: Implement and Test a Python Backend Server
-
-# Summary for listings and search engines
 summary: How to use FastAPI+Uvicorn to write and deploy the backend of a simple AI App.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:05:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:05:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:05:00Z'
+lastmod: '2023-03-08T00:05:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-
-This post uses [FastAPI](https://fastapi.tiangolo.com) as the web framework and
-[Uvicorn](https://www.uvicorn.org) as the web server.
-
-Some alternatives to FastAPI are [Flask](https://flask.palletsprojects.com/en/2.2.x/), [Starlette](https://www.starlette.io/), and [Django](https://www.djangoproject.com/).
-Alternatives to Uvicorn include [Gunicorn](https://gunicorn.org/), [Hypercorn](https://hypercorn.readthedocs.io/en/latest/), [nginx](https://www.nginx.com/).
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
+>
+> This post uses [FastAPI](https://fastapi.tiangolo.com) as the web framework and
+> [Uvicorn](https://www.uvicorn.org) as the web server.
+>
+> Some alternatives to FastAPI are [Flask](https://flask.palletsprojects.com/en/2.2.x/), [Starlette](https://www.starlette.io/), and [Django](https://www.djangoproject.com/).
+> Alternatives to Uvicorn include [Gunicorn](https://gunicorn.org/), [Hypercorn](https://hypercorn.readthedocs.io/en/latest/), [nginx](https://www.nginx.com/).
 
 By this point we have an AI project that we're happy with, and want to make it easily available.
 The goal of this post is to write a simple backend service that calls the Python code from [Part 4](/post/2023-03-04-ai-web-app),
@@ -212,10 +187,9 @@ markers = [
 
 Now we can differentiate between running unit tests (`hatch run cov`) and integration tests (`hatch run integration`).
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/1ac21850a30e8d5efacba162ba8e7eefec08b8ac
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/1ac21850a30e8d5efacba162ba8e7eefec08b8ac
 
 To continue this tutorial, go to [Part 6](/post/2023-03-06-ai-web-app).
 

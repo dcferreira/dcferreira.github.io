@@ -2,27 +2,15 @@
 title: City-GAN
 summary: City-GAN uses Conditional Generative Adversarial Neural Networks to generate pictures of fake buildings, with the architectural characteristics of a specific city.
 tags:
-  - Deep Learning
-date: "2019-07-01T00:00:00Z"
-
-# Optional external URL for project (replaces project detail page).
-external_link: ""
-
+- Deep Learning
+date: '2019-07-01T00:00:00Z'
 image:
-  caption: ""
   focal_point: Smart
-
-url_code: "https://github.com/muxamilian/city-gan"
-url_pdf: "https://arxiv.org/pdf/1907.05280.pdf"
-url_slides: ""
-url_video: ""
-
-# Slides (optional).
-#   Associate this project with Markdown slides.
-#   Simply enter your slide deck's filename without extension.
-#   E.g. `slides = "example-slides"` references `content/slides/example-slides.md`.
-#   Otherwise, set `slides = ""`.
-slides: ""
+links:
+- type: pdf
+  url: https://arxiv.org/pdf/1907.05280.pdf
+- type: code
+  url: https://github.com/muxamilian/city-gan
 ---
 
 Generative Adversarial Networks (GANs) are a well-known technique that is trained on samples (e.g. pictures

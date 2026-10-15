@@ -1,54 +1,29 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 4)
 subtitle: Develop an App with Test-Driven Development
-
-# Summary for listings and search engines
 summary: How and why we should use pytest and unit tests to facilitate development when writing an AI App.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:04:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:04:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:04:00Z'
+lastmod: '2023-03-08T00:04:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 
 In this post we'll have a look [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development).
 The idea is to first write some simple unit tests, where we describe how our code
@@ -216,10 +191,9 @@ hatch run cov
 This command will fail with `NotImplementedError`, as the functions we're testing aren't yet implemented.
 If you're following along and got a different error, check the link below for the full code.
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/0d29f2c81a628fb5e856f7da5314995a6bf601bf
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/0d29f2c81a628fb5e856f7da5314995a6bf601bf
 
 # Implementing Functions
 
@@ -364,10 +338,9 @@ def search(
 
 Running `hatch run cov` should now show the tests as passing.
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/afe845ca0a5866d4a2d4ef6bb687c31f3384d473
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/afe845ca0a5866d4a2d4ef6bb687c31f3384d473
 
 To continue this tutorial, go to [Part 5](/post/2023-03-05-ai-web-app).
 

@@ -2,19 +2,12 @@
 title: agent-pawl
 summary: Makes AI coding agents follow the steps you want, in the order you want. A state-machine workflow engine for Claude Code.
 tags:
-  - AI Agents
-  - LLMs
-date: "2026-09-18T00:00:00Z"
-
-# Optional external URL for project (replaces project detail page).
-external_link: ""
-
-url_code: "https://github.com/dcferreira/agent-pawl"
-url_pdf: ""
-url_slides: ""
-url_video: ""
-
-slides: ""
+- AI Agents
+- LLMs
+date: '2026-09-18T00:00:00Z'
+links:
+- type: code
+  url: https://github.com/dcferreira/agent-pawl
 ---
 
 `pawl` ensures your AI coding agents follow the steps you want, in the order you want.

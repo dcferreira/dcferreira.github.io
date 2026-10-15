@@ -1,54 +1,29 @@
 ---
 title: Making and Deploying an AI Web App in 2023 (Part 3)
 subtitle: Setup the Python Project with Modern Tools
-
-# Summary for listings and search engines
 summary: How to setup a Python project for easy developing with black, ruff, pre-commit hooks, and type hints.
-
-# Link this post with a project
-projects: []
-
-# Date published
-date: "2023-03-08T00:03:00Z"
-
-# Date updated
-lastmod: "2023-03-08T00:03:00Z"
-
-# Is this an unpublished draft?
+date: '2023-03-08T00:03:00Z'
+lastmod: '2023-03-08T00:03:00Z'
 draft: false
-
-# Show this page in the Featured widget?
 featured: false
-
-# Featured image
-# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
-image:
-  caption: "Image credit: [**Unsplash**](https://unsplash.com/photos/CpkOjOcXdUY)"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
-  - admin
-
+- admin
 tags:
-  - AI
-  - Machine Learning
-  - Web App
-  - txtai
-  - Web Development
-  - Serverless
-  - NLP
-
+- AI
+- Machine Learning
+- Web App
+- txtai
+- Web Development
+- Serverless
+- NLP
 categories:
-  - AI
-  - NLP
+- AI
+- NLP
 ---
 
-{{% callout note %}}
-This is part of a multi-part blogpost about how to build an AI Web App.
-Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
-{{% /callout %}}
+> [!NOTE]
+> This is part of a multi-part blogpost about how to build an AI Web App.
+> Please refer to [Part 1](/post/2023-03-01-ai-web-app) for more context.
 
 In this post we will have a look at how to setup Python projects using modern
 tools in the Python ecosystem.
@@ -62,10 +37,9 @@ while integrating with my workflows.
 
 # Project Manager
 
-{{% callout note %}}
-Alternatives to `hatch`: [Poetry](https://python-poetry.org/), [PDM](https://pdm.fming.dev/latest/),
-[Conda](https://docs.conda.io/en/latest/), [venv](https://docs.python.org/3/library/venv.html).
-{{% /callout %}}
+> [!NOTE]
+> Alternatives to `hatch`: [Poetry](https://python-poetry.org/), [PDM](https://pdm.fming.dev/latest/),
+> [Conda](https://docs.conda.io/en/latest/), [venv](https://docs.python.org/3/library/venv.html).
 
 My currently favorite project manager is [hatch](https://hatch.pypa.io/).
 If you've never used a project manager before, its main job is keeping track of your dependencies,
@@ -77,13 +51,12 @@ I like `hatch` in particular because it's super fast at resolving dependencies
 and has a utility for running scripts and an environment manager.
 These last 2 features allow `hatch` to replace [tox](https://tox.wiki/en/latest/) for many use cases.
 
-{{% callout warning %}}
-At the moment `hatch` has a big downside compared to `Poetry`, in that it can't pin dependencies.
-You can specify the library versions you want, but their dependencies' versions won't be fixed.
-(See [their FAQ about libraries vs applications](https://hatch.pypa.io/latest/meta/faq/#libraries-vs-applications))
-
-Hopefully this will be solved in the future.
-{{% /callout %}}
+> [!WARNING]
+> At the moment `hatch` has a big downside compared to `Poetry`, in that it can't pin dependencies.
+> You can specify the library versions you want, but their dependencies' versions won't be fixed.
+> (See [their FAQ about libraries vs applications](https://hatch.pypa.io/latest/meta/faq/#libraries-vs-applications))
+>
+> Hopefully this will be solved in the future.
 
 So the first step is to install `hatch`
 
@@ -115,12 +88,11 @@ The most interesting file here is `pyproject.toml`, where you will keep all your
 
 # Linter
 
-{{% callout note %}}
-Alternatives to `ruff`: [flake8](https://flake8.pycqa.org/en/latest/), [FlakeHeaven](https://flakeheaven.readthedocs.io/en/latest/),
-[FlakeHell](https://flakehell.readthedocs.io/).
-
-I'm not aware of good alternatives to `black` or `isort`.
-{{% /callout %}}
+> [!NOTE]
+> Alternatives to `ruff`: [flake8](https://flake8.pycqa.org/en/latest/), [FlakeHeaven](https://flakeheaven.readthedocs.io/en/latest/),
+> [FlakeHell](https://flakehell.readthedocs.io/).
+>
+> I'm not aware of good alternatives to `black` or `isort`.
 
 For linting, my favorite tool is [ruff](https://github.com/charliermarsh/ruff).
 It's significantly faster than any other linter, and very simple to setup and forget.
@@ -242,10 +214,9 @@ in your Python package.
 touch ai_web_app/py.typed
 ```
 
-{{% callout note %}}
-If you've been following these instructions, your code should look like this:
-https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe
-{{% /callout %}}
+> [!NOTE]
+> If you've been following these instructions, your code should look like this:
+> https://github.com/dcferreira/ai-web-app/tree/26dde85a68232db3ee84967098b872d54e8414fe
 
 To continue this tutorial, go to [Part 4](/post/2023-03-04-ai-web-app).
 
