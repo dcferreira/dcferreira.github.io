@@ -373,4 +373,4 @@ To continue this tutorial, go to [Part 5](/post/2023-03-05-ai-web-app).
 
 For comments or questions, use the
 [Reddit discussion](https://www.reddit.com/user/dlcferreira/comments/11mv30e/making_and_deploying_an_ai_web_app_in_2023_part_4/)
-or reach out to me [directly via email](mailto:daniel.ferreira.1@gmail.com).
+or reach out to me [directly via email](mailto:daniel@dcferreira.com).

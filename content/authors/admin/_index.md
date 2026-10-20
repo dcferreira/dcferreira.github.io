@@ -42,7 +42,7 @@ education:
 social:
   - icon: envelope
     icon_pack: fas
-    link: "mailto:daniel.ferreira.1@gmail.com"
+    link: "mailto:daniel@dcferreira.com"
   - icon: github
     icon_pack: fab
     link: https://github.com/dcferreira
