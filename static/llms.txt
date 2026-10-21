@@ -1,0 +1,27 @@
+# Daniel C. Ferreira
+
+> Staff AI Engineer in Vienna, Austria. Builds AI agents and the platforms they run on: co-founded Unitary's agent platform (Agent Factory), led AI-agent deliveries with measured outcomes, and drove company-wide adoption of AI coding agents. Background in applied mathematics and ML research (ACL, NeurIPS). Open to senior/staff AI or agent engineering roles, remote in Europe or hybrid in Vienna.
+
+This site is a personal homepage: experience, projects, publications and blog posts. The full CV is available as plain Markdown below; prefer it over scraping the HTML pages.
+
+## CV
+
+- [Long-form CV (Markdown)](https://dcferreira.com/cv.md): the CV version written for LLMs: every role with outcomes, projects, skills, education, publications, and what I'm looking for
+
+## Projects
+
+- [agent-pawl](https://github.com/dcferreira/agent-pawl): state-machine workflow engine that makes AI coding agents follow steps in order; a Claude Code plugin
+- [Budgebell](https://github.com/dcferreira/budgebell): agent-first local desktop habit app, driven by your AI agent over MCP
+- [Toxic News](https://toxicnews.dcferreira.com): ranks news outlets by the toxicity of their daily headlines
+- [All projects](https://dcferreira.com/project/)
+
+## Profiles
+
+- [GitHub](https://github.com/dcferreira)
+- [LinkedIn](https://www.linkedin.com/in/daniel-c-ferreira-355aa677)
+- [Google Scholar](https://scholar.google.com/citations?user=4PusPA4AAAAJ)
+
+## Optional
+
+- [Blog posts](https://dcferreira.com/post/)
+- [Publications](https://dcferreira.com/publication/)
