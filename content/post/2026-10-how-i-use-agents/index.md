@@ -140,7 +140,7 @@ I'm not aware of any general framework doing all of this automatically right now
 
 Everything in this post is about context. Having the right context allows you to live one level of abstraction higher. I don't promise that working like this leads to tasks getting done faster than manually, but it will allow you to do more tasks in the same time. With this workflow, **I'm working on 3-10 tasks simultaneously at any given time.**
 
-I'm sharing my setup as a repo here. It includes the skills I use and a little bit on how to use them. It also includes more systems than those described here. I'm planning to write some follow-up posts: how I manage workers, when to trust agents, and forcing agents to follow my instructions (hint: this is just [pawl](https://github.com/dcferreira/agent-pawl)).
+I'm sharing my setup as a repo [here](https://github.com/dcferreira/brain-public). It includes the skills I use and a little bit on how to use them. It also includes more systems than those described here. I'm planning to write some follow-up posts: how I manage workers, when to trust agents, and forcing agents to follow my instructions (hint: this is just [pawl](https://github.com/dcferreira/agent-pawl)).
 
 I don't recommend you install those specific skills, but rather take ideas from it and start building your own. Have an agent read over it and recommend one or two ideas to start using in your workflows.
 
