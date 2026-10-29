@@ -42,7 +42,7 @@ authors:
 #   - AI
 ---
 
-I've had both friends and colleagues ask how I'm using agents for work. It's easier to show than explain. Click the buttons in this animation:
+I've had both friends and colleagues ask how I'm using agents for work. It's easier to show than explain. Click the buttons in this animation to experience my typical morning:
 
 {{< figframe src="/post-assets/how-i-use-agents/opener.html" title="Join standup, then launch a worker for each task" height="520" >}}
 
@@ -54,7 +54,7 @@ If you write software and want to get more out of your agents, here's how I've s
 
 It doesn't matter how good the model is: if it doesn't get the correct information, it won't accomplish its task. My job these days is not to write code, but rather to ensure that my agents have access to the right context.
 
-So let's talk about where my agents are getting their context from. This plot compares the sources before/after I had this setup described in this post:
+So let's talk about where my agents are getting their context from. This plot compares the sources before/after I had this setup described in this post, as well as its impact on my productivity:
 
 {{< figframe src="/post-assets/how-i-use-agents/context-sources.html" title="What agents read each week, and merge requests I opened" height="560" >}}
 
