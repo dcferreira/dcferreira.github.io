@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one stage that replays a composite work day in four stops. A day strip under it picks the stop. Same visual language as the opener: squiggles for text, dark "claude" windows for agents */
+:root{
+  --bg:#eef1f4; --surface:#fbfcfd; --fg:#16202b; --muted:#5a6878; --line:#c9d1da; --ink:#8b97a5;
+  --you:#b8396b; --work:#2f6fd0; --plan:#8a6a1c;
+  --term-bg:#121820; --term-bar:#222d39; --term-fg:#d5dde5; --term-dim:#5f6d7b; --term-ok:#6cc596; --term-acc:#e8739f; --bell:#e0a42a;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#04070a; --term-bar:#141c25;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#04070a; --term-bar:#141c25;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+.page{padding-inline:16px;padding-block:28px 80px;display:grid;gap:18px;justify-items:center}
+.page > *{width:100%;max-width:440px}
+.draft{font:12px var(--mono);color:var(--plan)}
+h1{font-family:var(--display);font-size:28px;line-height:1.1;margin:0}
+.intro p{margin:6px 0 0;font-size:14.5px;color:var(--muted)}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--work);outline-offset:2px}
+
+figure{margin:0;display:grid;gap:12px}
+.stage{position:relative;height:280px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.scene{position:absolute;inset:12px;animation:fadein .35s ease-out both}
+.cap{margin:0;min-height:3.2em;font-size:14.5px;color:var(--muted)}
+.cap b{color:var(--fg);font-weight:600}
+
+/* day strip */
+.strip{position:relative;display:grid;grid-template-columns:repeat(4,1fr);padding-top:14px}
+.strip::before{content:"";position:absolute;left:12.5%;right:12.5%;top:20px;height:2px;background:var(--line)}
+.strip .fill{position:absolute;left:12.5%;top:20px;height:2px;background:var(--fg);transition:width .5s ease}
+.stop{background:none;border:0;padding:0;cursor:pointer;display:grid;justify-items:center;gap:3px;position:relative}
+.stop i{width:14px;height:14px;border-radius:50%;background:var(--surface);border:2px solid var(--line);margin-top:-1px;transition:all .3s}
+.stop.past i{border-color:var(--fg);background:var(--fg)}
+.stop.on i{border-color:var(--you);background:var(--you);box-shadow:0 0 0 4px color-mix(in srgb,var(--you) 22%,transparent)}
+.stop time{font:500 12px var(--mono);color:var(--muted)}
+.stop span{font-size:12.5px;line-height:1.25;color:var(--muted);text-align:center}
+.stop.on time,.stop.on span{color:var(--fg)}
+.nav{display:flex;justify-content:space-between;align-items:center}
+.next{background:var(--fg);color:var(--bg);border:0;border-radius:999px;padding:6px 16px;font-weight:600;font-size:14px;cursor:pointer}
+.replay{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px;cursor:pointer;padding:0}
+
+/* shared bits */
+.sq{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
+.draw{stroke-dasharray:100;stroke-dashoffset:100;animation:draw .5s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadein{from{opacity:0}}
+@keyframes pulse{50%{opacity:.3}}
+.lines{display:flex;flex-direction:column;gap:9px}
+.lines svg{display:block;height:12px;overflow:visible}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.hd{display:block;font:500 11px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding-bottom:6px}
+.win{background:var(--term-bg);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.tb{display:flex;gap:4px;align-items:center;padding:5px 8px;background:var(--term-bar);font:10.5px/1.3 var(--mono);color:var(--term-dim);flex:none;white-space:nowrap}
+.tb i{width:6px;height:6px;border-radius:50%;background:var(--term-dim);flex:none}
+.tb span{margin-left:4px;overflow:hidden;text-overflow:ellipsis}
+.tb b{margin-left:auto;font-weight:600;color:var(--term-fg)}
+.win .body{flex:1;padding:6px 8px;display:flex;flex-direction:column;gap:6px;min-height:0}
+.win .body svg{width:100%;height:8px;overflow:visible;flex:none}
+.win .sq{stroke:var(--term-fg);stroke-width:1.8;stroke-dasharray:100;stroke-dashoffset:100;animation:work 2.6s ease-in-out infinite}
+.win .sq.still{animation:none;stroke-dashoffset:0}
+@keyframes work{0%{stroke-dashoffset:100;opacity:1}55%{stroke-dashoffset:0}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+.win .cur{width:6px;height:9px;background:var(--term-ok);animation:pulse 1s steps(1) infinite;flex:none}
+
+/* 1: before standup */
+.s1{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:14px;height:100%}
+.s1 .left{display:flex;flex-direction:column;gap:8px;min-width:0;justify-content:center}
+.s1 .left .cc{min-height:120px}
+.s1 .right{display:grid;grid-template-rows:auto 1fr;gap:12px;min-width:0}
+.vsym{display:grid;justify-items:center;gap:0;font:500 11px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.vsym svg{width:50px;height:50px;fill:none;stroke:var(--fg);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.vsym{animation:fadein .4s ease-out both}
+.vsym[hidden]{display:none}
+.vsym.busy svg{animation:pulse 1.2s ease-in-out .4s infinite}
+.frag{position:absolute;left:0;top:0;width:44px;height:10px;pointer-events:none}
+.frag svg{display:block;width:100%;height:100%;overflow:visible}
+.frag .sq{stroke:var(--fg)}
+.doc .sub{display:block;font:500 10.5px var(--mono);color:var(--muted);margin:2px 0 6px}
+.doc .sub + .lines{margin-bottom:8px}
+.doc{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:6px 16px 6px 6px;padding:10px;box-shadow:0 3px 10px rgba(0,0,0,.08);animation:docin .4s ease-out both;align-self:start}
+.doc .hd{padding-bottom:8px}
+.doc .lines{gap:7px}
+@keyframes docin{from{transform:translateY(10px);opacity:0}}
+.dot{position:absolute;left:0;top:0;width:7px;height:7px;border-radius:50%;background:var(--work);pointer-events:none}
+.dot.out{background:var(--term-acc)}
+.cc{background:var(--term-bg);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;border:0;padding:0;text-align:left;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.cc .pr{padding:9px 10px;font:12.5px/1.5 var(--mono);color:var(--term-acc);overflow-wrap:anywhere}
+.cc .pr::before{content:"> ";color:var(--term-dim)}
+.cc .caret{display:inline-block;width:7px;height:13px;background:var(--term-fg);vertical-align:-2px;animation:pulse 1s steps(1) infinite}
+.cc .log{padding:0 10px 8px;display:flex;flex-direction:column;gap:5px}
+.cc .row{display:flex;align-items:center;gap:6px;animation:fadein .25s ease-out both}
+.cc .row svg{height:8px}
+.cc .st{font:11.5px/1.4 var(--mono);color:var(--term-fg);white-space:nowrap}
+.cc .st .spin{color:var(--term-acc)}
+.cc .st .dim{color:var(--term-dim)}
+.cc .st .ok{color:var(--term-ok)}
+.turn{display:flex;justify-content:flex-end;align-items:center;gap:8px;font:11.5px var(--mono);color:var(--muted)}
+.enter{background:var(--surface);color:var(--fg);border:1.5px solid var(--fg);border-bottom-width:4px;border-radius:9px;padding:5px 14px;font:600 14px var(--mono);cursor:pointer;animation:fadein .3s ease-out both,bob 1.2s ease-in-out .5s infinite}
+.enter:active{border-bottom-width:1.5px;transform:translateY(2px)}
+@keyframes bob{50%{transform:translateY(-3px)}}
+
+/* 2: standup -> workers */
+.s2{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px}
+.s2 .pile{position:relative}
+.s2 .pile .win{position:absolute;width:82%;height:84px;animation:fly .5s cubic-bezier(.2,.8,.3,1) both}
+@keyframes fly{from{transform:translate(-120%,20px) scale(.3);opacity:0}}
+.say{font:12px/1.4 var(--mono);color:var(--term-acc);background:var(--term-bg);border-radius:7px;padding:7px 9px;margin-bottom:8px}
+.say::before{content:"> ";color:var(--term-dim)}
+
+/* 3: during the day */
+.s3{display:grid;grid-template-rows:auto 1fr;gap:8px}
+.grid6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:1fr 1fr;gap:8px;min-height:0}
+.grid6 .win{position:relative;outline:2px solid transparent;outline-offset:2px;transition:outline-color .3s,opacity .4s,transform .5s}
+.grid6 .win.here{outline-color:var(--you)}
+.grid6 .win.bell .tb{background:var(--bell);color:#1b1300}
+.grid6 .win.bell .tb i{background:#1b1300}
+.grid6 .win.bell .tb b{color:#1b1300}
+.grid6 .win.bell .tb b::before{content:"🔔 ";font-size:9px}
+.grid6 .win.bell{animation:shake .5s ease-in-out 2}
+@keyframes shake{25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+.grid6 .win.done .cur{background:var(--term-dim);animation:none}
+.grid6 .win.done .tb b::before{content:"✓ ";color:var(--term-ok)}
+.grid6 .slot{position:relative;display:grid;min-height:0}
+.grid6 .win.go{transform:translate(40%,-60%) scale(.15);opacity:0;transition:transform .6s ease-in,opacity .6s ease-in}
+.grid6 .win.new{animation:popin .4s ease-out both}
+@keyframes popin{from{transform:scale(.5);opacity:0}}
+.legend .vchip{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:0 8px;background:var(--bg);transition:background .3s}
+.legend .vchip.bump{background:color-mix(in srgb,var(--term-ok) 30%,var(--bg))}
+.legend{display:flex;gap:14px;font:11.5px var(--mono);color:var(--muted);align-items:center;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend .y{width:10px;height:10px;border-radius:3px;outline:2px solid var(--you)}
+.legend .b{width:10px;height:10px;border-radius:3px;background:var(--bell)}
+.legend .vchip{margin-left:auto}
+
+/* 4: end of day */
+.s4{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:12px}
+.s4 .grid6{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,1fr)}
+.s4 .win.go{transform:translateX(120%) scale(.2);opacity:0;transition:transform .5s ease-in,opacity .5s ease-in}
+.s4 .win.stay .tb span::after{content:" · tomorrow";color:var(--term-ok)}
+.vault .lines{gap:8px}
+.vault .lines svg{animation:fadein .3s ease-out both}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0s!important;animation-iteration-count:1!important;transition:none!important}}
+
+body{background:var(--bg)}
+.fig{padding:8px 16px;display:grid;gap:8px;max-width:440px;margin:0 auto}
+.replay{justify-self:end}
+</style></head><body>
+<style>
+/* embedded in the blog post: no card around the stage, the post's background shows through */
+html,body{background:transparent}
+body{margin:0}
+.page{padding-block:4px 8px}
+.intro h1{display:none}
+.stage,.demo{background:transparent;border:0;border-radius:0;padding:0}
+.scene{inset:5px}
+section{border-top:0;padding-top:0}
+.enter{border-color:var(--you);color:var(--you)}
+</style>
+
+<div class="fig"><div class="stage" id="stage" aria-live="polite"></div><button class="replay" id="replay" type="button">↻ replay</button></div>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stage=document.getElementById('stage');
+let ts=[];
+const at=(ms,fn)=>ts.push(setTimeout(fn,reduce?0:ms));
+function wave(w,amp=3,per=12,y=6){let d=`M0 ${y}`,s=1; for(let x=0;x<w-0.1;x+=per/2){const nx=Math.min(w,x+per/2); d+=` Q${(x+nx)/2} ${y-amp*s} ${nx} ${y}`; s=-s} return d}
+const sq=(pct,cls='sq')=>`<svg viewBox="0 0 100 12" preserveAspectRatio="none" style="width:${pct}%"><path class="${cls}" d="${wave(100)}" pathLength="100" vector-effect="non-scaling-stroke"/></svg>`;
+function win(label,num,i=0,still=false){
+  const lines=[0,1,2].map(j=>`<svg viewBox="0 0 100 8" preserveAspectRatio="none"><path class="sq${still?' still':''}" d="${wave(100*(.55+((i+j)%3)*.15),2.2,9,4)}" pathLength="100" vector-effect="non-scaling-stroke" style="animation-delay:${(i*.45+j*.8).toFixed(2)}s"/></svg>`).join('');
+  return `<div class="win"><span class="tb"><i></i><i></i><i></i><span>${label}</span>${num!=null?`<b>${num}</b>`:''}</span><div class="body">${lines}<span class="cur"></span></div></div>`;
+}
+const LENS=[80,62,92,70,85,60];
+
+
+const SCENE=
+  function day(){
+    stage.innerHTML=`<div class="scene s3"><div class="legend"><span><i class="y"></i>me</span><span><i class="b"></i>needs me</span></div>
+      <div class="grid6">${[0,1,2,3,4,5].map(i=>win('claude',i+1,i)).join('')}</div></div>`;
+    const ws=[...stage.querySelectorAll('.grid6 .win')];
+    let here=0;
+    const go=i=>{here=i; ws.forEach(w=>w.classList.remove('here')); ws[i].classList.add('here'); ws[i].classList.remove('bell')};
+    const pick=f=>{const c=[0,1,2,3,4,5].filter(f); return c.length?c[Math.floor(Math.random()*c.length)]:-1};
+    go(0);
+    if(reduce) return;
+    (function tick(){
+      const rung=pick(i=>i!==here&&ws[i].classList.contains('bell'));
+      if(rung>=0 && Math.random()<.6) go(rung);
+      else {const b=pick(i=>i!==here&&!ws[i].classList.contains('bell')); if(b>=0) ws[b].classList.add('bell')}
+      at(1100,tick);
+    })();
+  };
+function play(){ts.forEach(clearTimeout); ts=[]; SCENE()}
+document.getElementById('replay').onclick=play;
+const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){play(); io.disconnect()}},{threshold:.4});
+io.observe(stage);
+</script></body></html>
