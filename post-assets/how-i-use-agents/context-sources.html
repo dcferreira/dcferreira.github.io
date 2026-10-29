@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Where Agent Context Comes From</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f7f6f2;--card:#ffffff;--fg:#1d1c22;--muted:#6b6874;--line:#e3e0d8;--chip:#efede6;
+  --code:#8a93a3;--brain:#6d4cf0;--slack:#d9971a;--meet:#d94f73;--docs:#2f9a7f;--tickets:#4a7fe0;
+  --email:#a8714a;--prod:#d4612f;--web:#3aa3bb;--own:#8f8f47;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#16151b;--card:#1f1e26;--fg:#ecebf0;--muted:#9a97a6;--line:#302e3a;--chip:#2a2833;
+  --code:#7d8798;--brain:#9a82ff;--slack:#f0b23a;--meet:#f07090;--docs:#4fc0a2;--tickets:#7aa2f5;
+  --email:#c99068;--prod:#ee8152;--web:#5cc3da;--own:#b6b66a;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16151b;--card:#1f1e26;--fg:#ecebf0;--muted:#9a97a6;--line:#302e3a;--chip:#2a2833;
+  --code:#7d8798;--brain:#9a82ff;--slack:#f0b23a;--meet:#f07090;--docs:#4fc0a2;--tickets:#7aa2f5;
+  --email:#c99068;--prod:#ee8152;--web:#5cc3da;--own:#b6b66a;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 "IBM Plex Sans",system-ui,sans-serif;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance;font-weight:600}
+h2{font-size:19px;margin:0;text-wrap:balance;font-weight:600}
+p{margin:0;max-width:68ch}
+.mono,.lab{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted)}
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.find{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.find b{font-size:24px;font-weight:600;font-family:"IBM Plex Mono",monospace}
+.find span{color:var(--muted);font-size:13.5px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;align-self:flex-start;background:var(--chip);border-radius:8px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--muted);font:500 13px "IBM Plex Sans",sans-serif;padding:6px 11px;border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--fg);box-shadow:0 1px 2px #0002}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.opt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.opt header{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.opt header .lab{color:var(--brain)}
+.chart{overflow-x:auto;min-width:0}
+.chart svg{display:block;max-width:100%;height:auto}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px 20px;font-size:13.5px}
+.notes div{min-width:0}
+.notes .lab{display:block;margin-bottom:2px}
+svg text{font-family:"IBM Plex Sans",sans-serif;fill:var(--fg)}
+svg .m{fill:var(--muted)}
+.waffle{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;max-width:520px}
+.waffle div{aspect-ratio:1;border-radius:2px}
+.foot{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+#tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font-size:12.5px;padding:5px 8px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:20;max-width:260px}
+</style>
+<style>
+/* standalone embed: only option F, no page chrome */
+html,body{background:transparent}
+body{margin:0}
+body{padding-left:0;padding-right:0}
+.wrap>*:not(.bar):not(#o-stream){display:none!important}
+.wrap{padding-block:4px 8px;gap:6px;max-width:none}
+.bar{position:static;border:0;padding-block:0;background:transparent}
+.bar .seg{display:none}
+#o-stream{border:0;padding:0;background:transparent;border-radius:0}
+#o-stream header,#o-stream .notes{display:none}
+</style>
+</head><body>
+
+<div id="tip"></div>
+<div class="wrap">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <span class="lab">Post 0 · figure options · work Mac, Dec 2025 – Oct 2026</span>
+    <h1>Where my agents' context comes from</h1>
+    <p class="lede">Every tool call in 1,777 Claude Code sessions from the work laptop, bucketed by where the information came from. "Volume" is the text the tool returned (≈ tokens, chars ÷ 4). "Reach" is the share of sessions that touched the source at all. Only paths and tool names were read, never contents.</p>
+  </div>
+
+  <div class="findings" id="findings"></div>
+
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Code">
+      <button data-code="0" aria-pressed="true">Without code</button>
+      <button data-code="1" aria-pressed="false">With code</button>
+    </div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <section class="opt" id="o-donut">
+    <header><span class="lab">Option A</span><h2>Donut: share of volume</h2></header>
+    <div class="chart" id="c-donut"></div>
+    <div class="notes">
+      <div><span class="lab">Says</span>"Here's the split." Familiar, readable in two seconds.</div>
+      <div><span class="lab">Misses</span>Everything about <em>how</em> it gets there. Small slices (meetings) vanish, though they matter.</div>
+    </div>
+  </section>
+
+  <section class="opt" id="o-waffle">
+    <header><span class="lab">Option B</span><h2>Waffle: 200 squares of context</h2></header>
+    <div class="chart" id="c-waffle"></div>
+    <div class="notes">
+      <div><span class="lab">Says</span>Same as the donut, but easier to compare and friendlier on a blog. Each square is 0.5%.</div>
+      <div><span class="lab">Misses</span>Same blind spot: shows proportion, not flow or frequency.</div>
+    </div>
+  </section>
+
+  <section class="opt" id="o-bars">
+    <header><span class="lab">Option C</span><h2>Volume next to reach, by kind of session</h2></header>
+    <div class="seg" role="group" aria-label="Session type" id="segType">
+      <button data-t="all" aria-pressed="true">All sessions</button>
+      <button data-t="brain" aria-pressed="false">Brain sessions</button>
+      <button data-t="worker" aria-pressed="false">Workers</button>
+    </div>
+    <div class="chart" id="c-bars"></div>
+    <div class="notes">
+      <div><span class="lab">Says</span>The brain sessions read Slack and meetings; workers read the brain and code. Toggle to see the two jobs.</div>
+      <div><span class="lab">Misses</span>Needs the reader to toggle and compare. More analytic than inspiring.</div>
+    </div>
+  </section>
+
+  <section class="opt" id="o-sankey">
+    <header><span class="lab">Option D</span><h2>Flow: which session pulls each source</h2></header>
+    <div class="chart" id="c-sankey"></div>
+    <div class="notes">
+      <div><span class="lab">Says</span>The brain sessions do the collecting (Slack, meetings, docs), write it into the vault, and workers read the vault. Supports "the context was already collected".</div>
+      <div><span class="lab">Caveat</span>The vault → workers link is the brain-reads in worker sessions; "collected into the vault" is inferred from where the fetches happen, not measured.</div>
+    </div>
+  </section>
+
+  <section class="opt" id="o-scatter">
+    <header><span class="lab">Option E</span><h2>Reach vs volume</h2></header>
+    <div class="chart" id="c-scatter"></div>
+    <div class="notes">
+      <div><span class="lab">Says</span>Separates "touched in most sessions" from "brings a lot of text". Meetings sit low on volume but high on reach in brain sessions.</div>
+      <div><span class="lab">Misses</span>Log scale and two axes: the most work for a reader skimming a blog.</div>
+    </div>
+  </section>
+
+  <section class="opt" id="o-stream">
+    <header><span class="lab">Option F</span><h2>What agents read, and how much got done</h2></header>
+    <div class="chart" id="c-stream"></div>
+    <div class="notes">
+      <div><span class="lab">Says</span>Top: the mix of what agents read each week (average of that week and the two before); the brain arrives and immediately takes a big share. Bottom: MRs I opened (line: same 3-week average; faint bars: actual weeks), roughly 6 a week before the brain and 16 after. Three unrepresentative weeks are removed from both panels.</div>
+      <div><span class="lab">Careful</span>The MR climb starts about three weeks before the brain (workers were ramping up too), so this is "together with", not "because of". Counted from MRs opened through Claude Code sessions, which by then was how I opened all of them; the chart starts at the first one.</div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span><b>Method.</b> Read/Grep/Glob paths under the vault → brain (by folder); other paths → code. Shell commands bucketed by tool (git/glab → code, kubectl/aws/docker → prod, brain-search → brain). MCP connectors by name. Agent's own scratch files, file edits and task plumbing excluded. Subagent transcripts count toward their parent session.</span>
+    <span><b>Groups.</b> Meetings = Krisp + Glyphic connectors (meeting notes already in the vault count as brain). Prod &amp; data = Datadog, kubectl/aws, internal dashboards, ClickHouse. Own history &amp; skills = past session transcripts, skills and agent config.</span>
+  </div>
+</div>
+
+<script>
+const D = {"sessions":1777,"brainSessions":127,"workerSessions":1650,"sources":{"Claude config & skills":{"g":"Own history & skills","c":18196562,"bc":1648615,"n":2578},"Code":{"g":"Code","c":524772168,"bc":4443035,"n":125082},"Notion":{"g":"Docs & wikis","c":13832385,"bc":4986550,"n":2170},"Past sessions":{"g":"Own history & skills","c":18891271,"bc":283845,"n":3973},"Web":{"g":"Web","c":15718371,"bc":1847018,"n":13504},"Infra & prod":{"g":"Prod & data","c":5943652,"bc":88610,"n":4858},"Running code & tests":{"g":"Code","c":43012919,"bc":248972,"n":31312},"Brain: workers":{"g":"Brain","c":17648385,"bc":8206714,"n":4641},"Code & GitLab":{"g":"Code","c":41662879,"bc":504438,"n":26048},"Brain: other":{"g":"Brain","c":1326077,"bc":163977,"n":331},"Brain: knowledge":{"g":"Brain","c":3025794,"bc":784233,"n":1298},"Brain: search":{"g":"Brain","c":1529054,"bc":829765,"n":1076},"Web/API":{"g":"Web","c":1410989,"bc":12986,"n":1779},"Brain: home & top-of-mind":{"g":"Brain","c":4153706,"bc":3085169,"n":557},"Brain: session logs":{"g":"Brain","c":5428878,"bc":3384197,"n":935},"Tickets (Shortcut)":{"g":"Tickets","c":1769960,"bc":983761,"n":421},"Meetings (Krisp)":{"g":"Meetings","c":2114742,"bc":1698408,"n":465},"Brain: meetings":{"g":"Brain","c":2857107,"bc":2308302,"n":361},"Google Drive":{"g":"Docs & wikis","c":798595,"bc":750555,"n":56},"Slack":{"g":"Slack","c":34329842,"bc":26542987,"n":8679},"Email":{"g":"Email & calendar","c":1009359,"bc":350905,"n":196},"Internal tools":{"g":"Prod & data","c":6919482,"bc":1547204,"n":1555},"Brain: diary":{"g":"Brain","c":1117713,"bc":966111,"n":275},"Observability":{"g":"Prod & data","c":8458059,"bc":149344,"n":1637},"Brain: inbox":{"g":"Brain","c":7668303,"bc":7276584,"n":466},"Meetings (Glyphic)":{"g":"Meetings","c":2535699,"bc":1819791,"n":263},"Brain: planning":{"g":"Brain","c":147290,"bc":146876,"n":23},"Calendar":{"g":"Email & calendar","c":26121,"bc":21905,"n":4},"Library docs":{"g":"Docs & wikis","c":1325,"bc":0,"n":11},"Data":{"g":"Prod & data","c":279512,"bc":0,"n":205},"Docs":{"g":"Docs & wikis","c":277242,"bc":0,"n":72}},"groups":{"Own history & skills":{"other_sessions":627,"brain_sessions":42,"sessions":669},"Code":{"other_sessions":1573,"brain_sessions":96,"sessions":1669},"Docs & wikis":{"other_sessions":109,"brain_sessions":62,"sessions":171},"Web":{"other_sessions":379,"brain_sessions":28,"sessions":407},"Prod & data":{"other_sessions":451,"brain_sessions":37,"sessions":488},"Brain":{"other_sessions":319,"brain_sessions":88,"sessions":407},"Tickets":{"other_sessions":41,"brain_sessions":27,"sessions":68},"Meetings":{"other_sessions":22,"brain_sessions":75,"sessions":97},"Slack":{"other_sessions":160,"brain_sessions":81,"sessions":241},"Email & calendar":{"other_sessions":26,"brain_sessions":13,"sessions":39}},"weekly":{"2025-W51":{"Prod & data":66006,"Code":94062,"Own history & skills":7541},"2025-W52":{"Code":1638946,"Docs & wikis":174,"Web":7826,"Own history & skills":21626,"Prod & data":16751},"2026-W01":{"Code":292514},"2026-W04":{"Code":7452758,"Own history & skills":102230,"Web":77802,"Prod & data":39372},"2026-W05":{"Own history & skills":626872,"Code":15245804,"Web":173583,"Prod & data":14991,"Docs & wikis":372559},"2026-W06":{"Code":3844918,"Prod & data":18687,"Own history & skills":665305,"Web":102985},"2026-W07":{"Own history & skills":1041693,"Web":1282847,"Code":29930760,"Prod & data":85663,"Docs & wikis":207109},"2026-W08":{"Own history & skills":430505,"Code":22829559,"Web":1352449,"Docs & wikis":387302,"Prod & data":76094},"2026-W09":{"Code":28671669,"Own history & skills":498467,"Web":1072622,"Prod & data":298813,"Docs & wikis":5408},"2026-W10":{"Code":20488487,"Docs & wikis":157643,"Own history & skills":7445401,"Prod & data":19136,"Web":565168},"2026-W11":{"Code":5834596,"Docs & wikis":1504,"Own history & skills":8576866,"Prod & data":143035,"Web":347507,"Tickets":105},"2026-W12":{"Web":73262,"Code":5681410,"Prod & data":51997,"Docs & wikis":15036,"Own history & skills":134497,"Slack":24456},"2026-W13":{"Code":32133057,"Web":520878,"Own history & skills":556205,"Slack":21700,"Docs & wikis":85839,"Tickets":70},"2026-W14":{"Code":33860071,"Prod & data":481576,"Own history & skills":786623,"Web":1124258,"Docs & wikis":35042,"Tickets":70},"2026-W15":{"Code":19035054,"Web":712089,"Prod & data":225559,"Own history & skills":163735,"Slack":71034,"Docs & wikis":91416},"2026-W16":{"Prod & data":666771,"Code":9557885,"Own history & skills":887860,"Web":222358,"Tickets":70,"Slack":63540,"Docs & wikis":24544},"2026-W17":{"Code":37934340,"Prod & data":398811,"Own history & skills":1043180,"Slack":878663,"Web":197496,"Docs & wikis":837020},"2026-W18":{"Prod & data":309381,"Own history & skills":716949,"Code":11552170,"Slack":103475,"Web":253854,"Docs & wikis":141762},"2026-W19":{"Code":11900046,"Web":228166,"Prod & data":543949,"Own history & skills":730081,"Slack":46632},"2026-W20":{"Code":3787852,"Own history & skills":608168,"Prod & data":415178,"Web":324372,"Docs & wikis":452027,"Email & calendar":12494},"2026-W21":{"Code":1817144,"Own history & skills":210512,"Slack":69812,"Web":45453,"Prod & data":8187},"2026-W22":{"Code":4540839,"Own history & skills":208583,"Prod & data":211528,"Web":48451,"Slack":92286},"2026-W23":{"Slack":67649,"Code":6053587,"Prod & data":385486,"Own history & skills":51961,"Web":190433,"Docs & wikis":194929},"2026-W24":{"Code":38866514,"Web":1824585,"Prod & data":652216,"Own history & skills":382424,"Docs & wikis":839020,"Slack":360373},"2026-W25":{"Own history & skills":223590,"Code":16066746,"Prod & data":629801,"Web":305369,"Slack":96546,"Docs & wikis":185643},"2026-W26":{"Code":24145827,"Own history & skills":332874,"Prod & data":641281,"Web":1291565,"Slack":77251,"Docs & wikis":184717},"2026-W27":{"Brain":646835,"Slack":151120,"Docs & wikis":270229,"Web":391922,"Code":15788851,"Own history & skills":190312,"Meetings":75332,"Prod & data":134594},"2026-W28":{"Meetings":155127,"Docs & wikis":803576,"Brain":1789517,"Code":6977304,"Slack":355443,"Web":314201,"Own history & skills":965750,"Prod & data":1418849,"Tickets":118761},"2026-W29":{"Brain":1443213,"Tickets":518611,"Web":407515,"Meetings":1483306,"Code":8699947,"Docs & wikis":2293458,"Slack":1455401,"Own history & skills":352601,"Email & calendar":111533,"Prod & data":1130450},"2026-W30":{"Code":16670259,"Brain":2427845,"Own history & skills":896706,"Slack":3832922,"Tickets":334221,"Meetings":200984,"Web":463570,"Prod & data":1516414,"Docs & wikis":647017,"Email & calendar":63821},"2026-W31":{"Brain":3984281,"Slack":303509,"Tickets":573750,"Code":41253381,"Own history & skills":593864,"Meetings":288482,"Docs & wikis":543242,"Email & calendar":49584,"Prod & data":1241945,"Web":725660},"2026-W32":{"Brain":2947040,"Code":14248039,"Tickets":6806,"Meetings":5802,"Own history & skills":647727,"Slack":38961,"Prod & data":243757,"Web":126749},"2026-W33":{"Slack":537077,"Own history & skills":433635,"Code":29203952,"Brain":2273131,"Meetings":799628,"Prod & data":388177,"Tickets":29836,"Docs & wikis":921650,"Email & calendar":91166,"Web":455470},"2026-W34":{"Code":15578466,"Own history & skills":820110,"Brain":3837402,"Meetings":372756,"Docs & wikis":181024,"Prod & data":594158,"Slack":169192,"Web":861332,"Email & calendar":24323,"Tickets":47800},"2026-W35":{"Code":6750983,"Own history & skills":2813089,"Brain":1867438,"Slack":136109,"Meetings":299946,"Web":338918,"Email & calendar":48890,"Prod & data":276250,"Docs & wikis":190920},"2026-W36":{"Brain":5621967,"Code":524679,"Prod & data":41897,"Slack":550016,"Meetings":14933,"Docs & wikis":685524,"Own history & skills":29042},"2026-W37":{"Slack":23480578,"Brain":8295643,"Code":436050,"Meetings":116522,"Email & calendar":17219,"Prod & data":19883,"Docs & wikis":1539684,"Own history & skills":40389},"2026-W38":{"Slack":396133,"Brain":671353,"Code":2994388,"Meetings":186661,"Own history & skills":517027,"Web":74946,"Prod & data":44996,"Email & calendar":39372,"Docs & wikis":28032},"2026-W39":{"Brain":3175895,"Code":19764742,"Slack":304686,"Prod & data":452749,"Own history & skills":390113,"Web":389417,"Meetings":286110,"Email & calendar":17818,"Docs & wikis":5951},"2026-W40":{"Brain":2097751,"Code":13935673,"Web":102845,"Prod & data":905932,"Docs & wikis":232466,"Own history & skills":661086,"Email & calendar":182150,"Slack":243660,"Tickets":14722,"Meetings":68908},"2026-W41":{"Brain":1760022,"Code":13955178,"Own history & skills":1142541,"Prod & data":3583224,"Tickets":43473,"Web":90643,"Docs & wikis":515635,"Email & calendar":96672,"Meetings":236569,"Slack":245488},"2026-W42":{"Brain":2044978,"Code":9055837,"Own history & skills":140091,"Web":40794,"Prod & data":3207161,"Docs & wikis":1792711,"Email & calendar":280438,"Slack":156130,"Tickets":81665,"Meetings":59375}}};
+const GROUPS = [
+  ['Brain','--brain'],['Slack','--slack'],['Meetings','--meet'],['Docs & wikis','--docs'],['Tickets','--tickets'],
+  ['Email & calendar','--email'],['Prod & data','--prod'],['Web','--web'],['Own history & skills','--own'],['Code','--code']];
+const COL = Object.fromEntries(GROUPS.map(([g,v])=>[g,`var(${v})`]));
+let withCode = false, sType = 'all';
+const tip = document.getElementById('tip');
+const fmtM = c => (c/4/1e6).toFixed(c/4/1e6 < 1 ? 2 : 1) + 'M tok';
+const pct = (x,d=0) => (100*x).toFixed(d) + '%';
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs={}, parent){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); parent&&parent.appendChild(e); return e; }
+function hover(node, text){
+  node.addEventListener('pointermove', ev=>{ tip.textContent=text; tip.style.opacity=1;
+    const x=Math.min(ev.clientX+12, innerWidth-tip.offsetWidth-8); tip.style.left=x+'px'; tip.style.top=(ev.clientY+14)+'px'; });
+  node.addEventListener('pointerleave', ()=> tip.style.opacity=0);
+}
+function vol(type){ // group -> chars
+  const v={}; for(const s of Object.values(D.sources)){ const c = type==='brain'? s.bc : type==='worker'? s.c-s.bc : s.c; v[s.g]=(v[s.g]||0)+c; } return v; }
+function active(){ return GROUPS.map(g=>g[0]).filter(g=> withCode || g!=='Code'); }
+
+function findings(){
+  const v=vol('all'), tot=Object.values(v).reduce((a,b)=>a+b,0), nc=tot-v.Code;
+  const sb=D.sources['Slack'], mk=D.sources['Meetings (Krisp)'], mg=D.sources['Meetings (Glyphic)'];
+  const meetBrainShare=(mk.bc+mg.bc)/(mk.c+mg.c), slackBrainShare=sb.bc/sb.c;
+  const G=D.groups;
+  const items=[
+    [pct(v.Code/tot), 'of everything agents read is code. The rest is the context <em>around</em> the code.'],
+    [pct(v.Brain/nc), 'of the non-code context comes from the brain, the largest single source.'],
+    [pct((sb.bc+mk.bc+mg.bc)/(sb.c+mk.c+mg.c)), 'of Slack and meeting reads happen in brain sessions. Workers mostly get them second-hand, from the vault.'],
+    [pct(G.Meetings.brain_sessions/D.brainSessions), `of brain sessions pull meeting transcripts, against ${pct(G.Meetings.other_sessions/D.workerSessions,1)} of workers.`]];
+  document.getElementById('findings').innerHTML = items.map(([b,s])=>`<div class="find"><b>${b}</b><span>${s}</span></div>`).join('');
+}
+function legend(){
+  document.getElementById('legend').innerHTML = active().map(g=>`<span><i style="background:${COL[g]}"></i>${g}</span>`).join('');
+}
+
+function donut(){
+  const host=document.getElementById('c-donut'); host.innerHTML='';
+  const v=vol('all'), gs=active().filter(g=>v[g]>0), tot=gs.reduce((a,g)=>a+v[g],0);
+  const W=640,H=340,cx=170,cy=170,R=150,r=92;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W},host);
+  let a0=-Math.PI/2;
+  gs.forEach(g=>{
+    const a1=a0+2*Math.PI*v[g]/tot, large=a1-a0>Math.PI?1:0;
+    const p=(rad,a)=>`${cx+rad*Math.cos(a)},${cy+rad*Math.sin(a)}`;
+    const path=el('path',{d:`M${p(R,a0)}A${R},${R} 0 ${large} 1 ${p(R,a1)}L${p(r,a1)}A${r},${r} 0 ${large} 0 ${p(r,a0)}Z`,fill:COL[g],stroke:'var(--card)','stroke-width':1.5},svg);
+    hover(path,`${g}: ${pct(v[g]/tot,1)} · ${fmtM(v[g])}`); a0=a1;
+  });
+  el('text',{x:cx,y:cy-4,'text-anchor':'middle','font-size':22,'font-weight':600},svg).textContent=fmtM(tot).replace(' tok','');
+  el('text',{x:cx,y:cy+18,'text-anchor':'middle','font-size':12,class:'m'},svg).textContent='tokens read';
+  gs.slice().sort((a,b)=>v[b]-v[a]).forEach((g,i)=>{
+    const y=40+i*28;
+    el('rect',{x:360,y:y-11,width:12,height:12,rx:2,fill:COL[g]},svg);
+    el('text',{x:380,y,'font-size':13.5},svg).textContent=g;
+    el('text',{x:620,y,'font-size':13.5,'text-anchor':'end',class:'m','font-family':'IBM Plex Mono'},svg).textContent=pct(v[g]/tot,1);
+  });
+}
+
+function waffle(){
+  const host=document.getElementById('c-waffle'); host.innerHTML='';
+  const v=vol('all'), gs=active().filter(g=>v[g]>0), tot=gs.reduce((a,g)=>a+v[g],0), N=200;
+  // largest remainder so squares sum to N
+  const raw=gs.map(g=>({g,x:N*v[g]/tot})); raw.forEach(o=>o.n=Math.floor(o.x));
+  let left=N-raw.reduce((a,o)=>a+o.n,0); raw.slice().sort((a,b)=>(b.x-b.n)-(a.x-a.n)).slice(0,left).forEach(o=>o.n++);
+  const grid=document.createElement('div'); grid.className='waffle'; host.appendChild(grid);
+  raw.sort((a,b)=>b.n-a.n).forEach(o=>{ for(let i=0;i<o.n;i++){ const d=document.createElement('div'); d.style.background=COL[o.g]; hover(d,`${o.g}: ${pct(v[o.g]/tot,1)}`); grid.appendChild(d);} });
+}
+
+function bars(){
+  const host=document.getElementById('c-bars'); host.innerHTML='';
+  const v=vol(sType), gs=active(), tot=gs.reduce((a,g)=>a+(v[g]||0),0);
+  const nS = sType==='brain'? D.brainSessions : sType==='worker'? D.workerSessions : D.sessions;
+  const reach=g=>{ const G=D.groups[g]; return (sType==='brain'? G.brain_sessions : sType==='worker'? G.other_sessions : G.sessions)/nS; };
+  const rows=gs.slice().sort((a,b)=>(v[b]||0)-(v[a]||0));
+  const W=800,L=170,colW=260,gap=50,rh=30,H=50+rows.length*rh;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W},host);
+  el('text',{x:L,y:18,'font-size':11,class:'m','letter-spacing':'.08em'},svg).textContent='SHARE OF VOLUME';
+  el('text',{x:L+colW+gap,y:18,'font-size':11,class:'m','letter-spacing':'.08em'},svg).textContent=`REACH · % OF ${nS.toLocaleString()} SESSIONS`;
+  const vmax=Math.max(...rows.map(g=>(v[g]||0)/tot));
+  rows.forEach((g,i)=>{
+    const y=36+i*rh, s=(v[g]||0)/tot, rc=reach(g);
+    el('text',{x:L-10,y:y+14,'text-anchor':'end','font-size':13.5},svg).textContent=g;
+    const b1=el('rect',{x:L,y:y+2,width:Math.max(1,colW*s/vmax),height:18,rx:3,fill:COL[g]},svg); hover(b1,`${g}: ${pct(s,1)} of volume · ${fmtM(v[g]||0)}`);
+    el('text',{x:L+Math.max(1,colW*s/vmax)+6,y:y+15,'font-size':12,class:'m','font-family':'IBM Plex Mono'},svg).textContent=pct(s,1);
+    const x2=L+colW+gap;
+    el('rect',{x:x2,y:y+2,width:colW,height:18,rx:3,fill:'var(--chip)'},svg);
+    const b2=el('rect',{x:x2,y:y+2,width:Math.max(1,colW*rc),height:18,rx:3,fill:COL[g],opacity:.75},svg); hover(b2,`${g}: in ${pct(rc,1)} of sessions`);
+    el('text',{x:x2+colW+6,y:y+15,'font-size':12,class:'m','font-family':'IBM Plex Mono'},svg).textContent=pct(rc);
+  });
+}
+
+function sankey(){
+  const host=document.getElementById('c-sankey'); host.innerHTML='';
+  const S=Object.values(D.sources);
+  const by=(g,brain)=>S.filter(s=>s.g===g).reduce((a,s)=>a+(brain? s.bc : s.c-s.bc),0);
+  const srcs=active().filter(g=>g!=='Brain');
+  const W=820,H=460,x0=150,x1=430,x2=700,nw=14,pad=8;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W},host);
+  // flows: source -> brainSess / worker ; brain sessions -> vault (writes, drawn as the vault reads volume of brain sessions) ; vault -> worker
+  const toB=Object.fromEntries(srcs.map(g=>[g,by(g,true)])), toW=Object.fromEntries(srcs.map(g=>[g,by(g,false)]));
+  const vaultB=by('Brain',true), vaultW=by('Brain',false);
+  const tot=srcs.reduce((a,g)=>a+toB[g]+toW[g],0)+vaultB+vaultW;
+  const k=(H-40-pad*(srcs.length))/tot;
+  // left column: sources + vault at bottom of left? vault is its own middle node.
+  let y=20; const L={};
+  srcs.slice().sort((a,b)=>(toB[b]+toW[b])-(toB[a]+toW[a])).forEach(g=>{ const h=(toB[g]+toW[g])*k; L[g]={y,h}; y+=h+pad; });
+  const bIn=srcs.reduce((a,g)=>a+toB[g],0)+vaultB, wIn=srcs.reduce((a,g)=>a+toW[g],0)+vaultW;
+  const BS={y:20,h:bIn*k}, WS={y:20+bIn*k+40,h:wIn*k};
+  const V={x:x1,y:BS.y+BS.h+6,h:(vaultB+vaultW)*k};
+  // place vault node between columns
+  V.y=Math.min(H-20-V.h, Math.max(BS.y+BS.h-V.h/2, 20));
+  const ribbon=(xa,ya,ha,xb,yb,hb,color,label)=>{
+    const m=(xa+xb)/2;
+    const p=el('path',{d:`M${xa},${ya}C${m},${ya} ${m},${yb} ${xb},${yb}L${xb},${yb+hb}C${m},${yb+hb} ${m},${ya+ha} ${xa},${ya+ha}Z`,fill:color,opacity:.38},svg);
+    p.addEventListener('pointerenter',()=>p.setAttribute('opacity',.7)); p.addEventListener('pointerleave',()=>p.setAttribute('opacity',.38)); hover(p,label);
+  };
+  let bOff=BS.y, wOff=WS.y;
+  Object.keys(L).forEach(g=>{
+    const n=L[g]; let o=n.y;
+    if(toB[g]>0){ const h=toB[g]*k; ribbon(x0+nw,o,h,x2,bOff,h,COL[g],`${g} → brain sessions: ${fmtM(toB[g])}`); o+=h; bOff+=h; }
+    if(toW[g]>0){ const h=toW[g]*k; ribbon(x0+nw,o,h,x2,wOff,h,COL[g],`${g} → workers directly: ${fmtM(toW[g])}`); wOff+=h; }
+    el('rect',{x:x0,y:n.y,width:nw,height:Math.max(1,n.h),fill:COL[g],rx:2},svg);
+    el('text',{x:x0-8,y:n.y+Math.max(n.h,1)/2+4,'text-anchor':'end','font-size':12.5},svg).textContent=g;
+  });
+  // vault node
+  el('rect',{x:V.x,y:V.y,width:nw,height:V.h,fill:COL.Brain,rx:2},svg);
+  el('text',{x:V.x+nw/2,y:V.y-8,'text-anchor':'middle','font-size':12.5,'font-weight':600},svg).textContent='Brain (vault)';
+  ribbon(V.x+nw,V.y,vaultB*k,x2,bOff,vaultB*k,COL.Brain,`Vault → brain sessions: ${fmtM(vaultB)}`); bOff+=vaultB*k;
+  ribbon(V.x+nw,V.y+vaultB*k,vaultW*k,x2,wOff,vaultW*k,COL.Brain,`Vault → workers: ${fmtM(vaultW)}`);
+  // write-back loop (dashed): brain sessions -> vault
+  const lp=el('path',{d:`M${x2},${BS.y+BS.h*0.35} C${x2-90},${BS.y-12} ${V.x+80},${V.y-50} ${V.x+nw+2},${V.y+4}`,fill:'none',stroke:COL.Brain,'stroke-width':1.6,'stroke-dasharray':'4 4'},svg);
+  hover(lp,'Brain sessions write what they collect back into the vault (inferred, not measured)');
+  el('text',{x:(x2+V.x)/2+30,y:Math.max(14,V.y-36),'font-size':11.5,class:'m','text-anchor':'middle'},svg).textContent='writes back ↺';
+  // right nodes
+  [[BS,'Brain sessions',D.brainSessions],[WS,'Workers',D.workerSessions]].forEach(([n,t,c])=>{
+    el('rect',{x:x2,y:n.y,width:nw,height:n.h,fill:'var(--fg)',rx:2},svg);
+    el('text',{x:x2+nw+8,y:n.y+n.h/2,'font-size':13.5,'font-weight':600},svg).textContent=t;
+    el('text',{x:x2+nw+8,y:n.y+n.h/2+17,'font-size':11.5,class:'m'},svg).textContent=`${c.toLocaleString()} sessions`;
+  });
+}
+
+function scatter(){
+  const host=document.getElementById('c-scatter'); host.innerHTML='';
+  const v=vol('all'), gs=active();
+  const W=760,H=380,L=60,R=150,T=20,B=50;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W},host);
+  const vals=gs.map(g=>v[g]/4), lo=Math.log10(Math.min(...vals))-0.2, hi=Math.log10(Math.max(...vals))+0.2;
+  const X=r=>L+(W-L-R)*r, Y=c=>T+(H-T-B)*(1-(Math.log10(c/4)-lo)/(hi-lo));
+  for(let r=0;r<=1.001;r+=0.25){ el('line',{x1:X(r),x2:X(r),y1:T,y2:H-B,stroke:'var(--line)'},svg); el('text',{x:X(r),y:H-B+18,'text-anchor':'middle','font-size':11,class:'m'},svg).textContent=pct(r); }
+  for(let e=Math.ceil(lo);e<=hi;e++){ const y=T+(H-T-B)*(1-(e-lo)/(hi-lo)); el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:'var(--line)'},svg); el('text',{x:L-8,y:y+4,'text-anchor':'end','font-size':11,class:'m'},svg).textContent= e>=6? (10**(e-6))+'M' : (10**(e-3))+'k'; }
+  el('text',{x:(L+W-R)/2,y:H-10,'text-anchor':'middle','font-size':12,class:'m'},svg).textContent='Reach: % of all sessions touching it';
+  el('text',{x:14,y:(T+H-B)/2,'font-size':12,class:'m',transform:`rotate(-90 14 ${(T+H-B)/2})`,'text-anchor':'middle'},svg).textContent='Volume (tokens, log)';
+  gs.forEach(g=>{
+    const rc=D.groups[g].sessions/D.sessions, x=X(rc), y=Y(v[g]);
+    const c=el('circle',{cx:x,cy:y,r:8,fill:COL[g],stroke:'var(--card)','stroke-width':2},svg); hover(c,`${g}: ${pct(rc,1)} of sessions · ${fmtM(v[g])}`);
+    el('text',{x:x+12,y:y+4,'font-size':12.5},svg).textContent=g;
+  });
+}
+
+const MR = {"2026-W10":2,"2026-W11":6,"2026-W12":13,"2026-W13":4,"2026-W14":1,"2026-W15":0,"2026-W16":3,"2026-W17":4,"2026-W18":2,"2026-W19":4,"2026-W20":1,"2026-W21":0,"2026-W22":4,"2026-W23":4,"2026-W24":18,"2026-W25":11,"2026-W26":21,"2026-W27":12,"2026-W28":21,"2026-W29":7,"2026-W30":24,"2026-W31":30,"2026-W32":22,"2026-W33":13,"2026-W34":28,"2026-W35":8,"2026-W36":0,"2026-W37":0,"2026-W38":1,"2026-W39":9,"2026-W40":7,"2026-W41":17,"2026-W42":14};
+function smoothPath(pts, move=true){
+  let d = move ? `M${pts[0][0]},${pts[0][1]}` : `L${pts[0][0]},${pts[0][1]}`;
+  for(let i=1;i<pts.length;i++){ const [x0,y0]=pts[i-1],[x1,y1]=pts[i], mx=(x0+x1)/2; d+=`C${mx},${y0} ${mx},${y1} ${x1},${y1}`; }
+  return d;
+}
+function stream(){
+  const host=document.getElementById('c-stream'); host.innerHTML='';
+  const QUIET=['2026-W36','2026-W37','2026-W38'];
+  const weeks=Object.keys(MR).sort().filter(w=>!QUIET.includes(w)), gs=active(), n=weeks.length;
+  const bi=weeks.indexOf('2026-W27');
+  const W=820,L=16,R=150,T=40,H1=250,G=52,H2=120,B=34,H=T+H1+G+H2+B;
+  const X=i=>L+(W-L-R)*i/(n-1), Y=f=>T+H1*(1-f);
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W},host);
+  // weekly shares, trailing 3-week average, renormalised
+  const raw=weeks.map(w=>{ const r=D.weekly[w]||{}, t=gs.reduce((a,g)=>a+(r[g]||0),0); return Object.fromEntries(gs.map(g=>[g,t?(r[g]||0)/t:0])); });
+  const sm=raw.map((_,i)=>{ const win=raw.slice(Math.max(0,i-2),i+1); const o=Object.fromEntries(gs.map(g=>[g,win.reduce((a,r)=>a+r[g],0)/win.length]));
+    const t=gs.reduce((a,g)=>a+o[g],0)||1; gs.forEach(g=>o[g]/=t); return o; });
+  let base=weeks.map(()=>0); const bands={}, paths=[];
+  gs.forEach(g=>{
+    const top=base.map((b,i)=>b+sm[i][g]);
+    const up=top.map((f,i)=>[X(i),Y(f)]), dn=base.map((f,i)=>[X(i),Y(f)]).reverse();
+    const p=el('path',{d:smoothPath(up)+smoothPath(dn,false)+'Z',fill:COL[g],opacity:g==='Brain'?1:.82,style:'transition:opacity .15s;cursor:default'},svg);
+    p.dataset.g=g; p.dataset.o=g==='Brain'?1:.82; paths.push(p);
+    bands[g]=[base[n-1],top[n-1]]; base=top;
+  });
+  // hover a band: fade the others, show its share before vs after the brain
+  const period=(a,b,g)=>{ const ws=weeks.slice(a,b); let x=0,t=0; ws.forEach(w=>{ const r=D.weekly[w]||{}; x+=r[g]||0; t+=gs.reduce((s,k)=>s+(r[k]||0),0); }); return t?x/t:0; };
+  const info=el('text',{x:W-R,y:T-16,'text-anchor':'end','font-size':13,'font-weight':600},svg);
+  paths.forEach(p=>{
+    p.addEventListener('pointerenter',()=>{ const g=p.dataset.g;
+      paths.forEach(q=>q.setAttribute('opacity', q===p?1:.12));
+      info.setAttribute('fill',COL[g]);
+      info.textContent=g==='Brain'?`Brain: 0% before → ${pct(period(bi,n,g))} after`:`${g}: ${pct(period(0,bi,g))} before → ${pct(period(bi,n,g))} after`; });
+    p.addEventListener('pointerleave',()=>{ paths.forEach(q=>q.setAttribute('opacity',q.dataset.o)); info.textContent=''; });
+  });
+  // direct labels at the right edge
+  let lastY=-99;
+  gs.forEach(g=>{ const [a,b]=bands[g], h=(b-a)*H1; if(h<11) return; let y=Y((a+b)/2)+4; if(Math.abs(y-lastY)<13) return; lastY=y;
+    el('text',{x:W-R+10,y,'font-size':12.5,fill:COL[g],'font-weight':g==='Brain'?600:400},svg).textContent=g; });
+  el('text',{x:L,y:T-16,'font-size':11,class:'m','letter-spacing':'.08em'},svg).textContent=withCode?'WHAT AGENTS READ · SHARE OF ALL CONTEXT':'WHAT AGENTS READ · SHARE OF NON-CODE CONTEXT';
+  // MR bars
+  const bt=T+H1+G, mx=Math.max(...weeks.map(w=>MR[w])), bw=(W-L-R)/n*0.62;
+  el('text',{x:L,y:bt-14,'font-size':11,class:'m','letter-spacing':'.08em'},svg).textContent='MERGE REQUESTS I OPENED · PER WEEK';
+  el('line',{x1:L,x2:W-R,y1:bt+H2,y2:bt+H2,stroke:'var(--line)'},svg);
+  weeks.forEach((w,i)=>{ const h=H2*MR[w]/mx;
+    const r=el('rect',{x:X(i)-bw/2,y:bt+H2-h,width:bw,height:Math.max(h,0),rx:2,fill:'var(--muted)',opacity:.18},svg); hover(r,`${MR[w]} MRs that week`); });
+  // trailing 3-week moving average, same window as the top panel
+  const ma=weeks.map((_,i)=>{ const win=weeks.slice(Math.max(0,i-2),i+1); return win.reduce((s,w)=>s+MR[w],0)/win.length; });
+  const pts=ma.map((v,i)=>[X(i),bt+H2-H2*v/mx]);
+  el('path',{d:smoothPath(pts)+`L${X(n-1)},${bt+H2}L${X(0)},${bt+H2}Z`,fill:'var(--fg)',opacity:.12},svg);
+  el('path',{d:smoothPath(pts),fill:'none',stroke:'var(--fg)','stroke-width':2.2},svg);
+  // brain marker across both panels
+  const xb=X(bi)-((W-L-R)/(n-1))/2;
+  el('line',{x1:xb,x2:xb,y1:T-4,y2:bt+H2,stroke:'var(--fg)','stroke-width':1.2,'stroke-dasharray':'2 3'},svg);
+  const lab=el('text',{x:xb+6,y:T+14,'font-size':13,'font-weight':600},svg); lab.textContent='Brain introduced';
+  el('text',{x:L,y:H-8,'font-size':11.5,class:'m'},svg).textContent='← earlier';
+  el('text',{x:W-R,y:H-8,'font-size':11.5,class:'m','text-anchor':'end'},svg).textContent='later →';
+  el('text',{x:(L+W-R)/2,y:H-8,'font-size':11.5,class:'m','text-anchor':'middle'},svg).textContent=`each column is one week · ${n} weeks`;
+}
+
+function render(){ legend(); donut(); waffle(); bars(); sankey(); scatter(); stream(); }
+document.querySelectorAll('[data-code]').forEach(b=>b.onclick=()=>{ withCode=b.dataset.code==='1';
+  document.querySelectorAll('[data-code]').forEach(x=>x.setAttribute('aria-pressed',x===b)); render(); });
+document.querySelectorAll('#segType button').forEach(b=>b.onclick=()=>{ sType=b.dataset.t;
+  document.querySelectorAll('#segType button').forEach(x=>x.setAttribute('aria-pressed',x===b)); bars(); });
+findings(); render();
+</script>
+
+</body></html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Standup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a two-sided toy. Left, a todo list. Right, where you act: join standup, then launch. Three versions of how the agent windows open */
+:root{
+  --bg:#eef1f4; --surface:#fbfcfd; --fg:#16202b; --muted:#5a6878; --line:#c9d1da; --ink:#8b97a5;
+  --you:#b8396b; --work:#2f6fd0; --plan:#8a6a1c;
+  --term-bg:#121820; --term-bar:#222d39; --term-fg:#d5dde5; --term-dim:#5f6d7b; --term-ok:#6cc596; --term-acc:#e8739f;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#04070a; --term-bar:#141c25;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#04070a; --term-bar:#141c25;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.page{padding-inline:16px;padding-block:28px 80px;display:grid;gap:30px;justify-items:center}
+.page > *{width:100%;max-width:440px}
+h1{font-family:var(--display);font-size:28px;line-height:1.1;margin:0}
+.intro{display:grid;gap:6px}
+.intro p{margin:0;font-size:14.5px;color:var(--muted)}
+.jump{display:flex;flex-wrap:wrap;gap:6px}
+.jump a{font:500 13px var(--mono);color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:2px 11px;background:var(--surface)}
+section{display:grid;gap:10px;padding-top:22px;border-top:1px dashed var(--line)}
+.k{font:500 12px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--plan)}
+h2{font-family:var(--display);font-size:22px;line-height:1.15;margin:0}
+section > p{margin:0;font-size:14.5px;color:var(--muted)}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--work);outline-offset:2px}
+
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:12px;height:290px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.todo{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 10px 6px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.todo .hd{font:500 11px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding-bottom:4px}
+.item{display:flex;align-items:center;gap:8px;height:36px;min-width:0;animation:fadein .3s ease-out both}
+.item .box{width:12px;height:12px;border:1.8px solid var(--ink);border-radius:3px;flex:none;position:relative}
+.item .num{display:none;font:600 10px/16px var(--mono);width:16px;height:16px;border-radius:4px;background:var(--term-bg);color:var(--term-fg);text-align:center;flex:none}
+.launched .item .num{display:block}
+.launched .item .box{display:none}
+.v1.launched .item .num{display:none}
+.v1.launched .item .box{display:block;border-color:transparent}
+.v1.launched .item .box::after{content:"";position:absolute;inset:1px;border-radius:50%;background:var(--term-ok);animation:pulse 1.4s ease-in-out infinite}
+.item svg{flex:1;min-width:0;height:12px;overflow:visible}
+.sq{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
+.draw{stroke-dasharray:100;stroke-dashoffset:100;animation:draw .5s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadein{from{opacity:0}}
+@keyframes pulse{50%{opacity:.3}}
+
+.stage{position:relative;min-width:0}
+.center{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;text-align:center;animation:fadein .3s ease-out both}
+.join{background:var(--fg);color:var(--bg);border:0;border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.join::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--term-ok)}
+.call{position:relative;width:118px;height:86px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);display:grid;grid-template-columns:1fr 1fr;padding:8px;gap:4px}
+.call span{display:grid;place-items:end center;position:relative}
+.call span::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--ink);position:absolute;top:2px;left:50%;transform:translateX(-50%)}
+.call span::after{content:"";width:28px;height:12px;border-radius:14px 14px 0 0;background:var(--ink)}
+.call span.talk::before,.call span.talk::after{background:var(--fg)}
+.bubble{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;animation:pop .25s ease-out both}
+.bubble svg{display:block;width:46px;height:10px;overflow:visible}
+@keyframes pop{from{transform:translateX(-50%) scale(.4);opacity:0}}
+.over{font-size:14px;color:var(--muted);margin:0}
+.cc{width:100%;background:var(--term-bg);border-radius:9px;overflow:hidden;text-align:left;border:0;padding:0;display:block;cursor:pointer;animation:fadein .3s ease-out both}
+.tb{display:flex;gap:4px;align-items:center;padding:5px 8px;background:var(--term-bar);font:10.5px/1.3 var(--mono);color:var(--term-dim);flex:none}
+.tb i{width:6px;height:6px;border-radius:50%;background:var(--term-dim);flex:none}
+.tb span{margin-left:4px}
+.tb b{margin-left:auto;font-weight:600;color:var(--term-fg)}
+.cc .pr{padding:10px 10px 12px;font:12.5px/1.5 var(--mono);color:var(--term-acc);min-height:62px;overflow-wrap:anywhere}
+.cc .pr::before{content:"> ";color:var(--term-dim)}
+.cc .ghost{color:var(--term-dim)}
+.cc .caret{display:inline-block;width:7px;height:13px;background:var(--term-fg);vertical-align:-2px;animation:pulse 1s steps(1) infinite}
+.cc .sent{display:block;color:var(--term-ok);margin-top:4px}
+.cc .sent::before{content:"⏺ ";}
+.cc.ring{animation:fadein .3s ease-out both,ring 1.8s ease-out .6s infinite}
+.hint{font:11.5px var(--mono);color:var(--muted);margin:0}
+.hint kbd{font:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface);color:var(--fg)}
+.enter{background:var(--surface);color:var(--fg);border:1.5px solid var(--fg);border-bottom-width:4px;border-radius:9px;padding:6px 16px;font:600 15px var(--mono);cursor:pointer;animation:fadein .3s ease-out both,bob 1.2s ease-in-out .5s infinite}
+.enter:active{border-bottom-width:1.5px;transform:translateY(2px)}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.pointer{position:absolute;width:30px;height:30px;right:14%;top:58%;pointer-events:none;animation:tap 1.3s ease-in-out .3s infinite}
+.pointer path{fill:var(--surface);stroke:var(--fg);stroke-width:1.6;stroke-linejoin:round}
+@keyframes tap{0%,100%{transform:translate(10px,14px)}50%{transform:translate(0,0)}}
+.taplbl{position:absolute;right:0;top:calc(58% + 32px);font:600 12px var(--body);color:var(--you)}
+.chip{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;background:var(--you);color:var(--surface);border:0;border-radius:10px;padding:9px 12px;font:600 13.5px/1.3 var(--body);text-align:left;cursor:pointer;animation:fadein .3s ease-out both,ring 1.8s ease-out .6s infinite}
+.chip::after{content:"➜";font-size:16px}
+.stage .stack{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:10px;animation:fadein .3s ease-out both}
+.cmd{background:var(--term-bg);color:var(--term-acc);border:0;border-radius:8px;padding:9px 12px;font:13px/1.4 var(--mono);cursor:pointer;text-align:left;max-width:100%;box-shadow:0 0 0 0 color-mix(in srgb,var(--term-acc) 50%,transparent);animation:fadein .3s ease-out both,ring 1.8s ease-out 1s infinite}
+.cmd::before{content:"> ";color:var(--term-dim)}
+.cmd::after{content:" ⏎";color:var(--term-dim)}
+@keyframes ring{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--term-acc) 45%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
+.reset{position:absolute;right:0;bottom:-2px;font-size:12px;background:none;border:0;color:var(--muted);cursor:pointer;text-decoration:underline;padding:0}
+
+/* agent window */
+.win{position:absolute;background:var(--term-bg);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.win .body{flex:1;padding:6px 8px;display:flex;flex-direction:column;gap:6px;justify-content:flex-start;min-height:0}
+.win svg{width:100%;height:8px;overflow:visible;flex:none}
+.win .sq{stroke:var(--term-fg);stroke-width:1.8;stroke-dasharray:100;stroke-dashoffset:100;animation:work 2.6s ease-in-out infinite}
+@keyframes work{0%{stroke-dashoffset:100;opacity:1}55%{stroke-dashoffset:0}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+.win .cur{width:6px;height:9px;background:var(--term-ok);animation:pulse 1s steps(1) infinite;flex:none}
+/* V1 aligned rows */
+.v1 .win{left:14px;right:0;height:34px;transform-origin:0 50%;animation:grow .4s ease-out both}
+.v1 .win .body{flex-direction:row;align-items:center;padding:0 8px}
+.v1 .win .bar{display:none}
+.v1 .link{position:absolute;left:-12px;width:26px;height:1.6px;background:var(--work);transform-origin:0 50%;animation:grow .25s ease-out both}
+@keyframes grow{from{transform:scaleX(0)}}
+/* V2 cascade */
+.v2 .win{width:76%;height:92px;animation:fly .5s cubic-bezier(.2,.8,.3,1) both}
+@keyframes fly{from{transform:translate(-130%,var(--fy)) scale(.25);opacity:0}}
+/* V3 tiled */
+.v3 .tiles{position:absolute;inset:0 0 20px 0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px}
+.v3 .win{position:relative;animation:popin .35s ease-out both}
+@keyframes popin{from{transform:scale(.5);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0s!important;animation-iteration-count:1!important}}
+.page{padding-block:8px}
+section{border-top:0;padding-top:0}
+</style></head><body>
+<style>
+/* embedded in the blog post: no card around the stage, the post's background shows through */
+html,body{background:transparent}
+body{margin:0}
+.page{padding-block:4px 8px}
+.intro{display:none}
+.join{background:var(--you);color:#fff;box-shadow:0 2px 0 color-mix(in srgb,var(--you) 55%,#000);animation:ring 1.8s ease-out .8s infinite}
+.join:hover{filter:brightness(1.08)}
+.join:active{transform:translateY(1px);box-shadow:none}
+.stage,.demo{background:transparent;border:0;border-radius:0;padding:0}
+.scene{inset:5px}
+section{border-top:0;padding-top:0}
+.enter{border-color:var(--you);color:var(--you)}
+</style>
+
+
+<main class="page">
+  <section id="o2">
+    <div class="demo" data-v="2" data-o="2"></div></section>
+</main>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PRE=2, N=4, LENS=[.8,.62,.92,.7,.85,.6];
+function wave(w,amp=3,per=12,y=6){let d=`M0 ${y}`,s=1; for(let x=0;x<w-0.1;x+=per/2){const nx=Math.min(w,x+per/2); d+=` Q${(x+nx)/2} ${y-amp*s} ${nx} ${y}`; s=-s} return d}
+const sq=(w,cls='sq',style='')=>`<svg viewBox="0 0 ${w} 12" preserveAspectRatio="none"><path class="${cls}" d="${wave(w)}" pathLength="100" style="${style}"/></svg>`;
+function win(i){
+  const lines=[0,1,2].map(j=>`<svg viewBox="0 0 100 8" preserveAspectRatio="none"><path class="sq" d="${wave(100*(.55+((i+j)%3)*.15),2.2,9,4)}" pathLength="100" style="animation-delay:${(i*.45+j*.8).toFixed(2)}s"/></svg>`).join('');
+  return `<span class="tb"><i></i><i></i><i></i><span>claude</span><b>${i+1}</b></span><div class="body">${lines}<span class="cur"></span></div>`;
+}
+
+function makeDemo(root){
+  const v=+root.dataset.v; let ts=[];
+  const at=(ms,fn)=>ts.push(setTimeout(fn,ms));
+  root.classList.add('v'+v);
+  root.innerHTML=`<div class="todo"><span class="hd">Todo</span><div class="items"></div></div><div class="stage"></div>`;
+  const items=root.querySelector('.items'), stage=root.querySelector('.stage');
+  function addItem(i,anim){
+    const d=document.createElement('div'); d.className='item';
+    d.innerHTML=`<span class="box"></span><span class="num">${i+1}</span>${sq(Math.round(140*LENS[i]),'sq'+(anim?' draw':''))}`;
+    d.querySelector('svg').style.flex=`0 1 ${Math.round(LENS[i]*100)}%`;
+    items.appendChild(d);
+  }
+  function idle(){
+    ts.forEach(clearTimeout); ts=[]; items.innerHTML=''; root.classList.remove('launched');
+    for(let i=0;i<PRE;i++) addItem(i,false);
+    stage.innerHTML=`<div class="center"><button class="join" type="button">Join standup</button></div>`;
+    stage.querySelector('.join').onclick=standup;
+  }
+  function standup(){
+    stage.innerHTML=`<div class="center"><div class="call"><span></span><span></span><span></span><span></span></div></div>`;
+    const heads=[...stage.querySelectorAll('.call span')], call=stage.querySelector('.call');
+    if(reduce){for(let i=0;i<N;i++) addItem(PRE+i,false); over(); return}
+    const who=[0,3,1,2];
+    for(let i=0;i<N;i++) at(210+i*790,()=>{
+      heads.forEach(h=>h.classList.remove('talk')); heads[who[i]].classList.add('talk');
+      call.querySelector('.bubble')?.remove();
+      const b=document.createElement('div'); b.className='bubble'; b.innerHTML=sq(46,'sq draw'); call.appendChild(b);
+      at(375,()=>addItem(PRE+i,true));
+    });
+    at(210+N*790+170,over);
+  }
+  const CMD='launch a worker for each task', o=+(root.dataset.o||0);
+  const ccBox=(inner,cls='')=>`<button class="cc ${cls}" type="button" aria-label="Send: ${CMD}"><span class="tb"><i></i><i></i><i></i><span>claude</span></span><span class="pr">${inner}</span></button>`;
+  let busy=false;
+  function send(){
+    if(busy) return; busy=true;
+    const pr=stage.querySelector('.pr');
+    stage.querySelectorAll('.enter,.pointer,.taplbl,.chip,.hint').forEach(x=>x.remove());
+    stage.querySelector('.cc')?.classList.remove('ring');
+    if(pr) pr.innerHTML=`${CMD}<span class="sent">starting 6 agents</span>`;
+    at(reduce?0:700,launch);
+  }
+  function typeInto(pr,done){let n=0; const step=()=>{if(busy && done!==send) return; pr.innerHTML=CMD.slice(0,n)+'<span class="caret"></span>'; if(n++<CMD.length) at(reduce?0:32,step); else done()}; step()}
+  function over(){
+    busy=false;
+    if(o===1){
+      stage.innerHTML=`<div class="stack"><p class="over">Standup over.</p>${ccBox(`<span class="caret"></span><span class="ghost">${CMD}</span>`,'ring')}<p class="hint">tap the box, or <kbd>Tab</kbd> <kbd>⏎</kbd></p></div>`;
+      stage.querySelector('.cc').onclick=send;
+    } else if(o===2){
+      stage.innerHTML=`<div class="stack"><p class="over">Standup over.</p>${ccBox('<span class="caret"></span>')}<div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="hint">your turn</span><button class="enter" type="button" hidden>⏎ Enter</button></div></div>`;
+      const pr=stage.querySelector('.pr'), en=stage.querySelector('.enter');
+      stage.querySelector('.cc').onclick=send; en.onclick=send;
+      typeInto(pr,()=>{en.hidden=false});
+    } else if(o===3){
+      stage.innerHTML=`<div class="stack"><p class="over">Standup over.</p>${ccBox('<span class="caret"></span>')}</div>`;
+      const pr=stage.querySelector('.pr'); stage.querySelector('.cc').onclick=send;
+      typeInto(pr,()=>{ if(!stage.querySelector('.cc')) return;
+        stage.insertAdjacentHTML('beforeend',`<svg class="pointer" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2.5c1 0 1.7.7 1.7 1.7v7.1l.9-.3c.9-.3 1.8.1 2.2.9l.2.5.6-.2c.9-.3 1.8.2 2.1 1l.1.3.5-.1c1-.2 1.9.5 2 1.5l.4 3.6c.2 2.2-1.3 4.1-3.4 4.5l-2.6.4c-1.6.3-3.2-.3-4.2-1.6L4 15.6c-.6-.8-.4-1.9.4-2.4.7-.5 1.6-.4 2.2.2l.7.8V4.2c0-1 .7-1.7 1.7-1.7z"/></svg><span class="taplbl">tap to send</span>`);
+      });
+    } else if(o===4){
+      stage.innerHTML=`<div class="stack"><p class="over">Standup over.</p>${ccBox('<span class="caret"></span>')}<button class="chip" type="button">${CMD}</button></div>`;
+      let picked=false; const pick=()=>{if(picked) return; picked=true; const pr=stage.querySelector('.pr'); stage.querySelector('.chip')?.remove(); typeInto(pr,send)};
+      stage.querySelector('.chip').onclick=pick; stage.querySelector('.cc').onclick=pick;
+    } else {
+      stage.innerHTML=`<div class="center"><p class="over">Standup over.</p><button class="cmd" type="button">launch a worker for each task</button></div>`;
+      stage.querySelector('.cmd').onclick=launch;
+    }
+  }
+  function launch(){
+    root.classList.add('launched');
+    stage.innerHTML=''; const rows=[...items.children];
+    if(v===1){
+      rows.forEach((r,i)=>{
+        const y=r.offsetTop + r.offsetHeight/2 - stage.offsetTop;
+        const w=document.createElement('div'); w.className='win'; w.style.top=(y-17)+'px'; w.style.animationDelay=(i*.12+.15)+'s'; w.innerHTML=win(i);
+        const l=document.createElement('div'); l.className='link'; l.style.top=y+'px'; l.style.animationDelay=(i*.12)+'s';
+        stage.append(l,w);
+      });
+    }
+    if(v===2){
+      rows.forEach((r,i)=>{
+        const w=document.createElement('div'); w.className='win'; w.style.top=(6+i*26)+'px'; w.style.left=(2+i*11)+'px';
+        w.style.setProperty('--fy',(r.offsetTop - stage.offsetTop - (6+i*26))+'px'); w.style.animationDelay=(i*.18)+'s'; w.style.zIndex=i; w.innerHTML=win(i);
+        stage.append(w);
+      });
+    }
+    if(v===3){
+      const t=document.createElement('div'); t.className='tiles';
+      t.innerHTML=rows.map((_,i)=>`<div class="win" style="animation-delay:${(i*.1).toFixed(2)}s">${win(i)}</div>`).join('');
+      stage.append(t);
+    }
+    const rs=document.createElement('button'); rs.className='reset'; rs.type='button'; rs.textContent='start over'; rs.onclick=idle; stage.append(rs);
+  }
+  idle();
+}
+document.querySelectorAll('.demo').forEach(makeDemo);
+</script></body></html>
