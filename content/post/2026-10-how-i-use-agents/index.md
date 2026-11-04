@@ -48,7 +48,7 @@ I've had both friends and colleagues ask how I'm using agents for work. It's eas
 
 The above is genuinely how I work nowadays. Most days I'm working on 3-10 tasks in parallel. The trick isn't the agents or the harness. It's that, **by the time I ask, they already have the context.**
 
-If you write software and want to get more out of your agents, here's how I've set this up.
+If you write software and want to get more out of your agents, this is how I've set this up. My full setup is publicly available [here](https://github.com/dcferreira/brain-public), though it won't make much sense without this post.
 
 ## Context is everything
 
@@ -58,9 +58,9 @@ So let's talk about where my agents are getting their context from. This plot co
 
 {{< figframe src="/post-assets/how-i-use-agents/context-sources.html" title="What agents read each week, and merge requests I opened" height="560" >}}
 
-### Brain
+### My Second Brain
 
-The most important piece of context in my setup is the brain. It's a text store where all agents are saving important information after every session. This turned out to be the most impactful source of context after I set up this system. In the first few weeks there's not much there so it's not super useful, but as it becomes populated the agents start relying on it more and more.
+The most important piece of context in my setup is the "second brain". This brain is simply a text store where all agents are saving important information after every session. This turned out to be the most impactful source of context after I set up this system. In the first few weeks there's not much there so it's not super useful, but as it becomes populated the agents start relying on it more and more.
 
 In practice, this is an [Obsidian](https://obsidian.md/) vault (that is, a bunch of markdown files), the capability to index it (I'm using [qmd](https://github.com/tobi/qmd)), and some rules to get all Claude Code sessions to write to it.
 
@@ -84,7 +84,7 @@ Then there's the messaging platforms and docs. I use Slack to communicate with c
 
 As an example, a customer asked me to make some changes to how our code was matching names. This was one of many requests in a call with them, a small change for which I didn't memorize all the details. After the meeting, the summary and tasks were added to the brain.
 
-The next day I started an agent with "make the changes to ignore middle names like we talked in yesterday's call", and the agent went to work. The agent knew the summarized information was second-hand, so went straight to the source call and found all the details. It turns out the rules were overly simplified in the summary that was saved in the brain! They were complex: *first/last name alternative spellings were meant to be flagged for human review, when completely different they should be rejected, and only when they completely match (except for the middle name which would ignored) should they be accepted*.
+The next day I started an agent with "make the changes to ignore middle names like we talked in yesterday's call", and the agent went to work. The agent knew the summarized information was second-hand, so went straight to the source call and found all the details. It turns out the rules were overly simplified in the summary that was saved in the brain! They were complex: *first/last name alternative spellings were meant to be flagged for human review, when completely different they should be rejected, and only when they completely match (except for the middle name which would be ignored) should they be accepted*.
 
 Not only did I not tell the agent all of this, but I'd forgotten all of those details. I checked later and they did match the agreed rules during the 1 minute or so that we discussed in the call. I didn't give the agent the rules, I just made sure it could find them!
 
@@ -100,7 +100,7 @@ I open up a new session and call a skill: an agent summarizes what I did yesterd
 
 Typically in a standup I'll talk about what I'm doing today, and colleagues make requests of me. So after the call I have a todo list for the day, and I unleash my agents! I do this not only for programming tasks, but for almost all tasks: if I need to send a plot to Alice with the week's data, I open a session so I don't forget it. Each task has one dedicated agent.
 
-*This is the "magic moment" from the opener of this post.*
+*Note: this is the same animation I used in the intro of this post.*
 
 {{< figframe src="/post-assets/how-i-use-agents/2-standup.html" title="Standup" height="480" >}}
 
@@ -122,7 +122,7 @@ I typically have one "brain" session which is in charge of doing this, and there
 
 {{< figframe src="/post-assets/how-i-use-agents/4-wrap-up.html" title="Wrap up" height="470" >}}
 
-### Over the days
+### During the week
 
 Those systems described above all work on a daily basis. However, projects don't typically work at day-scale, so I have a few more tricks:
 
@@ -140,7 +140,7 @@ I'm not aware of any general framework doing all of this automatically right now
 
 Everything in this post is about context. Having the right context allows you to live one level of abstraction higher. I don't promise that working like this leads to tasks getting done faster than manually, but it will allow you to do more tasks in the same time. With this workflow, **I'm working on 3-10 tasks simultaneously at any given time.**
 
-I'm sharing my setup as a repo [here](https://github.com/dcferreira/brain-public). It includes the skills I use and a little bit on how to use them. It also includes more systems than those described here. I'm planning to write some follow-up posts: how I manage workers, when to trust agents, and forcing agents to follow my instructions (hint: this is just [pawl](https://github.com/dcferreira/agent-pawl)).
+I'm sharing my setup as a repo [here](https://github.com/dcferreira/brain-public). It includes the skills I use and a little bit on how to use them. It also includes more systems than those described here. I'm planning to write some follow-up posts: how I manage agents, when to trust agents, and forcing agents to follow my instructions (hint: this is just [pawl](https://github.com/dcferreira/agent-pawl)).
 
 I don't recommend you install those specific skills, but rather take ideas from it and start building your own. Have an agent read over it and recommend one or two ideas to start using in your workflows.
 
