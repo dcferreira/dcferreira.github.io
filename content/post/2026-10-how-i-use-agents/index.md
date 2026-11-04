@@ -9,21 +9,13 @@ summary: How I run 3-10 coding agents in parallel at work, and why the trick is 
 projects: []
 
 # Date published
-date: "2026-10-29T00:00:00Z"
+date: "2026-11-05T00:00:00Z"
 
 # Date updated
-lastmod: "2026-10-29T00:00:00Z"
+lastmod: "2026-11-05T00:00:00Z"
 
 # Is this an unpublished draft?
 draft: false
-
-# Unlisted preview: rendered at its URL, but kept out of lists, the homepage and RSS.
-# Delete `_build` and `private` below, and uncomment the tags and categories, to publish it properly.
-_build:
-  list: never
-  render: always
-# Keep it out of search engines while unlisted (Wowchemy adds a noindex meta).
-private: true
 
 # Show this page in the Featured widget?
 featured: false
@@ -31,15 +23,14 @@ featured: false
 authors:
   - admin
 
-# Tags and categories would list the post on their pages; restore them when publishing.
-# tags:
-#   - AI
-#   - Agents
-#   - Claude Code
-#   - Productivity
-#
-# categories:
-#   - AI
+tags:
+  - AI
+  - Agents
+  - Claude Code
+  - Productivity
+
+categories:
+  - AI
 ---
 
 I've had both friends and colleagues ask how I'm using agents for work. It's easier to show than explain. Click the buttons in this animation to experience my typical morning:
