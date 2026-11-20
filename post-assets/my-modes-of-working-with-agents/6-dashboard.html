@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boolangerie website Control</title>
+<style>
+/* the dashboard in a browser window, as in the Pawl dashboard snapshot; transparent page so the post shows through */
+:root{--ink:#13201f;--muted:#546867;--chrome:#d3dbdb;--chrome-line:#bcc8c8;--bar:#f4f7f7;--shadow:rgba(19,32,31,.18)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ink:#e1eaea;--muted:#8fa3a2;--chrome:#1e2a2a;--chrome-line:#2f3e3d;--bar:#141e1e;--shadow:rgba(0,0,0,.5);color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e1eaea;--muted:#8fa3a2;--chrome:#1e2a2a;--chrome-line:#2f3e3d;--bar:#141e1e;--shadow:rgba(0,0,0,.5);color-scheme:dark}
+html,body{background:transparent;margin:0;color:var(--ink)}
+.page{padding:8px 16px 16px}
+.window{border-radius:12px;overflow:hidden;border:1px solid var(--chrome-line);box-shadow:0 18px 44px -20px var(--shadow),0 2px 6px var(--shadow);background:var(--chrome)}
+.titlebar{display:flex;align-items:center;gap:12px;padding:9px 12px;border-bottom:1px solid var(--chrome-line)}
+.dots{display:flex;gap:6px;flex:none}.dots span{width:11px;height:11px;border-radius:50%;background:#ff5f57}
+.dots span:nth-child(2){background:#febc2e}.dots span:nth-child(3){background:#28c840}
+.url{flex:1;min-width:0;background:var(--bar);border:1px solid var(--chrome-line);border-radius:7px;padding:4px 12px;font:12px ui-monospace,Menlo,monospace;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.spacer{width:45px;flex:none}
+iframe{display:block;width:100%;height:520px;border:0;background:var(--bar)}
+@media (max-width:560px){.spacer{display:none}}
+</style></head><body>
+<div class="page"><div class="window">
+  <div class="titlebar" aria-hidden="true"><div class="dots"><span></span><span></span><span></span></div><div class="url">claude.ai/artifact · Boolangerie website Control</div><div class="spacer"></div></div>
+  <iframe src="6-dashboard-app.html" title="Boolangerie website Control dashboard, a frozen example with made-up data"></iframe>
+</div></div>
+</body></html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>New requests come in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same visual language as the first post: squiggles for text, dark terminal windows for agents, pink for me */
+:root{
+  --bg:#eef1f4; --surface:#fbfcfd; --fg:#16202b; --muted:#5a6878; --line:#c9d1da; --ink:#8b97a5;
+  --you:#b8396b; --work:#2f6fd0; --plan:#8a6a1c;
+  --term-bg:#121820; --term-bar:#222d39; --term-fg:#d5dde5; --term-dim:#5f6d7b; --term-ok:#6cc596; --term-acc:#e8739f; --bell:#e0a42a;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#04070a; --term-bar:#141c25;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#04070a; --term-bar:#141c25;
+  color-scheme:dark}
+/* embedded in the blog post: no card around the stage, the post's background shows through */
+html,body{background:transparent}
+body{color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--work);outline-offset:2px}
+.fig{padding:8px 16px;display:grid;gap:8px;max-width:440px;margin:0 auto}
+.stage{position:relative;height:360px}
+.scene{position:absolute;inset:5px;animation:fadein .35s ease-out both}
+.replay{justify-self:end;background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px;cursor:pointer;padding:0}
+@keyframes fadein{from{opacity:0}}
+@keyframes pulse{50%{opacity:.3}}
+@keyframes popin{from{transform:scale(.5);opacity:0}}
+@keyframes bob{50%{transform:translateY(-3px)}}
+@keyframes ring{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--you) 50%,transparent)}100%{box-shadow:0 0 0 9px transparent}}
+
+/* agent windows */
+.win{background:var(--term-bg);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 14px rgba(0,0,0,.18);min-width:0}
+.tb{display:flex;gap:4px;align-items:center;padding:5px 8px;background:var(--term-bar);font:10.5px/1.3 var(--mono);color:var(--term-dim);flex:none;white-space:nowrap}
+.tb i{width:6px;height:6px;border-radius:50%;background:var(--term-dim);flex:none}
+.tb span{margin-left:4px;overflow:hidden;text-overflow:ellipsis;color:var(--term-fg)}
+.tb b{margin-left:auto;font-weight:600;color:var(--term-fg)}
+.win .body{flex:1;padding:6px 8px;display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+.win .body svg{width:100%;height:8px;overflow:visible;flex:none}
+.sq{fill:none;stroke-linecap:round}
+.win .sq{stroke:var(--term-fg);stroke-width:1.8;stroke-dasharray:100;stroke-dashoffset:100;animation:work 2.6s ease-in-out infinite}
+@keyframes work{0%{stroke-dashoffset:100;opacity:1}55%{stroke-dashoffset:0}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+.win .cur{width:6px;height:9px;background:var(--term-ok);animation:pulse 1s steps(1) infinite;flex:none}
+.win.new{animation:popin .4s ease-out both}
+
+/* the prompt box (a claude session I type into) */
+.cc{width:100%;background:var(--term-bg);border-radius:9px;overflow:hidden;text-align:left;border:0;padding:0;display:block;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.cc .pr{display:block;padding:9px 10px 11px;font:12px/1.55 var(--mono);color:var(--term-acc);overflow-wrap:anywhere}
+.cc .pr::before{content:"> ";color:var(--term-dim)}
+.cc .caret{display:inline-block;width:7px;height:13px;background:var(--term-fg);vertical-align:-2px;animation:pulse 1s steps(1) infinite}
+.cc .sent{display:block;color:var(--term-ok);margin-top:4px}
+.cc .sent::before{content:"⏺ "}
+.turn{display:flex;justify-content:flex-end;align-items:center;gap:8px;font:12px var(--mono);color:var(--muted)}
+.enter{background:var(--surface);color:var(--you);border:1.5px solid var(--you);border-bottom-width:4px;border-radius:9px;padding:5px 14px;font:600 14px var(--mono);cursor:pointer;animation:fadein .3s ease-out both,bob 1.2s ease-in-out .5s infinite,ring 1.6s ease-out .5s infinite}
+.enter:active{border-bottom-width:1.5px;transform:translateY(2px)}
+.stack{display:grid;gap:10px;align-content:start;height:100%}
+.spawn{display:grid;gap:8px}
+.spawn .win{height:var(--wh,78px)}
+.who{font:500 11px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+
+.s5{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px}
+.inbox{display:grid;align-content:start;gap:6px}
+.items{display:grid;gap:5px}
+.it{display:grid;gap:0;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--you);border-radius:6px;padding:3px 7px;animation:drop .35s ease-out both;transition:opacity .4s}
+.it.form{border-left-color:var(--work)} .it.review{border-left-color:var(--bell)}
+.it .src{font:500 10px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.it .txt{font-size:12.5px;line-height:1.3}
+.it.taken{opacity:.35}
+@keyframes drop{from{transform:translateY(-10px);opacity:0}}
+.right{display:grid;align-content:start;gap:10px;min-width:0}
+.mgr{display:grid;gap:8px}
+.s5 .spawn{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.s5 .spawn .win{height:34px}
+.s5 .spawn .win .body{padding:4px 8px}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0s!important;animation-iteration-count:1!important;transition:none!important}}
+</style></head><body>
+<div class="fig"><div class="stage" id="stage" aria-live="polite"></div><button class="replay" id="replay" type="button">↻ replay</button></div>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stage=document.getElementById('stage');
+let ts=[];
+const at=(ms,fn)=>ts.push(setTimeout(fn,reduce?0:ms));
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function wave(w,amp=3,per=12,y=6){let d=`M0 ${y}`,s=1; for(let x=0;x<w-0.1;x+=per/2){const nx=Math.min(w,x+per/2); d+=` Q${(x+nx)/2} ${y-amp*s} ${nx} ${y}`; s=-s} return d}
+function win(label,i=0,n=3,cls='',num=''){
+  const lines=[...Array(n)].map((_,j)=>`<svg viewBox="0 0 100 8" preserveAspectRatio="none"><path class="sq" d="${wave(100*(.55+((i+j)%3)*.15),2.2,9,4)}" pathLength="100" vector-effect="non-scaling-stroke" style="animation-delay:${(i*.45+j*.8).toFixed(2)}s"/></svg>`).join('');
+  return `<div class="win ${cls}"><span class="tb"><i></i><i></i><i></i><span>${label}</span>${num?`<b>${num}</b>`:''}</span><div class="body">${lines}<span class="cur"></span></div></div>`;
+}
+/* A prompt typed into a session; Enter appears; pressing it (or tapping the box) spawns the windows. */
+function promptScene({session,cmd,sent,spawn,cols,wh,lines=3,after}){
+  let busy=false;
+  stage.innerHTML=`<div class="scene stack"><button class="cc" type="button" aria-label="Send the prompt"><span class="tb"><i></i><i></i><i></i><span>${session}</span></span><span class="pr"><span class="caret"></span></span></button>
+    <div class="turn"><span class="hint">your turn</span><button class="enter" type="button" hidden>⏎ click to send</button></div>
+    <div class="spawn" style="grid-template-columns:repeat(${cols},minmax(0,1fr));--wh:${wh}px"></div></div>`;
+  const pr=stage.querySelector('.pr'), en=stage.querySelector('.enter'), sp=stage.querySelector('.spawn'), turn=stage.querySelector('.turn');
+  const send=()=>{ if(busy) return; busy=true; turn.remove();
+    pr.innerHTML=`${esc(cmd)}<span class="sent">${sent}</span>`;
+    at(500,()=>{ sp.innerHTML=spawn.map((s,i)=>win(s,i,lines,'new')).join('');
+      [...sp.children].forEach((w,i)=>w.style.animationDelay=(i*.15)+'s'); after&&after(sp); });
+  };
+  stage.querySelector('.cc').onclick=()=>{ if(en.hidden) return; send() };
+  en.onclick=send;
+  let n=0; const step=()=>{ if(busy) return; pr.innerHTML=esc(cmd.slice(0,n))+'<span class="caret"></span>'; if(n<cmd.length){n+=2; at(28,step)} else en.hidden=false }; step();
+}
+const SCENE=function(){
+    const IN=[['pascal','Pascal','pick-up time slots','time slots'],['pascal','Pascal','pre-order reminders','reminders'],
+      ['pascal','Pascal','loyalty stamps','loyalty'],['pascal','Pascal','order history','order history'],
+      ['form','contact form','"menu won\'t load on my phone"','menu page'],['pascal','Pascal','pay online','payments'],
+      ['review','review ★★☆','"said open Monday, it wasn\'t"','opening days']];
+    const CMD='These just came in. Break them into tasks and spin up a worker for each';
+    stage.innerHTML=`<div class="scene s5"><div class="inbox"><span class="who">incoming</span><div class="items"></div></div>
+      <div class="right"><div class="mgr"></div><div class="spawn"></div></div></div>`;
+    const items=stage.querySelector('.items'), mgr=stage.querySelector('.mgr'), sp=stage.querySelector('.spawn');
+    /* the incoming tickets are already there when the figure starts */
+    items.innerHTML=IN.map(([k,src,txt])=>`<div class="it ${k}" style="animation:none"><span class="src">${src}</span><span class="txt">${esc(txt)}</span></div>`).join('');
+    at(400,()=>{
+      let busy=false;
+      mgr.innerHTML=`<button class="cc" type="button" aria-label="Send the prompt"><span class="tb"><i></i><i></i><i></i><span>manager · website</span></span><span class="pr"><span class="caret"></span></span></button>
+        <div class="turn"><button class="enter" type="button" hidden>⏎ click to send</button></div>`;
+      const pr=mgr.querySelector('.pr'), en=mgr.querySelector('.enter');
+      const send=()=>{ if(busy) return; busy=true; mgr.querySelector('.turn').remove();
+        pr.innerHTML=`${esc(CMD)}<span class="sent">starting ${IN.length} workers</span>`;
+        [...items.children].forEach((it,i)=>at(300+i*160,()=>{ it.classList.add('taken');
+          sp.insertAdjacentHTML('beforeend',win(IN[i][3],i,1,'new')); }));
+      };
+      mgr.querySelector('.cc').onclick=()=>{ if(!en.hidden) send() }; en.onclick=send;
+      let n=0; const step=()=>{ if(busy) return; pr.innerHTML=esc(CMD.slice(0,n))+'<span class="caret"></span>'; if(n<CMD.length){n+=2; at(28,step)} else en.hidden=false }; step();
+    });
+  };
+function play(){ts.forEach(clearTimeout); ts=[]; SCENE()}
+document.getElementById('replay').onclick=play;
+const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){play(); io.disconnect()}},{threshold:.4});
+io.observe(stage);
+</script></body></html>

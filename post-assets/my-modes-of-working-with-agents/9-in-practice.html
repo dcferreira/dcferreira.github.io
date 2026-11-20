@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>In practice: all three at once</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: three alternative treatments stacked, each a row of the three stages. Same visual language as the "How I use agents" figures: pink "me", dark agent windows, squiggles for text, blue = steering (how), amber = goals (what) */
+:root{
+  --bg:#eef1f4; --surface:#fbfcfd; --fg:#16202b; --muted:#5a6878; --line:#c9d1da; --ink:#8b97a5;
+  --you:#b8396b; --talk:#4d5b6c; --p1:#5a6878; --p2:#2f6fd0; --p3:#1f8a70; --p4:#a87a12; --p5:#8a4fc8; --proj-fo:.07; --proj-so:.35; --work:#2f6fd0; --plan:#a87a12;
+  --term-bg:#121820; --term-bar:#222d39; --term-fg:#d5dde5; --term-dim:#5f6d7b; --term-work:#6aa2f2; --term-plan:#e2b65a;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --talk:#a3b0bf; --p1:#93a2b2; --p2:#6aa2f2; --p3:#4cc39f; --p4:#d8b25a; --p5:#b98af0; --proj-fo:.11; --proj-so:.4; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#06090d; --term-bar:#1e2834;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1117; --surface:#151d26; --fg:#e4eaf0; --muted:#93a2b2; --line:#2a3846; --ink:#6d7c8c;
+  --you:#e8739f; --talk:#a3b0bf; --p1:#93a2b2; --p2:#6aa2f2; --p3:#4cc39f; --p4:#d8b25a; --p5:#b98af0; --proj-fo:.11; --proj-so:.4; --work:#6aa2f2; --plan:#d8b25a; --term-bg:#06090d; --term-bar:#1e2834;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-block:36px 72px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:grid;gap:44px}
+header{display:grid;gap:8px}
+.draft{font:12px var(--mono);color:var(--plan);margin:0}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,3.4vw,34px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:62ch;font-size:15px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin:6px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.legend li{display:flex;align-items:center;gap:8px}
+.legend svg{flex:none}
+
+.alt{display:grid;gap:16px}
+.alt-head{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:baseline}
+.letter{font:700 13px/1 var(--mono);color:var(--surface);background:var(--fg);border-radius:6px;padding:5px 8px;grid-row:span 2;align-self:start}
+h2{font-family:var(--display);font-weight:700;font-size:22px;line-height:1.2;margin:0}
+.alt-head p{margin:2px 0 0;color:var(--muted);font-size:14.5px;max-width:70ch;grid-column:2}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.row{grid-template-columns:minmax(0,1fr);max-width:420px}}
+figure{margin:0;display:grid;gap:8px;align-content:start;min-width:0}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;padding:6px}
+svg.d{width:100%;height:auto;display:block}
+figcaption{margin:0;font-size:14px;color:var(--muted)}
+figcaption b{color:var(--fg);font-weight:600}
+.snum{font:500 11px var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-right:2px}
+
+/* SVG parts */
+.me-ico{color:var(--you)}
+.win-bg{fill:var(--term-bg)}
+.win-bar{fill:var(--term-bar)}
+.win-dot{fill:var(--term-dim)}
+.win-ttl{fill:var(--term-fg);font:500 7.5px var(--mono)}
+.win.faded{opacity:.35}
+.sq{fill:none;stroke-width:1.6;stroke-linecap:round}
+.sq.how{stroke:var(--term-work)}
+.sq.reply{stroke:var(--term-dim)}
+.sq.what{stroke:var(--term-plan)}
+.chk{fill:none;stroke:var(--term-plan);stroke-width:1.1}
+.monitor{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+.stand{fill:var(--line)}
+.ln{fill:none;stroke-linecap:round}
+.ln.how{stroke:var(--work);stroke-width:2}
+.ln.what{stroke:var(--plan);stroke-width:2;stroke-dasharray:5 4}
+.ln.me{stroke:var(--you);stroke-width:1.6}
+.ln.talk{stroke:var(--you);stroke-width:2}
+.hd-talk{fill:var(--you)}
+.band{fill:color-mix(in srgb,var(--line) 28%,transparent);stroke:none}
+.blbl{fill:var(--muted);font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.empty{fill:var(--muted);font:italic 400 9.5px var(--body);opacity:.8}
+.lit{fill:none;stroke:var(--you);stroke-width:2}
+.talk path{fill:none;stroke:var(--talk);stroke-width:1.8;stroke-linecap:round}
+.talk circle{fill:var(--talk)}
+.talk.faded-ln{opacity:.35}
+.org{fill:none;stroke:var(--talk);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.me-lbl{fill:var(--you);font:700 13px var(--display)}
+.proj{fill-opacity:var(--proj-fo);stroke-opacity:var(--proj-so);stroke-width:1.2}
+.proj.p1{fill:var(--p1);stroke:var(--p1)} .gname.p1{fill:var(--p1)}
+.proj.p2{fill:var(--p2);stroke:var(--p2)} .gname.p2{fill:var(--p2)}
+.proj.p3{fill:var(--p3);stroke:var(--p3)} .gname.p3{fill:var(--p3)}
+.proj.p4{fill:var(--p4);stroke:var(--p4)} .gname.p4{fill:var(--p4)}
+.proj.p5{fill:var(--p5);stroke:var(--p5)} .gname.p5{fill:var(--p5)}
+.anims{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));gap:20px}
+.anim .stage{padding:0}
+.anim iframe{display:block;width:100%;border:0}
+.alt-head code{font:13px var(--mono)}
+.grp{fill:none;stroke:var(--line);stroke-width:1.5}
+.glbl{fill:var(--fg);font:600 11px var(--body)}
+.gmode{fill:var(--muted);font-weight:400}
+.wide{overflow-x:auto}
+svg.big{min-width:760px}
+.ln.agent{stroke:var(--ink);stroke-width:1.2}
+.hd-how{fill:var(--work)} .hd-what{fill:var(--plan)}
+.zone{stroke-width:1.2}
+.zone.how{fill:color-mix(in srgb,var(--work) 12%,transparent);stroke:color-mix(in srgb,var(--work) 55%,transparent)}
+.zone.what{fill:color-mix(in srgb,var(--plan) 14%,transparent);stroke:color-mix(in srgb,var(--plan) 60%,transparent)}
+.zlbl{font:600 10px var(--body)}
+.zlbl.how{fill:var(--work)} .zlbl.what{fill:var(--plan)}
+.curtain{fill:var(--bg);stroke:var(--line);stroke-dasharray:4 4}
+.sight{fill:var(--muted);font:italic 500 9.5px var(--body)}
+</style>
+<style>
+/* embedded in the blog post: no card, no heading, the post's background shows through */
+html,body{background:transparent}
+body{margin:0}
+.fig9{padding:4px 0 8px}
+.fig9 svg{display:block;width:100%;height:auto}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="h-how" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth"><path class="hd-how" d="M0 0 10 5 0 10 2.5 5z"/></marker>
+    <marker id="h-what" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth"><path class="hd-what" d="M0 0 10 5 0 10 2.5 5z"/></marker>
+    <marker id="h-talk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth"><path class="hd-talk" d="M0 0 10 5 0 10 2.5 5z"/></marker>
+    <symbol id="i-me" viewBox="0 0 24 24">
+      <circle cx="12" cy="8.2" r="4.4" fill="currentColor"/>
+      <path d="M4 21.5a8 7.6 0 0 1 16 0z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="fig9"><svg viewBox="0 0 694 344" role="img" aria-label="In practice, a realistic week: I and the brain talk with three one-off workers (blog, trip, CI fix), the managers of two projects and the PM of a third. Home server: the manager and I talk with its workers (backups, media, logger, disks). Data pipeline: the manager and I talk with its workers (ingest, backfill, schema, alerts). Boolangerie: the PM works through a tech lead who talks with its workers (rota, swaps, stock, flour)."><rect class="proj p1" x="8" y="88" width="165" height="252" rx="12"/><rect class="proj p2" x="179" y="88" width="137.0" height="252" rx="12"/><rect class="proj p3" x="322.0" y="88" width="145.0" height="252" rx="12"/><rect class="proj p4" x="473.0" y="88" width="213.0" height="252" rx="12"/><path class="org" d="M347 30 H425"/><path class="org" d="M325 50 V78"/><path class="org" d="M470 46 V78"/><path class="org" d="M38.0 78 H579.25"/><path class="org" d="M38.0 78 V100"/><path class="org" d="M88.0 78 V100"/><path class="org" d="M140.5 78 V100"/><path class="org" d="M255.75 78 V100"/><path class="org" d="M398.25 78 V100"/><path class="org" d="M579.25 78 V100"/><path class="org" d="M191.0 78 V217 H283.5"/><path class="org" d="M191.0 162 H283.5"/><path class="org" d="M255.75 134 V162"/><path class="org" d="M228.0 162 V176"/><path class="org" d="M283.5 162 V176"/><path class="org" d="M228.0 217 V226"/><path class="org" d="M283.5 217 V226"/><g class="win" transform="translate(201.0,176)"><rect class="win-bg" width="54" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h42a6 6 0 0 1 6 6v5h-54z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="48" y="8.6" text-anchor="end">backups</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q38.8 17.2 39.6 19.0"/></g><g class="win" transform="translate(261.0,176)"><rect class="win-bg" width="45" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h33a6 6 0 0 1 6 6v5h-45z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="39" y="8.6" text-anchor="end">media</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q31.2 17.2 32.4 19.0"/></g><g class="win" transform="translate(203.5,226)"><rect class="win-bg" width="49" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h37a6 6 0 0 1 6 6v5h-49z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="43" y="8.6" text-anchor="end">logger</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q34.8 20.8 35.6 19.0"/></g><g class="win" transform="translate(261.0,226)"><rect class="win-bg" width="45" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h33a6 6 0 0 1 6 6v5h-45z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="39" y="8.6" text-anchor="end">disks</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q31.2 17.2 32.4 19.0"/></g><path class="org" d="M334.0 78 V217 H428.0"/><path class="org" d="M334.0 162 H428.0"/><path class="org" d="M398.25 134 V162"/><path class="org" d="M368.5 162 V176"/><path class="org" d="M428.0 162 V176"/><path class="org" d="M368.5 217 V226"/><path class="org" d="M428.0 217 V226"/><g class="win" transform="translate(344.0,176)"><rect class="win-bg" width="49" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h37a6 6 0 0 1 6 6v5h-49z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="43" y="8.6" text-anchor="end">ingest</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q34.8 20.8 35.6 19.0"/></g><g class="win" transform="translate(399.0,176)"><rect class="win-bg" width="58" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h46a6 6 0 0 1 6 6v5h-58z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="52" y="8.6" text-anchor="end">backfill</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q40.0 17.2 42.0 19.0 Q42.4 20.8 42.8 19.0"/></g><g class="win" transform="translate(344.0,226)"><rect class="win-bg" width="49" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h37a6 6 0 0 1 6 6v5h-49z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="43" y="8.6" text-anchor="end">schema</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q34.8 20.8 35.6 19.0"/></g><g class="win" transform="translate(403.5,226)"><rect class="win-bg" width="49" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h37a6 6 0 0 1 6 6v5h-49z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="43" y="8.6" text-anchor="end">alerts</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q34.8 20.8 35.6 19.0"/></g><path class="org" d="M579.25 134 V190"/><path class="org" d="M579.25 224 V244"/><path class="org" d="M503.0 244 H655.5"/><path class="org" d="M503.0 244 V262"/><path class="org" d="M553.5 244 V262"/><path class="org" d="M604.5 244 V262"/><path class="org" d="M655.5 244 V262"/><g class="win" transform="translate(481.0,262)"><rect class="win-bg" width="44" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h32a6 6 0 0 1 6 6v5h-44z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="38" y="8.6" text-anchor="end">rota</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q30.8 17.2 31.6 19.0"/></g><g class="win" transform="translate(531.0,262)"><rect class="win-bg" width="45" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h33a6 6 0 0 1 6 6v5h-45z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="39" y="8.6" text-anchor="end">swaps</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q31.2 17.2 32.4 19.0"/></g><g class="win" transform="translate(582.0,262)"><rect class="win-bg" width="45" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h33a6 6 0 0 1 6 6v5h-45z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="39" y="8.6" text-anchor="end">stock</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q31.2 17.2 32.4 19.0"/></g><g class="win" transform="translate(633.0,262)"><rect class="win-bg" width="45" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h33a6 6 0 0 1 6 6v5h-45z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="39" y="8.6" text-anchor="end">flour</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q31.2 17.2 32.4 19.0"/></g><g class="win" transform="translate(16.0,100)"><rect class="win-bg" width="44" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h32a6 6 0 0 1 6 6v5h-44z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="38" y="8.6" text-anchor="end">blog</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q30.8 17.2 31.6 19.0"/></g><g class="win" transform="translate(66.0,100)"><rect class="win-bg" width="44" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h32a6 6 0 0 1 6 6v5h-44z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="38" y="8.6" text-anchor="end">trip</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q30.8 17.2 31.6 19.0"/></g><g class="win" transform="translate(116.0,100)"><rect class="win-bg" width="49" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h37a6 6 0 0 1 6 6v5h-49z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="43" y="8.6" text-anchor="end">CI fix</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q34.8 20.8 35.6 19.0"/></g><g class="win" transform="translate(217.75,100)"><rect class="win-bg" width="76" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h64a6 6 0 0 1 6 6v5h-76z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="70" y="8.6" text-anchor="end">manager</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q40.0 17.2 42.0 19.0 Q44.0 20.8 46.0 19.0 Q48.0 17.2 50.0 19.0 Q52.0 20.8 54.0 19.0 Q55.6 17.2 57.2 19.0"/></g><g class="win" transform="translate(360.25,100)"><rect class="win-bg" width="76" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h64a6 6 0 0 1 6 6v5h-76z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="70" y="8.6" text-anchor="end">manager</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q40.0 17.2 42.0 19.0 Q44.0 20.8 46.0 19.0 Q48.0 17.2 50.0 19.0 Q52.0 20.8 54.0 19.0 Q55.6 17.2 57.2 19.0"/></g><g class="win" transform="translate(547.25,100)"><rect class="win-bg" width="64" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h52a6 6 0 0 1 6 6v5h-64z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="58" y="8.6" text-anchor="end">PM</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q40.0 17.2 42.0 19.0 Q44.0 20.8 46.0 19.0 Q46.8 17.2 47.6 19.0"/></g><g class="win" transform="translate(541.25,190)"><rect class="win-bg" width="76" height="34" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h64a6 6 0 0 1 6 6v5h-76z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="70" y="8.6" text-anchor="end">tech lead</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q40.0 17.2 42.0 19.0 Q44.0 20.8 46.0 19.0 Q48.0 17.2 50.0 19.0 Q52.0 20.8 54.0 19.0 Q55.6 17.2 57.2 19.0"/></g><g class="win" transform="translate(425.0,14)"><rect class="win-bg" width="90" height="32" rx="6"/><path class="win-bar" d="M0 6a6 6 0 0 1 6-6h78a6 6 0 0 1 6 6v5h-90z"/><circle class="win-dot" cx="6" cy="5.5" r="1.5"/><circle class="win-dot" cx="11" cy="5.5" r="1.5"/><text class="win-ttl" x="84" y="8.6" text-anchor="end">brain</text><path class="sq reply" d="M6.0 19.0 Q8.0 17.2 10.0 19.0 Q12.0 20.8 14.0 19.0 Q16.0 17.2 18.0 19.0 Q20.0 20.8 22.0 19.0 Q24.0 17.2 26.0 19.0 Q28.0 20.8 30.0 19.0 Q32.0 17.2 34.0 19.0 Q36.0 20.8 38.0 19.0 Q40.0 17.2 42.0 19.0 Q44.0 20.8 46.0 19.0 Q48.0 17.2 50.0 19.0 Q52.0 20.8 54.0 19.0 Q56.0 17.2 58.0 19.0 Q60.0 20.8 62.0 19.0 Q64.0 17.2 66.0 19.0 Q67.2 20.8 68.4 19.0"/></g><use href="#i-me" x="308" y="12" width="34" height="34" class="me-ico"/><text class="me-lbl" x="304" y="35" text-anchor="end">me</text><text class="glbl" x="90.5" y="328" text-anchor="middle"><tspan class="gname p1">one-off jobs</tspan><tspan class="gmode"> · workers</tspan></text><text class="glbl" x="247.5" y="328" text-anchor="middle"><tspan class="gname p2">home server</tspan><tspan class="gmode"> · manager</tspan></text><text class="glbl" x="394.5" y="328" text-anchor="middle"><tspan class="gname p3">data pipeline</tspan><tspan class="gmode"> · manager</tspan></text><text class="glbl" x="579.5" y="328" text-anchor="middle"><tspan class="gname p4">Boolangerie</tspan><tspan class="gmode"> · PM + tech lead</tspan></text></svg></div>
+</body></html>
