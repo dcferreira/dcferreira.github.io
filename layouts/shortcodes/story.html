@@ -1,0 +1,6 @@
+{{ if not ($.Page.Scratch.Get "storyFonts") }}{{ $.Page.Scratch.Set "storyFonts" true }}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Gochi+Hand&display=swap">{{ end }}
+{{/* A story card for the running Boolangerie example. Usage: {{< story >}}paragraphs{{< /story >}}. Styles in assets/scss/custom.scss. */}}
+<div class="story-card">
+  <div class="story-label">{{ .Get "label" | default "🥐 At Boolangerie..." }}</div>
+  <div class="story-body">{{ .Page.RenderString (dict "display" "block") (trim .Inner "\n") }}</div>
+</div>

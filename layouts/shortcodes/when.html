@@ -1,0 +1,6 @@
+{{/* "When to use this" card, closes each mode section, followed by a thin rule. Usage: {{< when >}}paragraphs{{< /when >}}. Styles in assets/scss/custom.scss. */}}
+<div class="when-card">
+  <div class="when-label">{{ .Get "label" | default "When to use this" }}</div>
+  {{ .Page.RenderString (dict "display" "block") (trim .Inner "\n") }}
+</div>
+<hr class="section-rule">

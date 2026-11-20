@@ -4,3 +4,92 @@
   background-color: #23252f;
   border-color: rgb(20, 93, 165);
 }
+
+/* Story card: the running Boolangerie example (shortcode "story"). Cartoon sticker with a bakery-doodle watermark. */
+$story-doodles: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='380' viewBox='0 0 380 380' fill='none' stroke='%23000' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate%280 0%29 rotate%28-30%29 scale%281.05%29'%3E%3Crect x='-28' y='-8' width='56' height='16' rx='8'/%3E%3Cpath d='M-15 -5l5 10M-3 -5l5 10M9 -5l5 10'/%3E%3C/g%3E%3Cg transform='translate%280 380%29 rotate%28-30%29 scale%281.05%29'%3E%3Crect x='-28' y='-8' width='56' height='16' rx='8'/%3E%3Cpath d='M-15 -5l5 10M-3 -5l5 10M9 -5l5 10'/%3E%3C/g%3E%3Cg transform='translate%28380 0%29 rotate%28-30%29 scale%281.05%29'%3E%3Crect x='-28' y='-8' width='56' height='16' rx='8'/%3E%3Cpath d='M-15 -5l5 10M-3 -5l5 10M9 -5l5 10'/%3E%3C/g%3E%3Cg transform='translate%28380 380%29 rotate%28-30%29 scale%281.05%29'%3E%3Crect x='-28' y='-8' width='56' height='16' rx='8'/%3E%3Cpath d='M-15 -5l5 10M-3 -5l5 10M9 -5l5 10'/%3E%3C/g%3E%3Cg transform='translate%28190 0%29 rotate%2812%29 scale%281.05%29'%3E%3Cpath d='M-26 12c4-18 18-26 26-26s22 8 26 26c-8-4-14-4-18 0-4-6-12-6-16 0-4-4-10-4-18 0z'/%3E%3Cpath d='M-8 -12l4 18M8 -12l-4 18'/%3E%3C/g%3E%3Cg transform='translate%28190 380%29 rotate%2812%29 scale%281.05%29'%3E%3Cpath d='M-26 12c4-18 18-26 26-26s22 8 26 26c-8-4-14-4-18 0-4-6-12-6-16 0-4-4-10-4-18 0z'/%3E%3Cpath d='M-8 -12l4 18M8 -12l-4 18'/%3E%3C/g%3E%3Cg transform='translate%280 190%29 rotate%28-10%29 scale%281.05%29'%3E%3Cpath d='M-20 -6a20 9 0 0 1 40 0z'/%3E%3Cpath d='M-20 6a20 9 0 0 0 40 0z'/%3E%3Cpath d='M-21 -2h42M-21 2h42'/%3E%3C/g%3E%3Cg transform='translate%28380 190%29 rotate%28-10%29 scale%281.05%29'%3E%3Cpath d='M-20 -6a20 9 0 0 1 40 0z'/%3E%3Cpath d='M-20 6a20 9 0 0 0 40 0z'/%3E%3Cpath d='M-21 -2h42M-21 2h42'/%3E%3C/g%3E%3Cg transform='translate%28190 190%29 rotate%288%29 scale%281.05%29'%3E%3Crect x='-22' y='-14' width='44' height='28' rx='7'/%3E%3Cpath d='M-22 -3h44M-22 6h44'/%3E%3Cpath d='M-12 -14v-3M2 -14v-3' /%3E%3C/g%3E%3Cg transform='translate%2895 95%29 rotate%28-24%29 scale%281.05%29'%3E%3Crect x='-26' y='-9' width='52' height='18' rx='9'/%3E%3Cpath d='M-22 -3c8-5 14 3 22-1s14-4 22 1'/%3E%3C/g%3E%3Cg transform='translate%28285 95%29 rotate%286%29 scale%281.05%29'%3E%3Cpath d='M-20 14c-4-12 2-20 20-20s24 8 20 20z'/%3E%3Ccircle cx='0' cy='-11' r='7'/%3E%3Cpath d='M-10 2v10M0 2v10M10 2v10'/%3E%3C/g%3E%3Cg transform='translate%2895 285%29 rotate%28-15%29 scale%281.05%29'%3E%3Cpath d='M-26 12c4-18 18-26 26-26s22 8 26 26c-8-4-14-4-18 0-4-6-12-6-16 0-4-4-10-4-18 0z'/%3E%3Cpath d='M-8 -12l4 18M8 -12l-4 18'/%3E%3C/g%3E%3Cg transform='translate%28285 285%29 rotate%2818%29 scale%281.05%29'%3E%3Cpath d='M-20 -6a20 9 0 0 1 40 0z'/%3E%3Cpath d='M-20 6a20 9 0 0 0 40 0z'/%3E%3Cpath d='M-21 -2h42M-21 2h42'/%3E%3C/g%3E%3C/svg%3E");
+.article-style .story-card {
+  --sc-line: #2a211a; --sc-bg: #fff7e8; --sc-tag: #ffe7a8; --sc-doodle: #c98a35; --sc-ink: #1f2328;
+  position: relative;
+  isolation: isolate;
+  margin: 2rem 0.4rem 1.75rem 0;
+  padding: 1.6rem 1.4rem 0.5rem;
+  background: var(--sc-bg);
+  color: var(--sc-ink);
+  border: 3px solid var(--sc-line);
+  border-radius: 255px 18px 225px 16px / 16px 225px 18px 255px;
+  box-shadow: 6px 6px 0 var(--sc-line);
+}
+.article-style .story-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--sc-doodle);
+  opacity: 0.11;
+  -webkit-mask: $story-doodles -40px -30px / 380px auto repeat;
+  mask: $story-doodles -40px -30px / 380px auto repeat;
+}
+.article-style .story-card .story-label {
+  position: absolute;
+  top: -1.05rem;
+  left: 1.2rem;
+  transform: rotate(-3deg);
+  background: var(--sc-tag);
+  border: 3px solid var(--sc-line);
+  border-radius: 12px 18px 10px 16px;
+  padding: 0.05rem 0.8rem;
+  font: 24px/1.2 "Gochi Hand", "Comic Sans MS", cursive;
+  color: var(--sc-ink);
+}
+.article-style .story-card .story-body p {
+  margin: 0 0 0.8rem;
+  font: 20px/1.5 "Patrick Hand", "Comic Sans MS", cursive;
+}
+body.dark .article-style .story-card {
+  --sc-line: #f1e4cf; --sc-bg: #2b251c; --sc-tag: #3a311b; --sc-doodle: #e0a856; --sc-ink: #e6e9ed;
+}
+@media (max-width: 480px) {
+  .article-style .story-card { box-shadow: 4px 4px 0 var(--sc-line); }
+}
+
+/* "When to use this" callout, closing each mode section (shortcode "when").
+   Only used by the shortcode, so none of these rules reach other posts. */
+.article-style .when-card {
+  margin: 1.5rem 0 0;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+  border-left: 3px solid #2f6fd0;
+}
+.article-style .when-card .when-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #2f6fd0;
+  margin-bottom: 0.15rem;
+}
+.article-style .when-card p {
+  margin-bottom: 0.7rem;
+}
+.article-style .when-card p:last-child {
+  margin-bottom: 0.2rem;
+}
+/* the thin rule the shortcode puts after the callout, and extra room for the heading that follows */
+.article-style .section-rule {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 2.5rem 0 0;
+}
+.article-style .section-rule + h2,
+.article-style .section-rule + h3 {
+  margin-top: 4rem;
+}
+body.dark .article-style .when-card {
+  border-left-color: #6aa2f2;
+}
+body.dark .article-style .when-card .when-label {
+  color: #6aa2f2;
+}
+body.dark .article-style .section-rule {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
